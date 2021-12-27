@@ -1,0 +1,7 @@
+ERR - 0 - 2021-12-16T13:10:20.118463600Z - Uncompilable code - cannot find symbol
+  symbol:   class ConectaServidor
+  location: class projetofinalservidor.ProjetoFinalServidorERR - 0 - 2021-12-16T13:18:35.036458600Z - com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.ERR - 0 - 2021-12-16T13:18:35.044436600Z - java.lang.RuntimeException: Uncompilable code - cannot find symbol
+  symbol:   class ConectaServidor
+  location: class projetofinalservidor.ProjetoFinalServidor
