@@ -16,9 +16,6 @@ public class CriptoHash {
         String salt = getSalt();
         String securePass = getPassDigest(passToHash, salt);
         
-        System.out.println("Sal: " + salt);
-        System.out.println("Hash de senha: " + securePass);
-        
     }
     
     public static String getSalt() throws NoSuchAlgorithmException, NoSuchProviderException{
@@ -47,8 +44,7 @@ public class CriptoHash {
             return toHexString(bytes);
             
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Stopped Here!!!!");
+            Metodos.GravaLogErro("ERR", 0, e.toString());
             return "";
         }
     }
