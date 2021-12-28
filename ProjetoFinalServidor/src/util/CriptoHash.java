@@ -12,9 +12,9 @@ public class CriptoHash {
 
     public void CriptoSenha(String pSenha) throws NoSuchAlgorithmException, NoSuchProviderException{
         
-        String passToHash = pSenha;
-        String salt = getSalt();
-        String securePass = getPassDigest(passToHash, salt);
+        String wSenhaToHash = pSenha;
+        String wSal = getSalt();
+        String wSecurePass = getPassDigest(wSenhaToHash, wSal);
         
     }
     
@@ -34,16 +34,16 @@ public class CriptoHash {
         return sb.toString();
     }
     
-    private static String getPassDigest(String passwordToHash, String salt){
+    private static String getPassDigest(String pSenhaToHash, String pSal){
         try {
             
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(salt.getBytes());
+            md.update(pSal.getBytes());
             
-            byte[] bytes = md.digest(passwordToHash.getBytes());
+            byte[] bytes = md.digest(pSenhaToHash.getBytes());
             return toHexString(bytes);
             
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException e) {
             Metodos.GravaLogErro("ERR", 0, e.toString());
             return "";
         }
