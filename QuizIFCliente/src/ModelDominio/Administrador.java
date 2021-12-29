@@ -1,6 +1,6 @@
 /*
     //João Jorge Stahl Gomes - 29/12/2021 ::Criação
- */
+*/
 package ModelDominio;
 
 import java.io.Serializable;
