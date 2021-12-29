@@ -11,7 +11,7 @@ public class Conector {
     public static Connection getConnection(){
         try {
             String url = "jdbc:mysql://localhost:3306/";
-            String banco = "QuizIF";
+            String banco = "quizif";
             String usuario = "root";
             String senha = "";
             

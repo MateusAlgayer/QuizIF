@@ -1,20 +1,20 @@
 /*
-    //João Jorge Stahl Gomes - 29/12/2021 ::Criação
+  //Mateus Roberto Algayer - 29/12/2021 :: Campo pontuacao 
+  //João Jorge Stahl Gomes - 29/12/2021 :: Criação
  */
 package ModelDominio;
 
-/**
- *
- * @author User
- */
-public class Prova {
-    private static final long seralVersionUID = 123456789L;
+import java.io.Serializable;
+
+public class Prova implements Serializable{
+    private static final long serialVersionUID = 123456789L;
     
     private int codigoProva;
     private int nomeProva;
     private Area areaGeral;
     private String dificuludade;
     private char situacao;
+    private int pontuacao;
 
     public int getCodigoProva() {
         return codigoProva;
@@ -56,12 +56,21 @@ public class Prova {
         this.situacao = situacao;
     }
 
-    public Prova(int codigoProva, int nomeProva, Area areaGeral, String dificuludade, char situacao) {
+  public int getPontuacao() {
+    return pontuacao;
+  }
+
+  public void setPontuacao(int pontuacao) {
+    this.pontuacao = pontuacao;
+  }
+
+    public Prova(int codigoProva, int nomeProva, Area areaGeral, String dificuludade, char situacao, int pontuacao) {
         this.codigoProva = codigoProva;
         this.nomeProva = nomeProva;
         this.areaGeral = areaGeral;
         this.dificuludade = dificuludade;
         this.situacao = situacao;
+        this.pontuacao = pontuacao; //Mateus Roberto Algayer - 29/12/2021
     }
 
     public Prova(int nomeProva, Area areaGeral, String dificuludade, char situacao) {

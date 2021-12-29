@@ -5,7 +5,7 @@ package ModelDominio;
 
 
 public class Jogo {
-    private static final long seralVersionUID = 123456789L;
+    private static final long serialVersionUID = 123456789L;
     
     private int codJogo;
     private Prova prova;

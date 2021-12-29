@@ -3,12 +3,8 @@
  */
 package ModelDominio;
 
-/**
- *
- * @author User
- */
 public class Pergunta {
-    private static final long seralVersionUID = 123456789L;
+    private static final long serialVersionUID = 123456789L;
     
     private int codPergunta;
     private Area area;

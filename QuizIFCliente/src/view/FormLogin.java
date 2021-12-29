@@ -3,13 +3,17 @@
 
 package view;
 
+import ModelDominio.Usuario;
+import controller.InfoApp;
 import util.Metodos;
+import static util.Metodos.Consistencia;
 
 public class FormLogin extends javax.swing.JFrame {
 
   public FormLogin() {
     initComponents();
     Metodos.GeraConsistenciaCampos(this.rootPane);
+    lbAviso.setVisible(false);
   }
 
   @SuppressWarnings("unchecked")
@@ -21,13 +25,13 @@ public class FormLogin extends javax.swing.JFrame {
     lbTrocaSenha = new javax.swing.JLabel();
     btLogar = new javax.swing.JButton();
     btCadastro = new javax.swing.JButton();
-    btSair = new javax.swing.JButton();
     tfUsu = new javax.swing.JTextField();
     pfSenha = new javax.swing.JPasswordField();
     lbAviso = new javax.swing.JLabel();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Login");
+    setName("Login"); // NOI18N
     setResizable(false);
 
     jLabel1.setText("Usuário:");
@@ -35,17 +39,29 @@ public class FormLogin extends javax.swing.JFrame {
     jLabel2.setText("Senha:");
 
     lbTrocaSenha.setText("Esqueci minha senha!");
-
-    btLogar.setText("Logar");
-
-    btCadastro.setText("Cadastro");
-
-    btSair.setText("Sair");
-    btSair.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        btSairActionPerformed(evt);
+    lbTrocaSenha.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        lbTrocaSenhaMouseClicked(evt);
       }
     });
+
+    btLogar.setText("Logar");
+    btLogar.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btLogarActionPerformed(evt);
+      }
+    });
+
+    btCadastro.setText("Cadastro");
+    btCadastro.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btCadastroActionPerformed(evt);
+      }
+    });
+
+    tfUsu.setName("Usuário"); // NOI18N
+
+    pfSenha.setName("Senha"); // NOI18N
 
     lbAviso.setForeground(new java.awt.Color(255, 51, 51));
     lbAviso.setText("Usuário ou senha Incorretos!");
@@ -59,8 +75,7 @@ public class FormLogin extends javax.swing.JFrame {
         .addComponent(jLabel1)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(tfUsu)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(98, 98, 98))
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
@@ -86,13 +101,10 @@ public class FormLogin extends javax.swing.JFrame {
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addGap(16, 16, 16)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jLabel1)
-              .addComponent(tfUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(16, 16, 16)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel1)
+          .addComponent(tfUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -115,14 +127,36 @@ public class FormLogin extends javax.swing.JFrame {
     setLocationRelativeTo(null);
   }// </editor-fold>//GEN-END:initComponents
 
-  private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-    System.exit(0);
-  }//GEN-LAST:event_btSairActionPerformed
+  private void lbTrocaSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTrocaSenhaMouseClicked
+    //Abrir o form de troca de senha
+  }//GEN-LAST:event_lbTrocaSenhaMouseClicked
+
+  private void btCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroActionPerformed
+    //abrir o form de cadastro
+  }//GEN-LAST:event_btCadastroActionPerformed
+
+  private void btLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogarActionPerformed
+    if (!Consistencia(true, tfUsu, pfSenha)) return;
+
+    Usuario wLogin = new Usuario(tfUsu.getText(), String.valueOf(pfSenha.getPassword()));
+    
+    Usuario wUsu = QuizIFCliente.ccont.Login(wLogin);
+    
+    if(wUsu != null){
+      InfoApp.GUsuLogado = wUsu;
+      
+      FormPrincipal fp = new FormPrincipal();
+      fp.setVisible(true);
+      
+      dispose();
+    } else {
+      lbAviso.setVisible(true);
+    }
+  }//GEN-LAST:event_btLogarActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btCadastro;
   private javax.swing.JButton btLogar;
-  private javax.swing.JButton btSair;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel lbAviso;

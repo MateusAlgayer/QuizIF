@@ -1,4 +1,5 @@
 
+//Mateus Roberto Algayer - 29/12/2021 :: se tiver arquivo debug vai printar no console os logs
 //Mateus Roberto Algayer - 23/11/2021 :: Consistencia e Pedaco 
 
 package util;
@@ -199,6 +200,10 @@ public class Metodos{
 
         try (BufferedWriter grava = new BufferedWriter(new FileWriter(arquivo, true))) {
             grava.append("\n"+acao+" - "+id+" - "+Instant.now()+" - "+operacao);
+            
+            if((new File("QuizIFDebug.debug")).exists()){
+              System.out.println(acao+" - "+id+" - "+Instant.now()+" - "+operacao);
+            }
         }
     } catch (IOException e) {
         GravaLogErro("ERR", id, e.toString());
@@ -226,6 +231,9 @@ public class Metodos{
 
         try (BufferedWriter grava = new BufferedWriter(new FileWriter(arquivo, true))) {
             grava.append("\n"+acao+" - "+id+" - "+Instant.now()+" - "+operacao);
+            if((new File("QuizIFDebug.debug")).exists()){ //Mateus Roberto Algayer - 29/12/2021
+              System.out.println(acao+" - "+id+" - "+Instant.now()+" - "+operacao);
+            }
         }
     } catch (IOException e) {
     }

@@ -5,15 +5,14 @@ package ModelDominio;
 
 import java.io.Serializable;
 
-
 public class Usuario implements Serializable{
-    private static final long seralVersionUID = 123456789L;
+    private static final long serialVersionUID = 123456789L;
     
     protected int codUsuario;
     protected String nomeUsuario;
     protected String apelido;
     protected String email;
-    protected char senha;
+    protected String senha;
     
     //Getter e Setter
 
@@ -42,24 +41,24 @@ public class Usuario implements Serializable{
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public char getSenha() {
+    public String getSenha() {
         return senha;
     }
 
-    public void setSenha(char senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
     
     //Construtores
 
-    public Usuario(int codUsuario, String nomeUsuario, String apelido, String email, char senha) {
+    public Usuario(int codUsuario, String nomeUsuario, String apelido, String email, String senha) {
         this.codUsuario = codUsuario;
         this.nomeUsuario = nomeUsuario;
         this.apelido = apelido;
@@ -67,7 +66,7 @@ public class Usuario implements Serializable{
         this.senha = senha;
     }
 
-    public Usuario(String nomeUsuario, String apelido, String email, char senha) {
+    public Usuario(String nomeUsuario, String apelido, String email, String senha) {
         this.nomeUsuario = nomeUsuario;
         this.apelido = apelido;
         this.email = email;
@@ -76,6 +75,11 @@ public class Usuario implements Serializable{
 
     public Usuario(int codUsuario) {
         this.codUsuario = codUsuario;
+    }
+
+    public Usuario(String email, String senha) {
+      this.email = email;
+      this.senha = senha;
     }
 
     @Override
