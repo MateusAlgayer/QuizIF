@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import static util.Metodos.GravaLog;
 import static util.Metodos.GravaLogErro;
+import static util.Metodos.Erro;
 
 public class QuizIFCliente {
 
@@ -43,8 +44,13 @@ public class QuizIFCliente {
       ccont = new ConexaoController(wSocket, wOut, wIn);
       
     } catch (IOException e) {
+      Erro("Erro", "Erro na conexão com o servidor:\n"+e.toString());
       GravaLogErro("CON", 0, e.toString());
+      System.exit(0);
     }
+    
+    FormLogin fl = new FormLogin();
+    fl.setVisible(true);
   }
   
 }
