@@ -6,13 +6,12 @@ package util;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.activation.*;
 
 public class QuizIFMail {
     public static void main(String[] args) throws Exception{
         // Define email e senha do emissor da mensagem
         String myAddress = "jorgejorge1702@outlook.com";
-        String myPassword = "j1j2s3g4";
+        String myPassword = "";
         // Define o email do destinatário da mensagem
         String receiver = "jorgejorge1702@outlook.com";
 
