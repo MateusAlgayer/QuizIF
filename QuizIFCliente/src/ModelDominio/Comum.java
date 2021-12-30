@@ -5,23 +5,23 @@ package ModelDominio;
 
 import java.io.Serializable;
 
-/**
- *
- * @author User
- */
 public class Comum extends Usuario implements Serializable{
-    private static final long seralVersionUID = 123456789L;
+    private static final long serialVersionUID = 123456789L;
 
-    public Comum(int codUsuario, String nomeUsuario, String apelido, String email, char senha) {
+    public Comum(int codUsuario, String nomeUsuario, String apelido, String email, String senha) {
         super(codUsuario, nomeUsuario, apelido, email, senha);
     }
 
-    public Comum(String nomeUsuario, String apelido, String email, char senha) {
+    public Comum(String nomeUsuario, String apelido, String email, String senha) {
         super(nomeUsuario, apelido, email, senha);
     }
 
     public Comum(int codUsuario) {
         super(codUsuario);
+    }
+
+    public Comum(String apelido, String senha) {
+      super(apelido, senha);
     }
 
     @Override

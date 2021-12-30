@@ -3,6 +3,8 @@
 
 package controller;
 
+import Model.UsuarioDAO;
+import ModelDominio.Usuario;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -34,9 +36,19 @@ public class TrataAcaoController extends Thread{
       wCom = (String) in.readObject();
       
       while(!wCom.equalsIgnoreCase("FIM")){
-        
         GravaLog("CLI", idUnico, "Enviou o comando: '"+wCom+"'");
         
+        if(wCom.equalsIgnoreCase("EFETUARLOGIN")){
+          
+          out.writeObject("ok");
+          Usuario user = (Usuario) in.readObject();
+          
+          GravaLog("REQ", idUnico, "Requisição de login");
+          out.writeObject((new UsuarioDAO()).efetuarLogin(user, idUnico));
+        }
+        
+        GravaLog("CLI", idUnico, "Esperando comando");
+        wCom = (String) in.readObject();
       }
       
     } catch (IOException | ClassNotFoundException e) {

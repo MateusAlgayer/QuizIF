@@ -3,9 +3,12 @@
 
 package controller;
 
+import ModelDominio.Usuario;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import static util.Metodos.GravaLogErro;
 
 public class ConexaoController {
     
@@ -19,5 +22,22 @@ public class ConexaoController {
     this.wIn = pIn;
   }
   
-  
+  public Usuario Login(Usuario pUsu){
+    Usuario wUsu = null;
+    
+    String msg = "";
+    try {
+      wOut.writeObject("EFETUARLOGIN");
+      
+      msg = (String) wIn.readObject();
+      wOut.writeObject(pUsu);
+      
+      wUsu = (Usuario) wIn.readObject();
+      
+    } catch (IOException | ClassNotFoundException e) {
+      GravaLogErro("ERR", 0, "Erro ao enviar o form de login");
+    }
+    
+    return wUsu;
+  }
 }
