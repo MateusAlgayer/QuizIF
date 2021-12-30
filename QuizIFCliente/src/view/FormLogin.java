@@ -60,7 +60,6 @@ public class FormLogin extends javax.swing.JFrame{
     lbAviso.setText("Usuário ou senha Incorretos!");
 
     jButton1.setText("Esqueci minha senha");
-    jButton1.setBorder(null);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -76,11 +75,11 @@ public class FormLogin extends javax.swing.JFrame{
           .addGroup(layout.createSequentialGroup()
             .addGap(29, 29, 29)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(jButton1)
               .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel2)
                 .addGap(12, 12, 12)
-                .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addComponent(jButton1))
             .addGap(12, 12, 12)
             .addComponent(lbAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -115,7 +114,7 @@ public class FormLogin extends javax.swing.JFrame{
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(btCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(btLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(41, Short.MAX_VALUE))
+        .addContainerGap(35, Short.MAX_VALUE))
     );
 
     pack();
