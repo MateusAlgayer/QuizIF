@@ -3,12 +3,15 @@
 
 package controller;
 
+import Model.ProvaDAO;
 import Model.UsuarioDAO;
+import ModelDominio.Prova;
 import ModelDominio.Usuario;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import static util.Metodos.GravaLog;
 import static util.Metodos.GravaLogErro;
 
@@ -45,6 +48,16 @@ public class TrataAcaoController extends Thread{
           
           GravaLog("REQ", idUnico, "Requisição de login");
           out.writeObject((new UsuarioDAO()).efetuarLogin(user, idUnico));
+        } else if(wCom.equalsIgnoreCase("GETLISTAPROVAS")){
+          
+          out.writeObject("ok");
+          
+          Usuario usu = (Usuario)in.readObject();
+          
+          ArrayList<Prova> listaProvas = ((new ProvaDAO()).getListaProva(usu.getCodUsuario(), idUnico));
+          
+          GravaLog("REQ", idUnico, "Lista de provas");
+          out.writeObject(listaProvas);
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

@@ -10,9 +10,9 @@ public class Prova implements Serializable{
     private static final long serialVersionUID = 123456789L;
     
     private int codigoProva;
-    private int nomeProva;
+    private String nomeProva;
     private Area areaGeral;
-    private String dificuludade;
+    private String dificuldade;
     private char situacao;
     private int pontuacao;
 
@@ -24,11 +24,11 @@ public class Prova implements Serializable{
         this.codigoProva = codigoProva;
     }
 
-    public int getNomeProva() {
+    public String getNomeProva() {
         return nomeProva;
     }
 
-    public void setNomeProva(int nomeProva) {
+    public void setNomeProva(String nomeProva) {
         this.nomeProva = nomeProva;
     }
 
@@ -40,12 +40,12 @@ public class Prova implements Serializable{
         this.areaGeral = areaGeral;
     }
 
-    public String getDificuludade() {
-        return dificuludade;
+    public String getDificuldade() {
+        return dificuldade;
     }
 
-    public void setDificuludade(String dificuludade) {
-        this.dificuludade = dificuludade;
+    public void setDificuludade(String dificuldade) {
+        this.dificuldade = dificuldade;
     }
 
     public char getSituacao() {
@@ -64,19 +64,19 @@ public class Prova implements Serializable{
     this.pontuacao = pontuacao;
   }
 
-    public Prova(int codigoProva, int nomeProva, Area areaGeral, String dificuludade, char situacao, int pontuacao) {
+    public Prova(int codigoProva, String nomeProva, Area areaGeral, String dificuldade, char situacao, int pontuacao) {
         this.codigoProva = codigoProva;
         this.nomeProva = nomeProva;
         this.areaGeral = areaGeral;
-        this.dificuludade = dificuludade;
+        this.dificuldade = dificuldade;
         this.situacao = situacao;
         this.pontuacao = pontuacao; //Mateus Roberto Algayer - 29/12/2021
     }
 
-    public Prova(int nomeProva, Area areaGeral, String dificuludade, char situacao) {
+    public Prova(String nomeProva, Area areaGeral, String dificuldade, char situacao) {
         this.nomeProva = nomeProva;
         this.areaGeral = areaGeral;
-        this.dificuludade = dificuludade;
+        this.dificuldade = dificuldade;
         this.situacao = situacao;
     }
 
@@ -84,10 +84,17 @@ public class Prova implements Serializable{
         this.codigoProva = codigoProva;
     }
     
-
+    public Prova(int codigoProva, String nomeProva, Area areaGeral, String dificuldade, int pontuacao) {
+      this.codigoProva = codigoProva;
+      this.nomeProva = nomeProva;
+      this.areaGeral = areaGeral;
+      this.dificuldade = dificuldade;
+      this.pontuacao = pontuacao;
+    }
+    
     @Override
     public String toString() {
-        return "Prova{" + "codigoProva=" + codigoProva + ", nomeProva=" + nomeProva + ", areaGeral=" + areaGeral + ", dificuludade=" + dificuludade + ", situacao=" + situacao + '}';
+        return "Prova{" + "codigoProva=" + codigoProva + ", nomeProva=" + nomeProva + ", areaGeral=" + areaGeral + ", dificuludade=" + dificuldade + ", situacao=" + situacao + '}';
     }
     
     

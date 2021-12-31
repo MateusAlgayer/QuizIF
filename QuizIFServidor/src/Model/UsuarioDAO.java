@@ -39,17 +39,17 @@ public class UsuarioDAO {
       
       while(result.next()){
         switch(result.getString("TIPO")){
-          case "C": wUsu = new Comum(result.getInt("CODIGO"), 
+          case "C" -> wUsu = new Comum(result.getInt("CODIGO"), 
                                      result.getString("NOME"),
                                      result.getString("APELIDO"), 
                                      result.getString("EMAIL"), 
                                      result.getString("SENHA"));
-          case "J": wUsu = new Criador(result.getInt("CODIGO"), 
+          case "J" -> wUsu = new Criador(result.getInt("CODIGO"), 
                                        result.getString("NOME"),
                                        result.getString("APELIDO"), 
                                        result.getString("EMAIL"), 
                                        result.getString("SENHA"));
-          case "A": wUsu = new Administrador(result.getInt("CODIGO"), 
+          case "A" -> wUsu = new Administrador(result.getInt("CODIGO"), 
                                              result.getString("NOME"),
                                              result.getString("APELIDO"), 
                                              result.getString("EMAIL"), 

@@ -3,7 +3,9 @@
  */
 package ModelDominio;
 
-public class Area {
+import java.io.Serializable;
+
+public class Area implements Serializable{
     private static final long serialVersionUID = 123456789L;
     
     private int codArea;

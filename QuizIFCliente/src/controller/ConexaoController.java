@@ -3,11 +3,13 @@
 
 package controller;
 
+import ModelDominio.Prova;
 import ModelDominio.Usuario;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import static util.Metodos.GravaLogErro;
 
 public class ConexaoController {
@@ -39,5 +41,25 @@ public class ConexaoController {
     }
     
     return wUsu;
+  }
+  
+  public ArrayList<Prova> getProvas(){
+    
+    String msg = "";
+    try {
+      wOut.writeObject("GETLISTAPROVAS");
+      
+      msg = (String) wIn.readObject();
+      wOut.writeObject(InfoApp.GUsuLogado);
+      
+      ArrayList<Prova> listaProvas = (ArrayList<Prova>) wIn.readObject();
+      
+      return listaProvas;
+      
+    } catch (IOException | ClassNotFoundException e) {
+      GravaLogErro("ERR", 0, "Erro ao enviar listaProvas");
+    }
+    
+    return null; 
   }
 }
