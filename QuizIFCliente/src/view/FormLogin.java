@@ -1,10 +1,12 @@
 
 //Mateus Roberto Algayer - 29/12/2021 :: Criação
+//Staub - 30/12/2021 :: Add sal wLogin
 
 package view;
 
 import ModelDominio.Usuario;
 import controller.InfoApp;
+import util.CriptoHash;
 import util.Metodos;
 import static util.Metodos.Consistencia;
 
@@ -126,9 +128,9 @@ public class FormLogin extends javax.swing.JFrame{
   }//GEN-LAST:event_btCadastroActionPerformed
 
   private void btLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogarActionPerformed
-    if (!Consistencia(true, tfUsu, pfSenha)) return;
-
-    Usuario wLogin = new Usuario(tfUsu.getText(), String.valueOf(pfSenha.getPassword()));
+    if (!Consistencia(true, tfUsu, pfSenha)) return;    
+    
+    Usuario wLogin = new Usuario(tfUsu.getText(), String.valueOf(pfSenha.getPassword()), "");
     
     Usuario wUsu = QuizIFCliente.ccont.Login(wLogin);
     

@@ -1,5 +1,7 @@
 /*
     //João Jorge Stahl Gomes - 29/12/2021 ::Criação
+    //Staub - 30/12/2021 - ::Add sal
+
  */
 package ModelDominio;
 
@@ -8,11 +10,12 @@ import java.io.Serializable;
 public class Usuario implements Serializable{
     private static final long serialVersionUID = 123456789L;
     
-    protected int codUsuario;
-    protected String nomeUsuario;
-    protected String apelido;
-    protected String email;
-    protected String senha;
+    private int codUsuario;
+    private String nomeUsuario;
+    private String apelido;
+    private String email;
+    private String senha;
+    private String sal;
     
     //Getter e Setter
 
@@ -55,6 +58,14 @@ public class Usuario implements Serializable{
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public String getSal() {
+        return sal;
+    }
+
+    public void setSal(String sal) {
+        this.sal = sal;
+    }
     
     //Construtores
 
@@ -77,13 +88,16 @@ public class Usuario implements Serializable{
         this.codUsuario = codUsuario;
     }
 
-    public Usuario(String email, String senha) {
-      this.email = email;
-      this.senha = senha;
+    public Usuario(String email, String senha, String sal) {
+        this.email = email;
+        this.senha = senha;
+        this.sal = sal;
     }
-
+    
     @Override
     public String toString() {
         return "Usuario{" + "codUsuario=" + codUsuario + ", nomeUsuario=" + nomeUsuario + ", apelido=" + apelido + ", email=" + email + ", senha=" + senha + '}';
     }
+
+    
 }

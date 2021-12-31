@@ -1,5 +1,6 @@
 /*
     //João Jorge Stahl Gomes - 29/12/2021 ::Criação
+//Staub - 30/12/2021 :: Edit Comum/add sal
  */
 package ModelDominio;
 
@@ -20,8 +21,8 @@ public class Comum extends Usuario implements Serializable{
         super(codUsuario);
     }
 
-    public Comum(String apelido, String senha) {
-      super(apelido, senha);
+    public Comum(String email, String senha, String sal) {
+      super(email, senha, sal);
     }
 
     @Override

@@ -1,5 +1,6 @@
 
 //Staub - 28/12/2021 :: Criação
+//Staub - 30/12/2021 :: Edit getSalt
 
 package util;
 
@@ -18,12 +19,19 @@ public class CriptoHash {
         
     }
     
-    public static String getSalt() throws NoSuchAlgorithmException, NoSuchProviderException{
-        
+    public static String getSalt(){
+    
+        try {
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
         byte[] salt = new byte[16];
         sr.nextBytes(salt);
         return toHexString(salt);
+        
+        } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
+            Metodos.GravaLogErro("ERR", 0, "Erro no Sal");
+            return "";
+        }
+        
     }
     
     private static String toHexString(byte[] bytes){

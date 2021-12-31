@@ -16,8 +16,8 @@ public class Administrador extends Criador implements Serializable{
         super(nomeUsuario, apelido, email, senha);
     }
 
-    public Administrador(String apelido, String senha) {
-      super(apelido, senha);
+    public Administrador(String email, String senha, String sal) {
+      super(email, senha, sal);
     }
 
     public Administrador(int codUsuario) {
