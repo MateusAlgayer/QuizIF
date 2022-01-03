@@ -8,25 +8,31 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 public class QuizIFMail {
-    public static void main(String[] args) throws Exception{
-        // Define email e senha do emissor da mensagem
-        String myAddress = "jorgejorge1702@outlook.com";
-        String myPassword = "";
-        // Define o email do destinatário da mensagem
-        String receiver = "jorgejorge1702@outlook.com";
+    public static boolean EnviaEmail(String pEmail, int id){
+        try {
+            // Define email e senha do emissor da mensagem
+            String myAddress = "jorgejorge1702@outlook.com";
+            String myPassword = "j1j2s3g4";
+            // Define o email do destinatário da mensagem
+            String receiver = pEmail;
 
-        // Configura as propriedades do Outlook
-        Properties prop = setProperties();
+            // Configura as propriedades do Outlook
+            Properties prop = setProperties();
+        
+            // Cria uma nova seção, autenticada com email e senha
+            Session session = getSession(prop, myAddress, myPassword);
 
-        // Cria uma nova seção, autenticada com email e senha
-        Session session = getSession(prop, myAddress, myPassword);
-
-        String subject = "Teste de e-mail";
-        String bodyMsg = "<p>Testando o envio de e-mail.</p>";
-        Message message = createMessage(session, myAddress, receiver, subject, bodyMsg);
-        Transport.send(message);
-        System.out.println( "Mensagem enviada!" );
-    }
+            String subject = "Teste de e-mail";
+            String bodyMsg = "<p>Testando o envio de e-mail.</p>";
+            Message message = createMessage(session, myAddress, receiver, subject, bodyMsg);
+            Transport.send(message);
+            Metodos.GravaLog("EML", id, "Mensagem Enviada!");
+            return true;
+        } catch (MessagingException e) {
+            Metodos.GravaLogErro("Erro!", id, e.toString());
+            return false;
+        }
+            }
 
     private static Properties setProperties(){
         Properties prop = new Properties();

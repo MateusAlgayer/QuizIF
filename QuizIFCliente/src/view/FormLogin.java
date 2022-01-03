@@ -124,7 +124,8 @@ public class FormLogin extends javax.swing.JFrame{
   }// </editor-fold>//GEN-END:initComponents
 
   private void btCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroActionPerformed
-    //abrir o form de cadastro
+      FormCadastro frmCad = new FormCadastro();
+      frmCad.setVisible(true);
   }//GEN-LAST:event_btCadastroActionPerformed
 
   private void btLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogarActionPerformed
