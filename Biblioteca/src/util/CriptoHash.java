@@ -1,4 +1,5 @@
 
+//Mateus Roberto Algayer - 03/01/2022 :: Adaptações no CriptoSenha e GetSalt
 //Staub - 28/12/2021 :: Criação
 //Staub - 30/12/2021 :: Edit getSalt
 
@@ -11,25 +12,31 @@ import java.security.SecureRandom;
 
 public class CriptoHash {
 
-    public void CriptoSenha(String pSenha) throws NoSuchAlgorithmException, NoSuchProviderException{
-        
+    public String CriptoSenha(String pSenha, String pSal,int id){
+      try {
         String wSenhaToHash = pSenha;
-        String wSal = getSalt();
-        String wSecurePass = getPassDigest(wSenhaToHash, wSal);
+        String wSal = pSal;
+
+        return getPassDigest(wSenhaToHash, wSal);
+          
+      } catch (Exception e) {
+        Metodos.GravaLogErro("ERR", id, "Erro ao criptografar a senha");
+        return "";
+      }
         
     }
     
     public static String getSalt(){
     
         try {
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
-        byte[] salt = new byte[16];
-        sr.nextBytes(salt);
-        return toHexString(salt);
+          SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
+          byte[] salt = new byte[16];
+          sr.nextBytes(salt);
+          return toHexString(salt);
         
         } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-            Metodos.GravaLogErro("ERR", 0, "Erro no Sal");
-            return "";
+          Metodos.GravaLogErro("ERR", 0, "Erro no Sal");
+          return "";
         }
         
     }

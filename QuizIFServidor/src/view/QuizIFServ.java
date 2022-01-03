@@ -22,7 +22,7 @@ public class QuizIFServ {
 
         try {
           ServerSocket GServidor = new ServerSocket(12345);
-          Metodos.GravaLog("CON",0,"Usuário conectado");
+          Metodos.GravaLog("CON",0,"Servidor conectado");
 
           ConexaoUsu wConex = new ConexaoUsu(GServidor, wCon);
           
