@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import util.CriptoHash;
 import util.Metodos;
 import static util.Metodos.GravaLogErro;
@@ -86,24 +87,41 @@ public class ConexaoController {
         return false;
       }
       
+      boolean continua = true;
+      
       InfoApp.setGCodConfirmacao("");
-      
-      FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail();
-      frm.setModal(true);
-      frm.setVisible(true);
-      
-      InfoApp.setGCodConfirmacao("teste"); //tem que terminar a tela de confirmação de codigo
-      
-      if(InfoApp.getGCodConfirmacao().equals("")){      
-        wOut.writeObject("");
-        msg = (String) wIn.readObject();
-        return false;
-      }
+      //João Jorge - 04/01/2022 :: Criação
+      while(continua){
+        FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail();
+        frm.setModal(true);
+        frm.setVisible(true);
 
-      wOut.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
-      
-      return (boolean)wIn.readObject();
-      
+          switch (InfoApp.getGCodConfirmacao()) {
+              case "" -> wOut.writeObject("");
+              case "Fechou" -> {
+                  if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? \n O Cadastro será perdido.")){
+                      wOut.writeObject("Cancelar");
+                  }
+              }
+              default -> wOut.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
+          }
+        
+        msg = (String) wIn.readObject();
+        
+        switch (msg) {
+            case "ok" -> {
+                continua = false;
+                return true;
+              }
+              case "Cancelei" -> {
+                continua = false;
+                return false;
+              }
+              default -> {
+                //Continua no próximo episodio
+              }
+          }
+        }
     } catch (IOException | ClassNotFoundException e) {
        GravaLogErro("ERR", 0, "Erro ao enviar código via Email\n"+e.toString());
     }

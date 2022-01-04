@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -237,5 +238,19 @@ public class Metodos{
         }
     } catch (IOException e) {
     }
+  }
+  
+  //João Jorge Stahl Gomes - 04/01/2022
+  public static String GerarCodigo(){
+      Random random = new Random();
+      int codEmail;
+          codEmail = 100000+random.nextInt(999999);
+          System.out.println(codEmail);
+      return String.valueOf(codEmail);
+  }
+  
+  //João Jorge Stahl Gomes - 04/01/2022
+  public static boolean msgConfirma(String titulo){
+      return JOptionPane.showConfirmDialog(null, titulo, "Aviso!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
   }
 }

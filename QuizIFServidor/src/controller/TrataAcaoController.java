@@ -13,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import util.CriptoHash;
+import util.Metodos;
 import static util.Metodos.GravaLog;
 import static util.Metodos.GravaLogErro;
 import util.QuizIFMail;
@@ -73,7 +74,7 @@ public class TrataAcaoController extends Thread{
           
           out.writeObject(sal);
           
-          String codigo = "teste"; // trocar para randomizar um número
+          String codigo = Metodos.GerarCodigo();
           
           QuizIFMail.EnviaEmail(email, codigo, idUnico);
           

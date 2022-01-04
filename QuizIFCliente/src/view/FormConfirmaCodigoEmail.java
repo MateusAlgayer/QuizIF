@@ -3,6 +3,8 @@
 
 package view;
 
+import controller.InfoApp;
+
 public class FormConfirmaCodigoEmail extends javax.swing.JDialog {
 
   /**
@@ -13,29 +15,89 @@ public class FormConfirmaCodigoEmail extends javax.swing.JDialog {
   }
 
   @SuppressWarnings("unchecked")
-  // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-  private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-    setTitle("Verificação por e-mail");
-    setName("Verificação por e-mail"); // NOI18N
-    setType(java.awt.Window.Type.POPUP);
+        tfCodEmail = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        btConfirmaCodEmail = new javax.swing.JButton();
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-    getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 400, Short.MAX_VALUE)
-    );
-    layout.setVerticalGroup(
-      layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 300, Short.MAX_VALUE)
-    );
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Verificação por e-mail");
+        setName("Verificação por e-mail"); // NOI18N
+        setType(java.awt.Window.Type.POPUP);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
-    pack();
-    setLocationRelativeTo(null);
-  }// </editor-fold>//GEN-END:initComponents
+        tfCodEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfCodEmailActionPerformed(evt);
+            }
+        });
 
-  // Variables declaration - do not modify//GEN-BEGIN:variables
-  // End of variables declaration//GEN-END:variables
+        jLabel1.setText("Informe o código recebido no email");
+
+        btConfirmaCodEmail.setText("Confirmar");
+        btConfirmaCodEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConfirmaCodEmailActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(98, 98, 98)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(tfCodEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(btConfirmaCodEmail)))
+                .addContainerGap(112, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel1)
+                .addGap(49, 49, 49)
+                .addComponent(tfCodEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                .addComponent(btConfirmaCodEmail)
+                .addGap(53, 53, 53))
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void tfCodEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCodEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfCodEmailActionPerformed
+
+    private void btConfirmaCodEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmaCodEmailActionPerformed
+        String codEmail;
+        codEmail = tfCodEmail.getText(); 
+        InfoApp.setGCodConfirmacao(codEmail);
+        dispose();
+    }//GEN-LAST:event_btConfirmaCodEmailActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        InfoApp.setGCodConfirmacao("Fechou");
+    }//GEN-LAST:event_formWindowClosed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btConfirmaCodEmail;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField tfCodEmail;
+    // End of variables declaration//GEN-END:variables
 }
