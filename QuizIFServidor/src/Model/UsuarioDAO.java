@@ -66,5 +66,4 @@ public class UsuarioDAO {
     }
     return wUsu;
   }
-  
 }

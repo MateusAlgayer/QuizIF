@@ -12,7 +12,7 @@ import java.security.SecureRandom;
 
 public class CriptoHash {
 
-    public String CriptoSenha(String pSenha, String pSal,int id){
+    public static String Cripto(String pSenha, String pSal,int id){
       try {
         String wSenhaToHash = pSenha;
         String wSal = pSal;

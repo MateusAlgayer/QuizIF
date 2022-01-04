@@ -136,7 +136,7 @@ public class FormLogin extends javax.swing.JFrame{
     Usuario wUsu = QuizIFCliente.ccont.Login(wLogin);
     
     if(wUsu != null){
-      InfoApp.GUsuLogado = wUsu;
+      InfoApp.setGUsuLogado(wUsu);
       
       FormPrincipal fp = new FormPrincipal();
       fp.setVisible(true);

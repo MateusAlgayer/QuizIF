@@ -8,7 +8,8 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 public class QuizIFMail {
-    public static boolean EnviaEmail(String pEmail, int id){
+    
+  public static boolean EnviaEmail(String pEmail,String pCodigo, int id){
         try {
             // Define email e senha do emissor da mensagem
             String myAddress = "jorgejorge1702@outlook.com";
@@ -23,7 +24,7 @@ public class QuizIFMail {
             Session session = getSession(prop, myAddress, myPassword);
 
             String subject = "Teste de e-mail";
-            String bodyMsg = "<p>Testando o envio de e-mail.</p>";
+            String bodyMsg = "<p>Código de teste:"+pCodigo+"</p>";
             Message message = createMessage(session, myAddress, receiver, subject, bodyMsg);
             Transport.send(message);
             Metodos.GravaLog("EML", id, "Mensagem Enviada!");
@@ -32,7 +33,7 @@ public class QuizIFMail {
             Metodos.GravaLogErro("Erro!", id, e.toString());
             return false;
         }
-            }
+    }
 
     private static Properties setProperties(){
         Properties prop = new Properties();

@@ -12,8 +12,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import util.CriptoHash;
 import static util.Metodos.GravaLog;
 import static util.Metodos.GravaLogErro;
+import util.QuizIFMail;
 
 public class TrataAcaoController extends Thread{
   
@@ -42,22 +44,52 @@ public class TrataAcaoController extends Thread{
         GravaLog("CLI", idUnico, "Enviou o comando: '"+wCom+"'");
         
         if(wCom.equalsIgnoreCase("EFETUARLOGIN")){
-          
+          GravaLog("REQ", idUnico, "Requisição de login - INI");
+           
           out.writeObject("ok");
           Usuario user = (Usuario) in.readObject();
           
-          GravaLog("REQ", idUnico, "Requisição de login");
+          GravaLog("REQ", idUnico, "Requisição de login - FIM");
           out.writeObject((new UsuarioDAO()).efetuarLogin(user, idUnico));
         } else if(wCom.equalsIgnoreCase("GETLISTAPROVAS")){
           
+          GravaLog("REQ", idUnico, "Lista de provas - INI");
           out.writeObject("ok");
           
           Usuario usu = (Usuario)in.readObject();
           
           ArrayList<Prova> listaProvas = ((new ProvaDAO()).getListaProva(usu.getCodUsuario(), idUnico));
           
-          GravaLog("REQ", idUnico, "Lista de provas");
+          GravaLog("REQ", idUnico, "Lista de provas - FIM");
           out.writeObject(listaProvas);
+        } else if(wCom.equalsIgnoreCase("VALIDACODIGOEMAIL")){
+          
+          GravaLog("REQ", idUnico, "Validação de email por código - INI");
+          out.writeObject("ok");
+          
+          String email = (String)in.readObject();
+          
+          String sal = CriptoHash.getSalt();
+          
+          out.writeObject(sal);
+          
+          String codigo = "teste"; // trocar para randomizar um número
+          
+          QuizIFMail.EnviaEmail(email, codigo, idUnico);
+          
+          String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
+          
+          String cod = (String)in.readObject();
+          
+          if(cod.equals("")){
+            //não continua
+            out.writeObject(false);
+          } else {
+            //retorna um booleano comparando o codigo gerado com o codigo recebido no email
+            out.writeObject(criptocodigo.equals(cod));
+          }
+          
+          GravaLog("REQ", idUnico, "Validação de email por código - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

@@ -7,6 +7,25 @@ import ModelDominio.Usuario;
 
 public class InfoApp {
   
-  public static Usuario GUsuLogado;
+  private static Usuario GUsuLogado;
+  
+  private static String GCodConfirmacao;
+
+  public static Usuario getGUsuLogado() {
+    return GUsuLogado;
+  }
+
+  public static void setGUsuLogado(Usuario GUsuLogado) {
+    InfoApp.GUsuLogado = GUsuLogado;
+  }
+
+  public static String getGCodConfirmacao() {
+    return GCodConfirmacao;
+  }
+
+  public static void setGCodConfirmacao(String GCodConfirmacao) {
+    InfoApp.GCodConfirmacao = GCodConfirmacao;
+  }
+  
   
 }
