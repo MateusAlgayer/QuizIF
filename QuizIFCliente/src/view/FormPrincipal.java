@@ -163,7 +163,8 @@ public class FormPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
   private void btPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPerfilActionPerformed
-    
+    FormPerfil frmPerfil = new FormPerfil();
+    frmPerfil.setVisible(true);
   }//GEN-LAST:event_btPerfilActionPerformed
 
   private void btAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdminActionPerformed
@@ -171,13 +172,13 @@ public class FormPrincipal extends javax.swing.JFrame {
   }//GEN-LAST:event_btAdminActionPerformed
 
   private void btCriadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCriadorActionPerformed
-    FormManutProvas frm = new FormManutProvas();
-    frm.setVisible(true);
+    FormManutProvas frmProvas = new FormManutProvas();
+    frmProvas.setVisible(true);
   }//GEN-LAST:event_btCriadorActionPerformed
 
   private void MIManutPermissoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MIManutPermissoActionPerformed
-    FormManutPermisso frm = new FormManutPermisso();
-    frm.setVisible(true);
+    FormManutPermisso frmPermisso = new FormManutPermisso();
+    frmPermisso.setVisible(true);
   }//GEN-LAST:event_MIManutPermissoActionPerformed
 
   private void MIManutPerguntasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MIManutPerguntasActionPerformed
@@ -186,8 +187,8 @@ public class FormPrincipal extends javax.swing.JFrame {
   }//GEN-LAST:event_MIManutPerguntasActionPerformed
 
   private void btSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSobreActionPerformed
-    FormSobre frm = new FormSobre();
-    frm.setVisible(true);
+    FormSobre frmSobre = new FormSobre();
+    frmSobre.setVisible(true);
   }//GEN-LAST:event_btSobreActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

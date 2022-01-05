@@ -80,14 +80,22 @@ public class TrataAcaoController extends Thread{
           
           String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
           
-          String cod = (String)in.readObject();
+          boolean continua = true;
           
-          if(cod.equals("")){
-            //não continua
-            out.writeObject(false);
-          } else {
-            //retorna um booleano comparando o codigo gerado com o codigo recebido no email
-            out.writeObject(criptocodigo.equals(cod));
+          while(continua){
+          
+            String cod = (String)in.readObject();
+
+            if(cod.equals("Cancelar")){
+              continua = false;
+              out.writeObject("Cancelei");
+            } else if (criptocodigo.equals(cod)){
+              continua = false;
+              out.writeObject("ok");
+            } else {
+              out.writeObject("");
+            }
+            
           }
           
           GravaLog("REQ", idUnico, "Validação de email por código - FIM");

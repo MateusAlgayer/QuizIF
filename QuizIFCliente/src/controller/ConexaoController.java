@@ -10,10 +10,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import util.CriptoHash;
 import util.Metodos;
 import static util.Metodos.GravaLogErro;
+import static util.Metodos.GravaLog;
 import view.FormConfirmaCodigoEmail;
 
 public class ConexaoController {
@@ -33,12 +33,15 @@ public class ConexaoController {
     
     String msg = "";
     try {
+      GravaLog("LOG", 0, "Efetuar login - INI");
+      
       wOut.writeObject("EFETUARLOGIN");
       
       msg = (String) wIn.readObject();
       wOut.writeObject(pUsu);
       
       wUsu = (Usuario) wIn.readObject();
+      GravaLog("LOG", 0, "Efetuar login - FIM");
       
     } catch (IOException | ClassNotFoundException e) {
       GravaLogErro("ERR", 0, "Erro ao enviar o form de login\n"+e.toString());
@@ -49,6 +52,7 @@ public class ConexaoController {
   
   public ArrayList<Prova> getProvas(){
     
+    GravaLog("GET", 0, "Provas - INI");
     String msg = "";
     try {
       wOut.writeObject("GETLISTAPROVAS");
@@ -58,6 +62,7 @@ public class ConexaoController {
       
       ArrayList<Prova> listaProvas = (ArrayList<Prova>) wIn.readObject();
       
+      GravaLog("GET", 0, "Provas - FIM");
       return listaProvas;
       
     } catch (IOException | ClassNotFoundException e) {
@@ -69,7 +74,7 @@ public class ConexaoController {
   
   public boolean EnviaCodigoEmail(String pEmail){
     String msg = "";
-    
+    GravaLog("VAL", 0, "Codigo email - INI");
     try {
       wOut.writeObject("VALIDACODIGOEMAIL");
       
@@ -88,38 +93,44 @@ public class ConexaoController {
       }
       
       boolean continua = true;
+      boolean rep = false;
+      int cont = 0;
       
       InfoApp.setGCodConfirmacao("");
       //João Jorge - 04/01/2022 :: Criação
       while(continua){
-        FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail();
+        GravaLog("VAL", 0, "Codigo email rep:"+(cont++));
+        
+        FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(rep);
         frm.setModal(true);
         frm.setVisible(true);
 
-          switch (InfoApp.getGCodConfirmacao()) {
-              case "" -> wOut.writeObject("");
-              case "Fechou" -> {
-                  if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? \n O Cadastro será perdido.")){
-                      wOut.writeObject("Cancelar");
-                  }
-              }
-              default -> wOut.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
+        switch (InfoApp.getGCodConfirmacao()) {
+          case "Fechou" -> {
+            if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? \n O Cadastro será perdido.")){
+              wOut.writeObject("Cancelar");
+            } else {
+              wOut.writeObject("");
+            }
           }
+          default -> wOut.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
+        }
         
         msg = (String) wIn.readObject();
         
         switch (msg) {
             case "ok" -> {
-                continua = false;
-                return true;
-              }
-              case "Cancelei" -> {
-                continua = false;
-                return false;
-              }
-              default -> {
-                //Continua no próximo episodio
-              }
+              GravaLog("VAL", 0, "Codigo email - FIM");
+              return true;
+            }
+            case "Cancelei" -> {
+              GravaLog("VAL", 0, "Codigo email - FIM");
+              return false;
+            }
+            default -> {
+              //Continua no próximo episodio
+              rep = true;
+            }
           }
         }
     } catch (IOException | ClassNotFoundException e) {

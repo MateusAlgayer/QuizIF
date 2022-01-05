@@ -12,8 +12,8 @@ public class QuizIFMail {
   public static boolean EnviaEmail(String pEmail,String pCodigo, int id){
         try {
             // Define email e senha do emissor da mensagem
-            String myAddress = "jorgejorge1702@outlook.com";
-            String myPassword = "j1j2s3g4";
+            String myAddress = "QuizIFContato@outlook.com";
+            String myPassword = "zecaurubu123";
             // Define o email do destinatário da mensagem
             String receiver = pEmail;
 
