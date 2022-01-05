@@ -1,4 +1,5 @@
 
+//Mateus Roberto Algayer - 04/01/2022 :: CriaConf e LeConf
 //Mateus Roberto Algayer - 29/12/2021 :: se tiver arquivo debug vai printar no console os logs
 //Mateus Roberto Algayer - 23/11/2021 :: Consistencia e Pedaco 
 
@@ -12,10 +13,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -142,7 +145,7 @@ public class Metodos{
 
       wTela.setVisible(true);
 
-    } catch (Exception e) {
+    } catch (IllegalAccessException | IllegalArgumentException | InstantiationException | NoSuchMethodException | SecurityException | InvocationTargetException e) {
       Erro("Erro!", e.getMessage());
      
     }
@@ -156,21 +159,7 @@ public class Metodos{
       ((JDialog)wTela).setModal(true);
 
       wTela.setVisible(true);
-    } catch (Exception e) {
-      Erro("Erro!", e.getMessage());
-    }
-  }
-  
-  //Mateus Roberto Algayer - 03/12/2021
-  //overload da CriaTelaModal pra pegar parâmetros
-  public static void CriaTelaModal(Class pTela,Object ...pObj){  
-    try{
-      Window wTela = (Window)pTela.getDeclaredConstructor().newInstance();
-      
-      ((JDialog)wTela).setModal(true);
-
-      wTela.setVisible(true);
-    } catch (Exception e) {
+    } catch (IllegalAccessException | IllegalArgumentException | InstantiationException | NoSuchMethodException | SecurityException | InvocationTargetException e) {
       Erro("Erro!", e.getMessage());
     }
   }
@@ -245,12 +234,73 @@ public class Metodos{
       Random random = new Random();
       int codEmail;
           codEmail = 100000+random.nextInt(999999);
-          System.out.println(codEmail);
       return String.valueOf(codEmail);
   }
   
   //João Jorge Stahl Gomes - 04/01/2022
-  public static boolean msgConfirma(String titulo){
-      return JOptionPane.showConfirmDialog(null, titulo, "Aviso!", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+  public static boolean msgConfirma(String pMsg){
+    Object[] opcoes = {"   Sim   ", "   Não   "};
+    return JOptionPane.showOptionDialog(null, 
+                                        pMsg, 
+                                        "Aviso!", 
+                                        JOptionPane.YES_NO_OPTION, 
+                                        JOptionPane.QUESTION_MESSAGE, 
+                                        null, 
+                                        opcoes, 
+                                        opcoes[1]) == JOptionPane.YES_OPTION;
+                                           
+  }
+  
+  //Mateus Roberto Algayer - 04/01/2022
+  public static void CriaConf(String pNomeConf, String pConteudoConf){
+    try {
+      String path = "Cfg/";
+
+      File dir = new File(path);
+
+      if(!dir.exists()){
+          dir.mkdirs();
+      }
+      
+      File arquivo = new File(path+pNomeConf+".config");
+        
+        if(!arquivo.exists()){
+            arquivo.createNewFile();
+        }
+
+        try (BufferedWriter grava = new BufferedWriter(new FileWriter(arquivo))) {
+            grava.write(pConteudoConf);
+            
+            if((new File("QuizIFDebug.debug")).exists()){
+              System.out.println("GRA"+" - Gravado arquivo de configuração: "+pNomeConf);
+            }
+        }
+    } catch (IOException e) {
+      GravaLogErro("CFG", 0, "Erro ao criar o arquivo de configuração\n"+e.toString());
+    }
+  }
+  
+  //Mateus Roberto Algayer - 04/01/2022
+  public static String LeConf(String pNomeConf){
+    try {
+      String path = "Cfg/";
+      
+      File arquivo = new File(path+pNomeConf+".config");
+      
+      if(!arquivo.exists()){
+        return "";
+      }
+      
+      try (Scanner conf = new Scanner(arquivo)) {
+        String conteudo = "";
+        while(conf.hasNext()){
+          conteudo = conf.next();
+        }
+        return conteudo;
+      }
+    } catch (Exception e) {
+      GravaLogErro("CFG", 0, "Erro ao ler o arquivo de configuração\n"+e.toString());
+      return "";
+    }
   }
 }

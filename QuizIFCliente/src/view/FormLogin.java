@@ -1,14 +1,15 @@
 
-//Mateus Roberto Algayer - 29/12/2021 :: Criação
+//Mateus Roberto Algayer - 04/01/2022 :: Implementado botão de Cadastro
 //Staub - 30/12/2021 :: Add sal wLogin
+//Mateus Roberto Algayer - 29/12/2021 :: Criação
 
 package view;
 
 import ModelDominio.Usuario;
 import controller.InfoApp;
-import util.CriptoHash;
 import util.Metodos;
 import static util.Metodos.Consistencia;
+import static util.Metodos.Pedaco;
 
 public class FormLogin extends javax.swing.JFrame{
 
@@ -16,6 +17,15 @@ public class FormLogin extends javax.swing.JFrame{
     initComponents();
     Metodos.GeraConsistenciaCampos(this.rootPane);
     lbAviso.setVisible(false);
+    
+    String usu = Metodos.LeConf("lembraUsu");
+    
+    if(Pedaco(usu, "-", 1).equals("1")){
+      chbLembraUsu.setSelected(true);
+      tfUsu.setText(Pedaco(usu,"-",2));
+    } else {
+      chbLembraUsu.setSelected(false);
+    }
   }
 
   @SuppressWarnings("unchecked")
@@ -30,11 +40,17 @@ public class FormLogin extends javax.swing.JFrame{
     pfSenha = new javax.swing.JPasswordField();
     lbAviso = new javax.swing.JLabel();
     jButton1 = new javax.swing.JButton();
+    chbLembraUsu = new javax.swing.JCheckBox();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("Login");
     setName("Login"); // NOI18N
     setResizable(false);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosing(java.awt.event.WindowEvent evt) {
+        formWindowClosing(evt);
+      }
+    });
 
     jLabel1.setText("Usuário:");
 
@@ -63,6 +79,8 @@ public class FormLogin extends javax.swing.JFrame{
 
     jButton1.setText("Esqueci minha senha");
 
+    chbLembraUsu.setText("Lembrar usuário");
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -81,7 +99,8 @@ public class FormLogin extends javax.swing.JFrame{
                 .addComponent(jLabel2)
                 .addGap(12, 12, 12)
                 .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addComponent(jButton1))
+              .addComponent(jButton1)
+              .addComponent(chbLembraUsu))
             .addGap(12, 12, 12)
             .addComponent(lbAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -112,7 +131,9 @@ public class FormLogin extends javax.swing.JFrame{
           .addComponent(lbAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jButton1)
-        .addGap(37, 37, 37)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(chbLembraUsu)
+        .addGap(11, 11, 11)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(btCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(btLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -147,9 +168,18 @@ public class FormLogin extends javax.swing.JFrame{
     }
   }//GEN-LAST:event_btLogarActionPerformed
 
+  private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    if(chbLembraUsu.isSelected()){
+      Metodos.CriaConf("lembraUsu","1-"+tfUsu.getText());
+    } else {
+      Metodos.CriaConf("lembraUsu","0");
+    }
+  }//GEN-LAST:event_formWindowClosing
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btCadastro;
   private javax.swing.JButton btLogar;
+  private javax.swing.JCheckBox chbLembraUsu;
   private javax.swing.JButton jButton1;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;

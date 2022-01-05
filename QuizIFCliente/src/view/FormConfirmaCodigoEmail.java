@@ -29,14 +29,8 @@ public class FormConfirmaCodigoEmail extends javax.swing.JDialog {
     setResizable(false);
     setType(java.awt.Window.Type.POPUP);
     addWindowListener(new java.awt.event.WindowAdapter() {
-      public void windowClosed(java.awt.event.WindowEvent evt) {
-        formWindowClosed(evt);
-      }
-    });
-
-    tfCodEmail.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        tfCodEmailActionPerformed(evt);
+      public void windowClosing(java.awt.event.WindowEvent evt) {
+        formWindowClosing(evt);
       }
     });
 
@@ -58,52 +52,48 @@ public class FormConfirmaCodigoEmail extends javax.swing.JDialog {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
+        .addGap(24, 24, 24)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jLabel1)
           .addGroup(layout.createSequentialGroup()
-            .addGap(98, 98, 98)
-            .addComponent(jLabel1))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(148, 148, 148)
-            .addComponent(btConfirmaCodEmail))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(112, 112, 112)
+            .addGap(14, 14, 14)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
               .addComponent(lbAviso)
-              .addComponent(tfCodEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
-        .addContainerGap(118, Short.MAX_VALUE))
+              .addComponent(tfCodEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGap(48, 48, 48)
+            .addComponent(btConfirmaCodEmail)
+            .addGap(58, 58, 58)))
+        .addContainerGap(30, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(36, 36, 36)
+        .addGap(35, 35, 35)
         .addComponent(jLabel1)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(lbAviso)
         .addGap(17, 17, 17)
         .addComponent(tfCodEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
         .addComponent(btConfirmaCodEmail)
-        .addGap(53, 53, 53))
+        .addGap(30, 30, 30))
     );
 
     pack();
     setLocationRelativeTo(null);
   }// </editor-fold>//GEN-END:initComponents
 
-    private void tfCodEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCodEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfCodEmailActionPerformed
-
     private void btConfirmaCodEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmaCodEmailActionPerformed
-        String codEmail;
-        codEmail = tfCodEmail.getText(); 
-        InfoApp.setGCodConfirmacao(codEmail);
-        dispose();
+      String codEmail;
+      codEmail = tfCodEmail.getText(); 
+      InfoApp.setGCodConfirmacao(codEmail);
+      dispose();
     }//GEN-LAST:event_btConfirmaCodEmailActionPerformed
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        InfoApp.setGCodConfirmacao("Fechou");
-    }//GEN-LAST:event_formWindowClosed
+  private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    InfoApp.setGCodConfirmacao("Fechou");
+  }//GEN-LAST:event_formWindowClosing
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btConfirmaCodEmail;

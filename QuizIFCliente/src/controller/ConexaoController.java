@@ -132,7 +132,7 @@ public class ConexaoController {
               rep = true;
             }
           }
-        }
+      }
     } catch (IOException | ClassNotFoundException e) {
        GravaLogErro("ERR", 0, "Erro ao enviar código via Email\n"+e.toString());
     }

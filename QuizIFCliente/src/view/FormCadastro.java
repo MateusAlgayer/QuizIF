@@ -25,10 +25,10 @@ public class FormCadastro extends javax.swing.JFrame {
     jLabel2 = new javax.swing.JLabel();
     jLabel3 = new javax.swing.JLabel();
     tfApelido = new javax.swing.JTextField();
-    tfSenha = new javax.swing.JTextField();
-    jLabel4 = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setTitle("Cadastro");
+    setName("Cadastro"); // NOI18N
 
     jLabel1.setText("Email:");
 
@@ -43,8 +43,6 @@ public class FormCadastro extends javax.swing.JFrame {
 
     jLabel3.setText("Apelido:");
 
-    jLabel4.setText("Senha:");
-
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -52,7 +50,6 @@ public class FormCadastro extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addGap(23, 23, 23)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-          .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
           .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
@@ -60,9 +57,7 @@ public class FormCadastro extends javax.swing.JFrame {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
           .addComponent(tfNome, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
           .addComponent(tfEmail)
-          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-            .addComponent(tfSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-            .addComponent(tfApelido, javax.swing.GroupLayout.Alignment.LEADING)))
+          .addComponent(tfApelido))
         .addContainerGap(45, Short.MAX_VALUE))
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -84,11 +79,7 @@ public class FormCadastro extends javax.swing.JFrame {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel3)
           .addComponent(tfApelido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(15, 15, 15)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel4)
-          .addComponent(tfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
         .addComponent(btCadastro)
         .addGap(38, 38, 38))
     );
@@ -105,11 +96,11 @@ public class FormCadastro extends javax.swing.JFrame {
           } 
           
           if(!QuizIFCliente.ccont.EnviaCodigoEmail(tfEmail.getText())){
-             Metodos.Erro(this.getTitle(), "Ocorreu um erro ao verificar o código via email");
+             Metodos.Erro(this.getTitle(), "Cadastro cancelado");
              return;
           } 
           
-          Metodos.GravaLog("CAD", 0, "Cadastro quase completo");
+          System.out.println("ConfirmaSenha");
           
         } else {
             Metodos.Aviso(this.getTitle(), "E-mail inválido!");
@@ -121,10 +112,8 @@ public class FormCadastro extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
-  private javax.swing.JLabel jLabel4;
   private javax.swing.JTextField tfApelido;
   private javax.swing.JTextField tfEmail;
   private javax.swing.JTextField tfNome;
-  private javax.swing.JTextField tfSenha;
   // End of variables declaration//GEN-END:variables
 }
