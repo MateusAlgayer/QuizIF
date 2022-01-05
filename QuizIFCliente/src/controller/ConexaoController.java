@@ -90,6 +90,9 @@ public class ConexaoController {
       if(sal.equals("")){
         Metodos.GravaLog("REQ", 0, "Ocorreu um problema na criptografia");
         return false;
+      } else if(sal.equals("EmailExiste")){
+        Metodos.Erro("Cadastro", "O e-mail informado já está em uso");
+        return false;
       }
       
       boolean continua = true;
@@ -124,6 +127,7 @@ public class ConexaoController {
               return true;
             }
             case "Cancelei" -> {
+              Metodos.Aviso("Cadastro", "Cadastro cancelado com sucesso");
               GravaLog("VAL", 0, "Codigo email - FIM");
               return false;
             }

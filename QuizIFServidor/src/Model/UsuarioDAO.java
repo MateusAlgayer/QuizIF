@@ -66,4 +66,31 @@ public class UsuarioDAO {
     }
     return wUsu;
   }
+  
+  public boolean ExisteEmail(String pEmail, int id){
+    GravaLog("CAD", id, "Testa email único - INI");
+    
+    try {
+      String sql = "SELECT * FROM TABUSU "+
+                   "  WHERE EMAIL = ?";
+      try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        
+        stmt.setString(1, pEmail);
+
+        ResultSet result = stmt.executeQuery();
+
+        if(result.next()){
+          return true;
+        }
+
+        GravaLog("CAD", id, "Testa email único - FIM");
+        return false;
+      } finally {
+        con.close();
+      }
+    } catch (SQLException e) {
+      GravaLogErro("ERR",id, "Erro ao testar email único\n"+e.toString());
+      return true;
+    }
+  }
 }

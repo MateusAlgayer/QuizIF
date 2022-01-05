@@ -70,35 +70,44 @@ public class TrataAcaoController extends Thread{
           
           String email = (String)in.readObject();
           
-          String sal = CriptoHash.getSalt();
+          boolean existe = (new UsuarioDAO()).ExisteEmail(email, idUnico);
           
-          out.writeObject(sal);
-          
-          String codigo = Metodos.GerarCodigo();
-          
-          QuizIFMail.EnviaEmail(email, codigo, idUnico);
-          
-          String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
-          
-          boolean continua = true;
-          
-          while(continua){
-          
-            String cod = (String)in.readObject();
-
-            if(cod.equals("Cancelar")){
-              continua = false;
-              out.writeObject("Cancelei");
-            } else if (criptocodigo.equals(cod)){
-              continua = false;
-              out.writeObject("ok");
-            } else {
-              out.writeObject("");
-            }
+          if(!existe){
             
-          }
+            String sal = CriptoHash.getSalt();
           
-          GravaLog("REQ", idUnico, "Validação de email por código - FIM");
+            out.writeObject(sal);
+
+            String codigo = Metodos.GerarCodigo();
+
+            QuizIFMail.EnviaEmail(email, codigo, idUnico);
+
+            String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
+
+            boolean continua = true;
+
+            while(continua){
+
+              String cod = (String)in.readObject();
+
+              if(cod.equals("Cancelar")){
+                continua = false;
+                out.writeObject("Cancelei");
+              } else if (criptocodigo.equals(cod)){
+                continua = false;
+                out.writeObject("ok");
+              } else {
+                out.writeObject("");
+              }
+
+            }
+
+            GravaLog("REQ", idUnico, "Validação de email por código - FIM");
+          } else {
+            //cai aqui caso o email esteja em uso
+            GravaLog("REQ", idUnico, "Validação de email por código - FIM");
+            out.writeObject("EmailExiste");
+          }
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

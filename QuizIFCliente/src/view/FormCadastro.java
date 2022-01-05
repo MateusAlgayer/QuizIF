@@ -96,7 +96,6 @@ public class FormCadastro extends javax.swing.JFrame {
           } 
           
           if(!QuizIFCliente.ccont.EnviaCodigoEmail(tfEmail.getText())){
-             Metodos.Erro(this.getTitle(), "Cadastro cancelado");
              return;
           } 
           
