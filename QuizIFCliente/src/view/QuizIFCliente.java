@@ -18,7 +18,7 @@ public class QuizIFCliente {
   public static ConexaoController ccont;
   
   public static void main(String[] args) {
-    
+         
     Socket wSocket;
     ObjectOutputStream wOut;
     ObjectInputStream wIn;
