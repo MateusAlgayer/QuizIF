@@ -59,7 +59,9 @@ public class TrataAcaoController extends Thread{
           
           Usuario usu = (Usuario)in.readObject();
           
-          ArrayList<Prova> listaProvas = ((new ProvaDAO()).getListaProva(usu.getCodUsuario(), idUnico));
+          int usuEspec = (int) in.readObject();
+          
+          ArrayList<Prova> listaProvas = ((new ProvaDAO()).getListaProva(usu.getCodUsuario(), idUnico, usuEspec));
           
           GravaLog("REQ", idUnico, "Lista de provas - FIM");
           out.writeObject(listaProvas);

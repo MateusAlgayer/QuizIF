@@ -19,20 +19,30 @@ public class ProvaDAO {
     this.con = Conector.getConnection();
   }
   
-  public ArrayList<Prova> getListaProva(int usu,int Id){
+  public ArrayList<Prova> getListaProva(int usu,int Id, int usuEspec){
     try {
       PreparedStatement stmt;
+      
+      String wCondicao = "";
+      
+      if(usuEspec != 0){
+        wCondicao = " AND (DONO = ? OR NOT FIND_IN_SET(DONO,(SELECT GROUP_CONCAT(CODIGO) FROM TABUSU)))";
+      }
       
       String sql = "SELECT TABPRO.CODIGO, TABPRO.NOME, TABPRO.AREAGERAL, TABARE.NOME AS NOMEAREA, TABPRO.DIFICULDADE,"+ 
                    "(SELECT ROUND((NUMACERTOS*100) DIV NUMPERGUNTAS) FROM TABUSUPRO "+
                    "WHERE PROVA = TABPRO.CODIGO AND USUARIO = ?) AS PONTUACAO "+
                    "FROM TABPRO "+
                    "LEFT OUTER JOIN TABARE ON TABARE.CODIGO = TABPRO.AREAGERAL "+
-                   "WHERE TABPRO.SITUACAO <> 'I'";
+                   "WHERE TABPRO.SITUACAO <> 'I'"+wCondicao;
       
       stmt = con.prepareStatement(sql);
       
       stmt.setInt(1, usu);
+      
+      if(usuEspec != 0){
+        stmt.setInt(2, usuEspec);
+      }
       
       ResultSet result = stmt.executeQuery();
       

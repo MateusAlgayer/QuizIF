@@ -10,9 +10,15 @@ import javax.swing.table.AbstractTableModel;
 public class ProvasTableModel extends AbstractTableModel{
 
   private final ArrayList<Prova> listaProvas;
-
-  public ProvasTableModel(ArrayList<Prova> listaProvas) {
+  private final int numCols;
+  
+  public ProvasTableModel(ArrayList<Prova> listaProvas, boolean principal) {
     this.listaProvas = listaProvas;
+    if(principal){
+      this.numCols = 4;
+    } else {
+      this.numCols = 3;
+    }
   }
   
   @Override
@@ -22,7 +28,7 @@ public class ProvasTableModel extends AbstractTableModel{
 
   @Override
   public int getColumnCount() {
-    return 4;
+    return this.numCols;
   }
 
   @Override

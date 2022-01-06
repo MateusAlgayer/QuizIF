@@ -50,7 +50,7 @@ public class ConexaoController {
     return wUsu;
   }
   
-  public ArrayList<Prova> getProvas(){
+  public ArrayList<Prova> getProvas(int usuEspec){
     
     GravaLog("GET", 0, "Provas - INI");
     String msg = "";
@@ -59,6 +59,7 @@ public class ConexaoController {
       
       msg = (String) wIn.readObject();
       wOut.writeObject(InfoApp.getGUsuLogado());
+      wOut.writeObject(usuEspec);
       
       ArrayList<Prova> listaProvas = (ArrayList<Prova>) wIn.readObject();
       

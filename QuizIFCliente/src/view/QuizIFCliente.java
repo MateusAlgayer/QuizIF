@@ -3,6 +3,7 @@
 
 package view;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import controller.ConexaoController;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,15 +23,9 @@ public class QuizIFCliente {
     ObjectOutputStream wOut;
     ObjectInputStream wIn;
     
-    
-    try {
-      for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-        if ("Windows".equals(info.getName()) || "Linux".equals(info.getName())) {
-          javax.swing.UIManager.setLookAndFeel(info.getClassName());
-          break;
-        }
-      }
-    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+    try {  
+      javax.swing.UIManager.setLookAndFeel(new FlatLightLaf());
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
       GravaLogErro("ERR", 0, "Erro ao definir Look and Feel");
     }
    
