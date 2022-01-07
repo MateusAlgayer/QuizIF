@@ -10,6 +10,26 @@ public class InfoApp {
   private static Usuario GUsuLogado;
   
   private static String GCodConfirmacao;
+  
+  private static String GSenhaCripto;
+  
+  private static String GEmailUsu;
+
+  public static String getGEmailUsu() {
+    return GEmailUsu;
+  }
+
+  public static void setGEmailUsu(String GEmailUsu) {
+    InfoApp.GEmailUsu = GEmailUsu;
+  }
+
+  public static String getGSenhaCripto() {
+    return GSenhaCripto;
+  }
+
+  public static void setGSenhaCripto(String GSenhaCripto) {
+    InfoApp.GSenhaCripto = GSenhaCripto;
+  }
 
   public static Usuario getGUsuLogado() {
     return GUsuLogado;

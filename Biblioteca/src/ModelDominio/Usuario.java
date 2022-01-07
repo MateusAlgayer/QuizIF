@@ -76,22 +76,30 @@ public class Usuario implements Serializable{
         this.email = email;
         this.senha = senha;
     }
-
-    public Usuario(String nomeUsuario, String apelido, String email, String senha) {
+    
+    /**só para cadastro
+     * 
+     * @param nomeUsuario
+     * @param apelido
+     * @param email
+     * @param senha
+     * @param sal 
+     */
+    public Usuario(String nomeUsuario, String apelido, String email, String senha, String sal) {
         this.nomeUsuario = nomeUsuario;
         this.apelido = apelido;
         this.email = email;
         this.senha = senha;
+        this.sal = sal;
     }
 
     public Usuario(int codUsuario) {
         this.codUsuario = codUsuario;
     }
 
-    public Usuario(String email, String senha, String sal) {
+    public Usuario(String email, String senha) {
         this.email = email;
         this.senha = senha;
-        this.sal = sal;
     }
     
     @Override

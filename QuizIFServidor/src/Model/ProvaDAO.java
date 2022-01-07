@@ -23,10 +23,12 @@ public class ProvaDAO {
     try {
       PreparedStatement stmt;
       
-      String wCondicao = "";
+      String wCondicao;
       
       if(usuEspec != 0){
-        wCondicao = " AND (DONO = ? OR NOT FIND_IN_SET(DONO,(SELECT GROUP_CONCAT(CODIGO) FROM TABUSU)))";
+        wCondicao = "WHERE DONO = ? OR NOT FIND_IN_SET(DONO,(SELECT GROUP_CONCAT(CODIGO) FROM TABUSU))";
+      } else {
+        wCondicao = "WHERE TABPRO.SITUACAO <> 'I'";
       }
       
       String sql = "SELECT TABPRO.CODIGO, TABPRO.NOME, TABPRO.AREAGERAL, TABARE.NOME AS NOMEAREA, TABPRO.DIFICULDADE,"+ 
@@ -34,7 +36,7 @@ public class ProvaDAO {
                    "WHERE PROVA = TABPRO.CODIGO AND USUARIO = ?) AS PONTUACAO "+
                    "FROM TABPRO "+
                    "LEFT OUTER JOIN TABARE ON TABARE.CODIGO = TABPRO.AREAGERAL "+
-                   "WHERE TABPRO.SITUACAO <> 'I'"+wCondicao;
+                   wCondicao;
       
       stmt = con.prepareStatement(sql);
       

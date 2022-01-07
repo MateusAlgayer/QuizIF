@@ -46,12 +46,22 @@ public class TrataAcaoController extends Thread{
         
         if(wCom.equalsIgnoreCase("EFETUARLOGIN")){
           GravaLog("REQ", idUnico, "Requisição de login - INI");
-           
+          
           out.writeObject("ok");
-          Usuario user = (Usuario) in.readObject();
+          
+          String email = (String)in.readObject();
+          
+          String sal = (new UsuarioDAO()).getUsuSal(email, idUnico);
+          
+          out.writeObject(sal);
+          
+          if (!sal.isEmpty()){
+            Usuario user = (Usuario) in.readObject();
+            out.writeObject((new UsuarioDAO()).efetuarLogin(user, idUnico));
+          }
           
           GravaLog("REQ", idUnico, "Requisição de login - FIM");
-          out.writeObject((new UsuarioDAO()).efetuarLogin(user, idUnico));
+          
         } else if(wCom.equalsIgnoreCase("GETLISTAPROVAS")){
           
           GravaLog("REQ", idUnico, "Lista de provas - INI");
@@ -110,6 +120,20 @@ public class TrataAcaoController extends Thread{
             GravaLog("REQ", idUnico, "Validação de email por código - FIM");
             out.writeObject("EmailExiste");
           }
+        } else if(wCom.equalsIgnoreCase("CADASTROUSU")){
+          GravaLog("INS", idUnico, "Cadastro de usuário - INI");
+          
+          out.writeObject("ok");
+          
+          Usuario cadUsu = (Usuario)in.readObject();
+          
+          if ((new UsuarioDAO()).CadastroUsu(cadUsu, idUnico) == -1){
+            out.writeObject("ok");
+          } else {
+            out.writeObject("nok");
+          }
+          
+          GravaLog("INS", idUnico, "Cadastro de usuário - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

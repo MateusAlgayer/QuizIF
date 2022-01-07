@@ -12,12 +12,22 @@ public class Administrador extends Criador implements Serializable{
         super(codUsuario, nomeUsuario, apelido, email, senha);
     }
 
-    public Administrador(String nomeUsuario, String apelido, String email, String senha) {
-        super(nomeUsuario, apelido, email, senha);
+    /**
+     * Só para cadastro
+     * 
+     * @param nomeUsuario
+     * @param apelido
+     * @param email
+     * @param senha
+     * @param sal 
+     */
+    
+    public Administrador(String nomeUsuario, String apelido, String email, String senha,String sal) {
+        super(nomeUsuario, apelido, email, senha, sal);
     }
 
-    public Administrador(String email, String senha, String sal) {
-      super(email, senha, sal);
+    public Administrador(String email, String senha) {
+      super(email, senha);
     }
 
     public Administrador(int codUsuario) {

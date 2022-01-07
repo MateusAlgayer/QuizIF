@@ -13,16 +13,25 @@ public class Criador extends Usuario implements Serializable{
         super(codUsuario, nomeUsuario, apelido, email, senha);
     }
 
-    public Criador(String nomeUsuario, String apelido, String email, String senha) {
-        super(nomeUsuario, apelido, email, senha);
+    /**
+     * Só para cadastro
+     * 
+     * @param nomeUsuario
+     * @param apelido
+     * @param email
+     * @param senha
+     * @param sal 
+     */
+    public Criador(String nomeUsuario, String apelido, String email, String senha, String sal) {
+        super(nomeUsuario, apelido, email, senha, sal);
     }
 
     public Criador(int codUsuario) {
         super(codUsuario);
     }
 
-    public Criador(String email, String senha, String sal) {
-      super(email, senha, sal);
+    public Criador(String email, String senha) {
+      super(email, senha);
     }
 
     @Override

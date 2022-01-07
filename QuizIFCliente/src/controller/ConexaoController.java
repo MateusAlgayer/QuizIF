@@ -38,6 +38,16 @@ public class ConexaoController {
       wOut.writeObject("EFETUARLOGIN");
       
       msg = (String) wIn.readObject();
+      wOut.writeObject(pUsu.getEmail());
+      
+      String sal = (String)wIn.readObject();
+      
+      if(sal.isEmpty()){
+        return null;
+      }
+      
+      pUsu.setSenha(CriptoHash.Cripto(pUsu.getSenha(), sal, 0));
+      
       wOut.writeObject(pUsu);
       
       wUsu = (Usuario) wIn.readObject();
@@ -142,5 +152,28 @@ public class ConexaoController {
        GravaLogErro("ERR", 0, "Erro ao enviar código via Email\n"+e.toString());
     }
     return false;
+  }
+  
+  public boolean CadastraUsu(Usuario usu){
+    GravaLog("INS", 0, "Usuário - INI");
+    
+    String msg = "";
+    try {
+      wOut.writeObject("CADASTROUSU");
+      
+      msg = (String) wIn.readObject();
+      
+      wOut.writeObject(usu);
+      
+      GravaLog("INS", 0, "Usuário - FIM");
+
+      msg = (String)wIn.readObject();
+      
+      return msg.equals("ok");
+    } catch (IOException | ClassNotFoundException e) {
+      GravaLogErro("ERR", 0, "Erro ao cadastrar usuário\n"+e.toString());
+    }
+    
+    return false; 
   }
 }

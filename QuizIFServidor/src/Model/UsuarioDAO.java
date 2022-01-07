@@ -93,4 +93,77 @@ public class UsuarioDAO {
       return true;
     }
   }
+  
+  public int CadastroUsu(Usuario usu,int id){
+    PreparedStatement stmt = null;
+    
+    try {
+      try {
+        con.setAutoCommit(false);
+
+        String sql = "INSERT INTO TABUSU (NOME, APELIDO, EMAIL, SENHA, SAL) VALUES (?,?,?,?,?)";
+
+        stmt = con.prepareStatement(sql);
+
+        stmt.setString(1, usu.getNomeUsuario());
+        stmt.setString(2, usu.getApelido());
+        stmt.setString(3, usu.getEmail());
+        stmt.setString(4, usu.getSenha());
+        stmt.setString(5, usu.getSal());
+
+        stmt.execute();
+
+        con.commit();
+
+        } catch (SQLException e) {
+          try {
+            con.rollback();
+            GravaLogErro("ERR", id, "Erro ao cadastrar usuário\n"+e.toString());
+          } catch (SQLException ex) {
+            GravaLogErro("ERR", id, "Erro ao cadastrar usuário\n"+ex.toString());
+          }
+          return e.getErrorCode();
+        }
+
+        return -1;
+      } finally {
+        try {
+          if(stmt != null){
+            stmt.close();
+          }
+          con.setAutoCommit(true);
+          con.close();
+        } catch (SQLException ex) {
+          GravaLogErro("ERR", id, "Erro ao cadastrar usuário\n"+ex.toString());
+        }
+      }
+  }  
+  
+  public String getUsuSal(String email, int id){
+    GravaLog("SAL", id, "Pega sal usuário - INI");
+    
+    try {
+      String sql = "SELECT SAL FROM TABUSU "+
+                   "  WHERE EMAIL = ?";
+      try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        
+        stmt.setString(1, email);
+
+        ResultSet result = stmt.executeQuery();
+        
+        GravaLog("SAL", id, "Pega sal usuário - FIM");
+        
+        if(result.next()){
+          return result.getString("SAL");
+        }
+
+        return "";
+      } finally {
+        con.close();
+      }
+    } catch (SQLException e) {
+      GravaLogErro("ERR",id, "Erro ao recuperar o sal do usuário\n"+e.toString());
+      return "";
+    }
+  }
 }
