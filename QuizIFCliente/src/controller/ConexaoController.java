@@ -3,6 +3,7 @@
 
 package controller;
 
+import ModelDominio.Comum;
 import ModelDominio.Prova;
 import ModelDominio.Usuario;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import util.Metodos;
 import static util.Metodos.GravaLogErro;
 import static util.Metodos.GravaLog;
 import view.FormConfirmaCodigoEmail;
+import view.FormConfirmaSenha;
 
 public class ConexaoController {
     
@@ -175,5 +177,97 @@ public class ConexaoController {
     }
     
     return false; 
+  }
+  
+  public boolean EnviaRedefSenha(String email){
+    String msg;
+    try {
+      GravaLog("UPD", 0, "Redefinir senha - INI");
+      
+      wOut.writeObject("REDEFINESENHA");
+      
+      msg = (String) wIn.readObject();
+      wOut.writeObject(email);
+      
+      String sal = (String)wIn.readObject();
+      
+      if(sal.isEmpty()){
+        return false;
+      }
+      
+      boolean continua = true; 
+      int cont = 0;
+      boolean rep = false;
+      
+      while(continua){
+        GravaLog("VAL", 0, "Codigo email rep:"+(cont++));
+        
+        FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(rep);
+        frm.setModal(true);
+        frm.setVisible(true);
+
+        switch (InfoApp.getGCodConfirmacao()) {
+          case "Fechou" -> {
+            if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? \n A redefinição de senha será perdida.")){
+              wOut.writeObject("Cancelar");
+            } else {
+              wOut.writeObject("");
+            }
+          }
+          default -> wOut.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
+        }
+        
+        msg = (String) wIn.readObject();
+        
+        switch (msg) {
+            case "ok" -> {
+              GravaLog("UPD", 0, "Redefinir senha - email - FIM");
+              continua = false;
+            }
+            case "Cancelei" -> {
+              Metodos.Aviso("Redefinir senha", "Redefinir senha cancelado");
+              GravaLog("UPD", 0, "Redefinir senha - email - FIM");
+              return false;
+            }
+            default -> {
+              rep = true;
+            }
+          }
+      }
+      
+      continua = true;
+      cont = 0;
+      
+      InfoApp.setGSenhaCripto("");
+      GravaLog("UPD", 0, "Redefinir senha - senha - INI");
+      
+      while(continua){
+        GravaLog("UPD", 0, "Codigo email rep:"+(cont++));
+        
+        FormConfirmaSenha frm = new FormConfirmaSenha(sal);
+        frm.setModal(true);
+        frm.setVisible(true);
+
+        if(InfoApp.getGSenhaCripto().equals("Fechou")) {
+          if(Metodos.msgConfirma("Deseja interromper o processo de redefinição de senha?")){
+            wOut.writeObject(null);
+            return false;
+          } 
+        } else if(!InfoApp.getGSenhaCripto().equals("")){
+          //altera
+          Comum novoUsu = new Comum(email, InfoApp.getGSenhaCripto());
+          
+          wOut.writeObject(novoUsu);
+          
+          GravaLog("CAD", 0, "Cadastro - FIM");
+          return ((String)wIn.readObject()).equals("ok");
+        }
+      }
+      
+    }catch(IOException | ClassNotFoundException e){
+      GravaLogErro("ERR", 0, "Erro ao redefinir a senha\n"+e.toString());
+      return false;
+    }
+    return false;
   }
 }

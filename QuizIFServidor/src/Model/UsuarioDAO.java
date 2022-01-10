@@ -166,4 +166,46 @@ public class UsuarioDAO {
       return "";
     }
   }
+  
+  public int RedefSenha(Usuario usu, int id){
+    PreparedStatement stmt = null;
+    
+    try {
+      try {
+        con.setAutoCommit(false);
+
+        String sql = "UPDATE TABUSU SET SENHA = ? WHERE EMAIL = ?";
+
+        stmt = con.prepareStatement(sql);
+        
+        stmt.setString(1, usu.getSenha());
+        stmt.setString(2, usu.getEmail());
+
+        stmt.execute();
+
+        con.commit();
+
+        } catch (SQLException e) {
+          try {
+            con.rollback();
+            GravaLogErro("ERR", id, "Erro redefinir senha\n"+e.toString());
+          } catch (SQLException ex) {
+            GravaLogErro("ERR", id, "Erro redefinir senha\n"+ex.toString());
+          }
+          return e.getErrorCode();
+        }
+
+        return -1;
+      } finally {
+        try {
+          if(stmt != null){
+            stmt.close();
+          }
+          con.setAutoCommit(true);
+          con.close();
+        } catch (SQLException ex) {
+          GravaLogErro("ERR", id, "Erro redefinir senha\n"+ex.toString());
+        }
+      }
+  }
 }

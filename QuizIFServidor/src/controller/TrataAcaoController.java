@@ -134,6 +134,63 @@ public class TrataAcaoController extends Thread{
           }
           
           GravaLog("INS", idUnico, "Cadastro de usuário - FIM");
+        } else if(wCom.equalsIgnoreCase("REDEFINESENHA")){
+          GravaLog("UPD", idUnico, "Redefinir senha - email - INI");
+          
+          out.writeObject("ok");
+          
+          String email = (String)in.readObject();
+          
+          String sal = (new UsuarioDAO()).getUsuSal(email, idUnico);
+          
+          out.writeObject(sal);
+          
+          if (!sal.isEmpty()){
+            String codigo = Metodos.GerarCodigo();
+
+            QuizIFMail.EnviaEmail(email, codigo, idUnico);
+
+            String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
+
+            boolean continua = true;
+            boolean cancelado = false;
+            
+            while(continua){
+
+              String cod = (String)in.readObject();
+
+              if(cod.equals("Cancelar")){
+                out.writeObject("Cancelei");
+                cancelado = true;
+                continua = false;
+              } else if (criptocodigo.equals(cod)){
+                continua = false;
+                out.writeObject("ok");
+              } else {
+                out.writeObject("");
+              }
+
+            }
+            
+            if(!cancelado){
+              GravaLog("UPD", idUnico, "Redefinir senha - email - FIM");
+          
+              GravaLog("UPD", idUnico, "Redefinir senha - senha - INI");
+
+              Usuario usu = (Usuario)in.readObject();
+
+              if (usu != null){
+                if((new UsuarioDAO()).RedefSenha(usu, idUnico) == -1){
+                  out.writeObject("ok");
+                } else {
+                  out.writeObject("nok");
+                }
+                
+              }
+
+              GravaLog("UPD", idUnico, "Redefinir senha - senha - FIM");
+            }
+          }
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

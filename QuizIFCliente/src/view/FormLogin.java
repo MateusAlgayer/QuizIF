@@ -20,9 +20,9 @@ public class FormLogin extends javax.swing.JFrame{
     
     String usu = Metodos.LeConf("lembraUsu");
     
-    if(Pedaco(usu, "-", 1).equals("1")){
+    if(Pedaco(usu, "Ɵ", 1).equals("1")){
       chbLembraUsu.setSelected(true);
-      tfUsu.setText(Pedaco(usu,"-",2));
+      tfUsu.setText(Pedaco(usu,"Ɵ",2));
     } else {
       chbLembraUsu.setSelected(false);
     }
@@ -39,7 +39,7 @@ public class FormLogin extends javax.swing.JFrame{
     tfUsu = new javax.swing.JTextField();
     pfSenha = new javax.swing.JPasswordField();
     lbAviso = new javax.swing.JLabel();
-    jButton1 = new javax.swing.JButton();
+    btRedefSenha = new javax.swing.JButton();
     chbLembraUsu = new javax.swing.JCheckBox();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -73,16 +73,16 @@ public class FormLogin extends javax.swing.JFrame{
     tfUsu.setName("Usuário"); // NOI18N
 
     pfSenha.setName("Senha"); // NOI18N
-    pfSenha.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        pfSenhaActionPerformed(evt);
-      }
-    });
 
     lbAviso.setForeground(new java.awt.Color(255, 51, 51));
     lbAviso.setText("Usuário ou senha Incorretos!");
 
-    jButton1.setText("Esqueci minha senha");
+    btRedefSenha.setText("Esqueci minha senha");
+    btRedefSenha.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btRedefSenhaActionPerformed(evt);
+      }
+    });
 
     chbLembraUsu.setText("Lembrar usuário");
 
@@ -96,7 +96,7 @@ public class FormLogin extends javax.swing.JFrame{
             .addGap(78, 78, 78)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
               .addComponent(chbLembraUsu)
-              .addComponent(jButton1)))
+              .addComponent(btRedefSenha)))
           .addGroup(layout.createSequentialGroup()
             .addGap(26, 26, 26)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -130,7 +130,7 @@ public class FormLogin extends javax.swing.JFrame{
           .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(lbAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(1, 1, 1)
-        .addComponent(jButton1)
+        .addComponent(btRedefSenha)
         .addGap(5, 5, 5)
         .addComponent(chbLembraUsu)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -173,21 +173,29 @@ public class FormLogin extends javax.swing.JFrame{
 
   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
     if(chbLembraUsu.isSelected()){
-      Metodos.CriaConf("lembraUsu","1-"+tfUsu.getText());
+      Metodos.CriaConf("lembraUsu","1Ɵ"+tfUsu.getText());
     } else {
       Metodos.CriaConf("lembraUsu","0");
     }
   }//GEN-LAST:event_formWindowClosing
 
-  private void pfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfSenhaActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_pfSenhaActionPerformed
+  private void btRedefSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRedefSenhaActionPerformed
+    if (!Consistencia(true, tfUsu)) return;
+    
+    Metodos.GravaLog("UPD", 0, "Redefinição de senha - INI");
+    
+    if(QuizIFCliente.ccont.EnviaRedefSenha(tfUsu.getText())){
+      Metodos.Sucesso(this.getTitle(), "Senha alterada com sucesso!!");
+    } 
+    
+    Metodos.GravaLog("UPD", 0, "Redefinição de senha - FIM");
+  }//GEN-LAST:event_btRedefSenhaActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btCadastro;
   private javax.swing.JButton btLogar;
+  private javax.swing.JButton btRedefSenha;
   private javax.swing.JCheckBox chbLembraUsu;
-  private javax.swing.JButton jButton1;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel lbAviso;
