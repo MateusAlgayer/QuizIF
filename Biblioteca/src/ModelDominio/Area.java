@@ -46,6 +46,4 @@ public class Area implements Serializable{
     public String toString() {
         return "Area{" + "codArea=" + codArea + ", nome=" + nome + '}';
     }
-    
-    
 }

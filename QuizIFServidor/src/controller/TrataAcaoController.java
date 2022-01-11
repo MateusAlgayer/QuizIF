@@ -3,6 +3,7 @@
 
 package controller;
 
+import Model.AreaDAO;
 import Model.ProvaDAO;
 import Model.UsuarioDAO;
 import ModelDominio.Prova;
@@ -191,6 +192,14 @@ public class TrataAcaoController extends Thread{
               GravaLog("UPD", idUnico, "Redefinir senha - senha - FIM");
             }
           }
+        } else if(wCom.equalsIgnoreCase("GETLISTAAREA")){
+          GravaLog("REQ", idUnico, "Lista areas - INI");
+          
+          out.writeObject("ok");
+          
+          out.writeObject((new AreaDAO()).getListaArea(idUnico));
+          
+          GravaLog("REQ", idUnico, "Lista areas - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

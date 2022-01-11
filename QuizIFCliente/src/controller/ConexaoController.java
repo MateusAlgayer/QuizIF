@@ -6,6 +6,7 @@ package controller;
 import ModelDominio.Comum;
 import ModelDominio.Prova;
 import ModelDominio.Usuario;
+import ModelDominio.Area;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -269,5 +270,27 @@ public class ConexaoController {
       return false;
     }
     return false;
+  }
+
+  public ArrayList<Area> getListaArea() {
+    ArrayList<Area> lista = null;
+    
+    GravaLog("GET", 0, "Areas - INI");
+    String msg = "";
+    try {
+      wOut.writeObject("GETLISTAAREA");
+      
+      msg = (String) wIn.readObject();
+      
+      lista = (ArrayList<Area>) wIn.readObject();
+      
+      GravaLog("GET", 0, "Areas - FIM");
+      return lista;
+      
+    } catch (IOException | ClassNotFoundException e) {
+      GravaLogErro("ERR", 0, "Erro na requisição de areas\n"+e.toString());
+    }
+    
+    return null; 
   }
 }

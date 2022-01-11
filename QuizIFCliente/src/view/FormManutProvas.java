@@ -10,6 +10,8 @@ import view.tablemodel.ProvasTableModel;
 
 public class FormManutProvas extends javax.swing.JFrame {
 
+  ProvasTableModel GProvaModel;
+  
   public FormManutProvas() {
     initComponents();
     AtualizaTabela();
@@ -72,8 +74,18 @@ public class FormManutProvas extends javax.swing.JFrame {
     );
 
     btNovo.setText("Novo");
+    btNovo.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btNovoActionPerformed(evt);
+      }
+    });
 
     btEditar.setText("Editar");
+    btEditar.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btEditarActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -115,6 +127,22 @@ public class FormManutProvas extends javax.swing.JFrame {
     dispose();
   }//GEN-LAST:event_btVoltarActionPerformed
 
+  private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
+    FormProvas frmProvas = new FormProvas(null);
+    frmProvas.setModal(true);
+    frmProvas.setVisible(true);
+    
+    AtualizaTabela();
+  }//GEN-LAST:event_btNovoActionPerformed
+
+  private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
+    FormProvas frmProvas = new FormProvas(GProvaModel.getProva(tbProvas.getSelectedRow()));
+    frmProvas.setModal(true);
+    frmProvas.setVisible(true);
+    
+    AtualizaTabela();
+  }//GEN-LAST:event_btEditarActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btEditar;
   private javax.swing.JButton btNovo;
@@ -129,7 +157,9 @@ public class FormManutProvas extends javax.swing.JFrame {
     ArrayList<Prova> listaProvas = QuizIFCliente.ccont.getProvas(InfoApp.getGUsuLogado().getCodUsuario());
     
     if(listaProvas != null){
-      tbProvas.setModel(new ProvasTableModel(listaProvas, false));
+      GProvaModel = new ProvasTableModel(listaProvas, false);
+      
+      tbProvas.setModel(GProvaModel);
     }
   }
 
