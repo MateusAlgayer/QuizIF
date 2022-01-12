@@ -18,6 +18,7 @@ import util.Metodos;
 import static util.Metodos.GravaLog;
 import static util.Metodos.GravaLogErro;
 import util.QuizIFMail;
+import ModelDominio.Pergunta;
 
 public class TrataAcaoController extends Thread{
   
@@ -200,6 +201,25 @@ public class TrataAcaoController extends Thread{
           out.writeObject((new AreaDAO()).getListaArea(idUnico));
           
           GravaLog("REQ", idUnico, "Lista areas - FIM");
+        } else if(wCom.equalsIgnoreCase("GETPERGUNTASPROVA")){
+          GravaLog("REQ", idUnico, "Lista perguntas prova - INI");
+          
+          out.writeObject("ok");
+          
+          int numProva = (int)in.readObject();
+          
+          ArrayList<Pergunta> listaDis = new ArrayList<>();
+          ArrayList<Pergunta> listaSel = new ArrayList<>();
+          
+          (new ProvaDAO()).getPerguntasProva(numProva, listaDis, listaSel, idUnico);
+          
+          out.writeObject(listaDis);
+          
+          if (numProva != 0){
+          out.writeObject(listaSel);
+          }
+          
+          GravaLog("REQ", idUnico, "Lista perguntas prova - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

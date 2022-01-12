@@ -3,7 +3,9 @@
  */
 package ModelDominio;
 
-public class Pergunta {
+import java.io.Serializable;
+
+public class Pergunta implements Serializable{
     private static final long serialVersionUID = 123456789L;
     
     private int codPergunta;
@@ -13,6 +15,13 @@ public class Pergunta {
     private String alternativas;
     private int correta;
     private char situacao;
+
+    public Pergunta(int codPergunta, Area area, String pergunta, int dificuldade) {
+      this.codPergunta = codPergunta;
+      this.area = area;
+      this.pergunta = pergunta;
+      this.dificuldade = dificuldade;
+    }
 
     public int getCodPergunta() {
         return codPergunta;
@@ -94,11 +103,18 @@ public class Pergunta {
     public Pergunta(int codPergunta) {
         this.codPergunta = codPergunta;
     }
+    
+    public String getDificuldadeLiteral(){
+      return switch(this.dificuldade){
+        case 1 -> "Fácil";
+        case 2 -> "Médio";
+        case 3 -> "Difícil";
+        default -> "";
+      };
+    }
 
     @Override
     public String toString() {
         return "Pergunta{" + "codPergunta=" + codPergunta + ", area=" + area + ", pergunta=" + pergunta + ", dificuldade=" + dificuldade + ", alternativas=" + alternativas + ", correta=" + correta + ", situacao=" + situacao + '}';
-    }
-    
-    
+    } 
 }

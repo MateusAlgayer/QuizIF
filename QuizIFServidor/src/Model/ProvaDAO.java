@@ -4,6 +4,7 @@
 package Model;
 
 import ModelDominio.Area;
+import ModelDominio.Pergunta;
 import ModelDominio.Prova;
 import factory.Conector;
 import java.sql.*;
@@ -68,5 +69,67 @@ public class ProvaDAO {
       GravaLogErro("ERR",Id, e.toString());
     }
     return null;
+  }
+
+  public void getPerguntasProva(int numProva, ArrayList<Pergunta> listaDis, ArrayList<Pergunta> listaSel, int Id) {
+     try {
+      PreparedStatement stmt;
+      
+      String wCondicao = "";
+      
+      if(numProva != 0){
+        wCondicao = "AND TABPER.CODIGO NOT IN (SELECT TABPROPER.PERGUNTA FROM TABPROPER WHERE TABPROPER.PROVA = ?)";
+      }
+      
+      String sql = "SELECT TABPER.CODIGO, TABPER.PERGUNTA,TABARE.CODIGO AS CODAREA, TABARE.NOME, TABPER.DIFICULDADE  FROM TABPER "+
+                   "LEFT OUTER JOIN TABARE ON TABPER.CODAREA = TABARE.CODIGO "+
+                   "WHERE TABPER.SITUACAO <> 'I' "+
+                   wCondicao;
+      
+      stmt = con.prepareStatement(sql); 
+      
+      if(numProva != 0){
+        stmt.setInt(1, numProva);
+      }
+      
+      ResultSet result = stmt.executeQuery();
+      
+      while(result.next()){
+        listaDis.add(new Pergunta(result.getInt("CODIGO"),
+                                  new Area(result.getInt("CODAREA"),result.getString("NOME")),
+                                  result.getString("PERGUNTA"),
+                                  result.getInt("DIFICULDADE")));
+      }
+      
+      if(numProva != 0){
+      
+        sql = "SELECT TABPER.CODIGO, TABPER.PERGUNTA,TABARE.CODIGO AS CODAREA, TABARE.NOME, TABPER.DIFICULDADE "+
+              "FROM TABPROPER "+
+              " LEFT OUTER JOIN TABPER ON TABPROPER.PERGUNTA = TABPER.CODIGO "+
+              " LEFT OUTER JOIN TABARE ON TABPER.CODAREA = TABARE.CODIGO "+
+              "WHERE TABPROPER.PROVA = ? "; 
+      
+        stmt = con.prepareStatement(sql); 
+
+        stmt.setInt(1, numProva);
+
+        result = stmt.executeQuery();
+
+        while(result.next()){
+          listaSel.add( new Pergunta(result.getInt("CODIGO"),
+                                     new Area(result.getInt("CODAREA"),result.getString("NOME")),
+                                     result.getString("PERGUNTA"),
+                                     result.getInt("DIFICULDADE")));
+        }
+      
+      }
+
+      stmt.close();
+      con.close();
+      
+      GravaLog("SQL", Id, "Recuperou um objeto do banco: PerguntasProva");
+    } catch (SQLException e) {
+      GravaLogErro("ERR",Id, e.toString());
+    }
   }
 }

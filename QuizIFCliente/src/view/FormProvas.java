@@ -8,9 +8,17 @@ import ModelDominio.Area;
 import java.util.ArrayList;
 import util.Metodos;
 import view.util.ComboBoxArea;
+import ModelDominio.Pergunta;
+import view.tablemodel.PerguntasTableModel;
 
-public class FormProvas extends javax.swing.JDialog {
+public class FormProvas extends javax.swing.JFrame {
 
+  PerguntasTableModel GPerguntasDisModel;
+  PerguntasTableModel GPerguntasSelModel;
+  
+  boolean GModoEdicao;
+  Prova GProva;
+  
   public FormProvas(Prova prova) {
     initComponents();
     Metodos.GeraConsistenciaCampos(rootPane);
@@ -20,9 +28,12 @@ public class FormProvas extends javax.swing.JDialog {
     if(prova != null){
       AtualizaTabelas(prova.getCodigoProva());
       btExcluir.setVisible(true);
+      GModoEdicao = true;
+      GProva = prova;
     } else {
       AtualizaTabelas(0);
       btExcluir.setVisible(false);
+      GModoEdicao = false;
     }
   }
 
@@ -39,8 +50,10 @@ public class FormProvas extends javax.swing.JDialog {
     btAdicionar = new javax.swing.JButton();
     jScrollPane4 = new javax.swing.JScrollPane();
     tbPerDis = new javax.swing.JTable();
-    jLabel5 = new javax.swing.JLabel();
-    jLabel6 = new javax.swing.JLabel();
+    lbPerguntasSel = new javax.swing.JLabel();
+    lbPerguntasDisp = new javax.swing.JLabel();
+    jLabel7 = new javax.swing.JLabel();
+    jLabel8 = new javax.swing.JLabel();
     btSair = new javax.swing.JButton();
     jLabel2 = new javax.swing.JLabel();
     cbArea = new javax.swing.JComboBox<>();
@@ -61,7 +74,7 @@ public class FormProvas extends javax.swing.JDialog {
 
     tfNome.setName("Nome"); // NOI18N
 
-    jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Perguntas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+    jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
     tbPerSel.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
@@ -74,11 +87,23 @@ public class FormProvas extends javax.swing.JDialog {
         "Title 1", "Title 2", "Title 3", "Title 4"
       }
     ));
+    tbPerSel.setShowGrid(true);
+    tbPerSel.getTableHeader().setReorderingAllowed(false);
     jScrollPane3.setViewportView(tbPerSel);
 
     btRemover.setText("Remover");
+    btRemover.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btRemoverActionPerformed(evt);
+      }
+    });
 
     btAdicionar.setText("Adicionar");
+    btAdicionar.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btAdicionarActionPerformed(evt);
+      }
+    });
 
     tbPerDis.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
@@ -91,55 +116,66 @@ public class FormProvas extends javax.swing.JDialog {
         "Title 1", "Title 2", "Title 3", "Title 4"
       }
     ));
+    tbPerDis.setShowHorizontalLines(true);
+    tbPerDis.setShowVerticalLines(true);
+    tbPerDis.getTableHeader().setReorderingAllowed(false);
     jScrollPane4.setViewportView(tbPerDis);
 
-    jLabel5.setText("0/30");
+    lbPerguntasSel.setText("0/30");
 
-    jLabel6.setText("contPer");
+    lbPerguntasDisp.setText("contPer");
+
+    jLabel7.setText("Perguntas selecionadas:");
+
+    jLabel8.setText("Perguntas disponíveis:");
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel5))
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(16, 16, 16)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-        .addGap(18, 18, 18)
+        .addContainerGap()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(btRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(btAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(18, 18, 18)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+              .addComponent(lbPerguntasSel)
+              .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lbPerguntasDisp))
+              .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                  .addComponent(btAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                  .addComponent(btRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addComponent(jLabel6)))
-        .addGap(16, 16, 16))
+            .addComponent(jLabel7)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel8)))
+        .addContainerGap())
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(jLabel7)
+          .addComponent(jLabel8))
+        .addGap(4, 4, 4)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(62, 62, 62)
             .addComponent(btAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(100, 100, 100)
-            .addComponent(btRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(20, 20, 20)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-              .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+            .addGap(33, 33, 33)
+            .addComponent(btRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))
+          .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+          .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         .addGap(4, 4, 4)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel5)
-          .addComponent(jLabel6))
+          .addComponent(lbPerguntasSel)
+          .addComponent(lbPerguntasDisp))
         .addContainerGap())
     );
 
@@ -162,6 +198,11 @@ public class FormProvas extends javax.swing.JDialog {
     btSalvar.setText("Salvar");
 
     btExcluir.setText("Excluir");
+    btExcluir.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btExcluirActionPerformed(evt);
+      }
+    });
 
     jLabel4.setText("Dificuldade:");
 
@@ -173,7 +214,7 @@ public class FormProvas extends javax.swing.JDialog {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(23, 23, 23)
+        .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -192,7 +233,7 @@ public class FormProvas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbSituação, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
               .addComponent(tfNome))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
             .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -201,7 +242,7 @@ public class FormProvas extends javax.swing.JDialog {
                 .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(15, 15, 15))))
+            .addContainerGap())))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,8 +267,7 @@ public class FormProvas extends javax.swing.JDialog {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
           .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-          .addComponent(btExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addGap(19, 19, 19))
+          .addComponent(btExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
     );
 
     pack();
@@ -237,6 +277,37 @@ public class FormProvas extends javax.swing.JDialog {
   private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
     dispose();
   }//GEN-LAST:event_btSairActionPerformed
+
+  private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
+    if(tbPerSel.getSelectedRow() == -1)
+      return;
+    
+    Pergunta p = GPerguntasSelModel.getPergunta(tbPerSel.getSelectedRow());
+    
+    GPerguntasSelModel.removePergunta(tbPerSel.getSelectedRow());
+    
+    GPerguntasDisModel.adicionaPergunta(p);
+    
+    AtualizaInfo();
+  }//GEN-LAST:event_btRemoverActionPerformed
+
+  private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
+    if(tbPerDis.getSelectedRow() == -1)
+      return;
+     
+    Pergunta p = GPerguntasDisModel.getPergunta(tbPerDis.getSelectedRow());
+    
+    GPerguntasDisModel.removePergunta(tbPerDis.getSelectedRow());
+    
+    GPerguntasSelModel.adicionaPergunta(p);
+    
+    AtualizaInfo();
+  }//GEN-LAST:event_btAdicionarActionPerformed
+
+  private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+    if(Metodos.msgConfirma("Tem certeza que deseja excluir a prova '"+GProva.getNomeProva()+"'?"))
+      QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva());
+  }//GEN-LAST:event_btExcluirActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btAdicionar;
@@ -251,23 +322,49 @@ public class FormProvas extends javax.swing.JDialog {
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
-  private javax.swing.JLabel jLabel5;
-  private javax.swing.JLabel jLabel6;
+  private javax.swing.JLabel jLabel7;
+  private javax.swing.JLabel jLabel8;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JScrollPane jScrollPane3;
   private javax.swing.JScrollPane jScrollPane4;
+  private javax.swing.JLabel lbPerguntasDisp;
+  private javax.swing.JLabel lbPerguntasSel;
   private javax.swing.JTable tbPerDis;
   private javax.swing.JTable tbPerSel;
   private javax.swing.JTextField tfNome;
   // End of variables declaration//GEN-END:variables
 
   private void AtualizaTabelas(int numProva) {
-    // fazer
+    
+    ArrayList<Pergunta> listaSel = new ArrayList<>();
+    ArrayList<Pergunta> listaDis = new ArrayList<>();
+    
+    QuizIFCliente.ccont.getPerguntasProva(listaSel, listaDis, numProva);
+    
+    GPerguntasDisModel = new PerguntasTableModel(listaDis);
+    tbPerDis.setModel(GPerguntasDisModel);
+    
+    GPerguntasSelModel = new PerguntasTableModel(listaSel);
+    tbPerSel.setModel(GPerguntasSelModel);
+    
+    AtualizaInfo();
   }
 
   private void attComboArea() {
     ArrayList<Area> listaCombo = QuizIFCliente.ccont.getListaArea();
     
     ComboBoxArea.preencheComboboxArea(-1, cbArea, listaCombo, false);
+  }
+  
+  public void AtualizaInfo(){
+    
+    GPerguntasDisModel.ordenaLista();
+    GPerguntasDisModel.fireTableDataChanged();
+    
+    GPerguntasSelModel.ordenaLista();
+    GPerguntasSelModel.fireTableDataChanged();
+    
+    lbPerguntasDisp.setText(Integer.toString(GPerguntasDisModel.getRowCount()));
+    lbPerguntasSel.setText(Integer.toString(GPerguntasSelModel.getRowCount())+"/30");
   }
 }

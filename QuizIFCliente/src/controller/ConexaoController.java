@@ -7,6 +7,7 @@ import ModelDominio.Comum;
 import ModelDominio.Prova;
 import ModelDominio.Usuario;
 import ModelDominio.Area;
+import ModelDominio.Pergunta;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -292,5 +293,32 @@ public class ConexaoController {
     }
     
     return null; 
+  }
+
+  public void getPerguntasProva(ArrayList<Pergunta> listaSel, ArrayList<Pergunta> listaDis, int numProva) {
+    GravaLog("GET", 0,"Perguntas de uma prova - INI");
+    String msg = "";
+    try{
+      wOut.writeObject("GETPERGUNTASPROVA");
+      
+      msg = (String) wIn.readObject();
+      
+      wOut.writeObject(numProva);
+      
+      listaDis.addAll((ArrayList<Pergunta>) wIn.readObject());
+      
+      if(numProva != 0){
+        listaSel.addAll((ArrayList<Pergunta>) wIn.readObject());
+      }
+      
+    } catch(IOException | ClassNotFoundException e){
+      GravaLogErro("ERR", 0, "Erro na requisição de perguntas de uma prova\n"+e.toString());
+    }
+    
+    GravaLog("GET", 0,"Perguntas de uma prova - FIM");
+  }
+
+  public void ExcluirProva(int codigoProva) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 }

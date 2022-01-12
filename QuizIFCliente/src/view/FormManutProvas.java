@@ -129,18 +129,16 @@ public class FormManutProvas extends javax.swing.JFrame {
 
   private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
     FormProvas frmProvas = new FormProvas(null);
-    frmProvas.setModal(true);
     frmProvas.setVisible(true);
-    
-    AtualizaTabela();
   }//GEN-LAST:event_btNovoActionPerformed
 
   private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-    FormProvas frmProvas = new FormProvas(GProvaModel.getProva(tbProvas.getSelectedRow()));
-    frmProvas.setModal(true);
-    frmProvas.setVisible(true);
+    if(tbProvas.getSelectedRow() == -1)
+      return;
     
-    AtualizaTabela();
+    
+    FormProvas frmProvas = new FormProvas(GProvaModel.getProva(tbProvas.getSelectedRow()));
+    frmProvas.setVisible(true);
   }//GEN-LAST:event_btEditarActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
