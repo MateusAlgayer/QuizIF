@@ -649,8 +649,10 @@ public class QuizIFMail {
             Message message = createMessage(session, myAddress, receiver, subject, bodyMsg);
             Transport.send(message);
             Metodos.GravaLog("EML", id, "Mensagem Enviada!");
+            System.out.println(pCodigo);
             return true;
         } catch (MessagingException e) {
+            System.out.println(pCodigo);
             Metodos.GravaLogErro("Erro!", id, e.toString());
             return false;
         }

@@ -3,14 +3,20 @@
 
 package view;
 
+import ModelDominio.Usuario;
 import controller.InfoApp;
+import util.CriptoHash;
+import util.Metodos;
+import static util.Metodos.GravaLog;
 
-public class FormPerfil extends javax.swing.JFrame {
+public class FormPerfil extends javax.swing.JDialog {
 
   public FormPerfil() {
     initComponents();
     
     tfNomeUsu.setText(InfoApp.getGUsuLogado().getNomeUsuario());
+    tfApelidoUsu.setText(InfoApp.getGUsuLogado().getApelido());
+    tfEmailUsu.setText(InfoApp.getGUsuLogado().getEmail());
   }
   
     
@@ -25,6 +31,8 @@ public class FormPerfil extends javax.swing.JFrame {
         tfNomeUsu = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         tfApelidoUsu = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tfEmailUsu = new javax.swing.JTextField();
         btAltSenha = new javax.swing.JButton();
         btExcluirConta = new javax.swing.JButton();
 
@@ -54,6 +62,12 @@ public class FormPerfil extends javax.swing.JFrame {
 
         jLabel2.setText("Apelido:");
 
+        tfApelidoUsu.setEditable(false);
+
+        jLabel3.setText("Email:");
+
+        tfEmailUsu.setEditable(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -61,12 +75,14 @@ public class FormPerfil extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tfNomeUsu)
-                    .addComponent(tfApelidoUsu, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
+                    .addComponent(tfApelidoUsu, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                    .addComponent(tfEmailUsu))
                 .addContainerGap(154, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -80,12 +96,21 @@ public class FormPerfil extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(tfApelidoUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(tfEmailUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btAltSenha.setText("Alterar Senha");
 
         btExcluirConta.setText("Excluir Conta");
+        btExcluirConta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirContaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,14 +157,35 @@ public class FormPerfil extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tfNomeUsuActionPerformed
 
+    private void btExcluirContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirContaActionPerformed
+        GravaLog("DelUsu", 0, "Excluir Usuário - INI");
+        System.out.println("Email:" + tfEmailUsu.getText());
+        
+        if(!Metodos.msgConfirma("Tem certeza que deseja excluir o usuário? ")){
+            return;
+        }
+        if(QuizIFCliente.ccont.EnviaDelUsu(tfEmailUsu.getText())){
+          System.out.println("chegou aqui");
+          Usuario usu = new Usuario(InfoApp.getGUsuLogado().getCodUsuario());
+          boolean ok = QuizIFCliente.ccont.DeletaUsu(usu);
+          if(ok){
+            GravaLog("DelUsu", 0, "Excluir Usuário - FIM");
+            Metodos.Sucesso(this.getTitle(), "Usuário deletado!! \n A aplicação será encerrada!");
+            System.exit(0);
+          }
+        }
+    }//GEN-LAST:event_btExcluirContaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAltSenha;
     private javax.swing.JButton btExcluirConta;
     private javax.swing.JButton btVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField tfApelidoUsu;
+    private javax.swing.JTextField tfEmailUsu;
     private javax.swing.JTextField tfNomeUsu;
     // End of variables declaration//GEN-END:variables
 }

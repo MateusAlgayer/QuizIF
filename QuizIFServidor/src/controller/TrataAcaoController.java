@@ -122,6 +122,58 @@ public class TrataAcaoController extends Thread{
             GravaLog("REQ", idUnico, "Validação de email por código - FIM");
             out.writeObject("EmailExiste");
           }
+        } else if(wCom.equalsIgnoreCase("VALIDACODIGOEMAILDELUSU")){
+          
+          GravaLog("REQ", idUnico, "Validação de email por código - INI");
+          out.writeObject("ok");
+          
+          String email = (String)in.readObject();
+          
+          boolean existe = (new UsuarioDAO()).ExisteEmail(email, idUnico);
+          
+          if(existe){
+            
+            String sal = CriptoHash.getSalt();
+          
+            out.writeObject(sal);
+
+            String codigo = Metodos.GerarCodigo();
+
+            QuizIFMail.EnviaEmail(email, codigo, idUnico);
+
+            String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
+
+            boolean continua = true;
+
+            while(continua){
+
+              String cod = (String)in.readObject();
+
+              if(cod.equals("Cancelar")){
+                continua = false;
+                out.writeObject("Cancelei");
+              } else if (criptocodigo.equals(cod)){
+                continua = false;
+                out.writeObject("ok");
+              } else {
+                out.writeObject("");
+              }
+
+            }
+
+            GravaLog("REQ", idUnico, "Validação de email por código - FIM");
+          }
+        } else if(wCom.equalsIgnoreCase("Deletar Usuário")){
+            out.writeObject("ok");
+            Usuario usu = (Usuario) in.readObject();
+            //chamar o método de deletar do UsuarioDao
+            UsuarioDAO usudao = new UsuarioDAO();
+            int result = usudao.deletausu(usu, idUnico);
+            if (result == -1){
+                out.writeObject("ok");
+            }else {
+                out.writeObject("nok");
+            }
         } else if(wCom.equalsIgnoreCase("CADASTROUSU")){
           GravaLog("INS", idUnico, "Cadastro de usuário - INI");
           

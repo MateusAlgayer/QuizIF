@@ -19,6 +19,7 @@ import static util.Metodos.GravaLogErro;
 import static util.Metodos.GravaLog;
 import view.FormConfirmaCodigoEmail;
 import view.FormConfirmaSenha;
+import view.FormPerfil;
 
 public class ConexaoController {
     
@@ -320,5 +321,87 @@ public class ConexaoController {
 
   public void ExcluirProva(int codigoProva) {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+  
+  public boolean EnviaDelUsu(String email){
+    String msg;
+    try {
+      GravaLog("DEL", 0, "Deletar Usuario - INI");
+      
+      wOut.writeObject("VALIDACODIGOEMAILDELUSU");
+      
+      msg = (String) wIn.readObject();
+      wOut.writeObject(email);
+      
+      String sal = (String)wIn.readObject();
+      
+      if(sal.isEmpty()){
+        return false;
+      }
+      
+      boolean continua = true; 
+      int cont = 0;
+      boolean rep = false;
+      
+      while(continua){
+        GravaLog("DEL", 0, "Codigo email rep:"+(cont++));
+        
+        FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(rep);
+        frm.setModal(true);
+        frm.setVisible(true);
+
+        switch (InfoApp.getGCodConfirmacao()) {
+          case "Fechou" -> {
+            if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? ")){
+              wOut.writeObject("Cancelar");
+            } else {
+              wOut.writeObject("");
+            }
+          }
+          default -> wOut.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
+        }
+        
+        msg = (String) wIn.readObject();
+        
+        switch (msg) {
+            case "ok" -> {
+              GravaLog("DEL", 0, "Excluir Usuario - email - FIM");
+              continua = false;
+            }
+            case "Cancelei" -> {
+              Metodos.Aviso("Deletar Usuario", "Deletar Usuario cancelado");
+              GravaLog("DEL", 0, "Deletar Usuario - email - FIM");
+              return false;
+            }
+            default -> {
+              rep = true;
+            }
+          }
+      }
+      
+      return true;
+      
+    }catch(IOException | ClassNotFoundException e){
+      GravaLogErro("ERR", 0, "Erro ao deletar o usuário\n"+e.toString());
+      return false;
+    }
+  }
+  
+  public boolean DeletaUsu (Usuario usu){
+      String msg;
+        try {
+            wOut.writeObject("Deletar Usuário");
+            msg = (String) wIn.readObject();
+            wOut.writeObject(usu);
+            msg = (String) wIn.readObject();
+            if(msg.equals("ok")){
+                return true;
+            }else {
+                return false;
+            }
+        } catch (Exception e) {
+            GravaLog("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
+            return false;
+        }
   }
 }

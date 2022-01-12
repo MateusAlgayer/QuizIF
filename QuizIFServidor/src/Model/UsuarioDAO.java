@@ -208,4 +208,51 @@ public class UsuarioDAO {
         }
       }
   }
+  
+    //método que faz o DELETE na tabela de marcas
+    //quando o int for -1 é porque deu tudo certo
+    //quando o int fo != de -1 é porque deu ERRO ao deletar
+    public int deletausu(Usuario usu, int id) {
+        PreparedStatement stmt = null;
+
+        try {
+
+            try {
+                //eu vou controlar as transações com o banco
+                //por isso o AutoCommit é FALSE
+                con.setAutoCommit(false);
+
+                String sql = "delete from tabusu"
+                        + " where CODIGO = ?";
+                stmt = con.prepareStatement(sql);
+
+                //trocar os parâmetros
+                stmt.setInt(1, usu.getCodUsuario());
+                //executar o script
+                stmt.execute();
+                //efetivar a transação
+                con.commit(); // <- IMPORTANTE: efetiva a transação
+                return -1; //Deu tudo certo!
+            } catch (SQLException e) {
+                try {
+                    GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
+                    con.rollback(); // <- cancela a transação se deu erro
+                    return e.getErrorCode();
+                } catch (SQLException ex) {
+                    GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + ex.toString());
+                    return ex.getErrorCode();
+                }
+            }
+        } finally {
+            try {
+                //entra aqui independente se deu erro ou não
+                stmt.close();
+                con.setAutoCommit(true);
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace(); 
+                return e.getErrorCode();
+            }
+        }
+    }
 }
