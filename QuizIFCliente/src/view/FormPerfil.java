@@ -159,7 +159,6 @@ public class FormPerfil extends javax.swing.JDialog {
 
     private void btExcluirContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirContaActionPerformed
         GravaLog("DelUsu", 0, "Excluir Usuário - INI");
-        System.out.println("Email:" + tfEmailUsu.getText());
         
         if(!Metodos.msgConfirma("Tem certeza que deseja excluir o usuário? ")){
             return;
