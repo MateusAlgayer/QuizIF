@@ -18,6 +18,7 @@ public class FormProvas extends javax.swing.JFrame {
   
   boolean GModoEdicao;
   Prova GProva;
+  ArrayList<Area> GListaCombo;
   
   public FormProvas(Prova prova) {
     initComponents();
@@ -58,7 +59,7 @@ public class FormProvas extends javax.swing.JFrame {
     jLabel2 = new javax.swing.JLabel();
     cbArea = new javax.swing.JComboBox<>();
     jLabel3 = new javax.swing.JLabel();
-    cbSituação = new javax.swing.JComboBox<>();
+    cbSituacao = new javax.swing.JComboBox<>();
     btSalvar = new javax.swing.JButton();
     btExcluir = new javax.swing.JButton();
     jLabel4 = new javax.swing.JLabel();
@@ -68,7 +69,6 @@ public class FormProvas extends javax.swing.JFrame {
     setTitle("Manutenção de provas");
     setMinimumSize(new java.awt.Dimension(800, 600));
     setName("Manutenção de provas"); // NOI18N
-    setPreferredSize(new java.awt.Dimension(800, 600));
 
     jLabel1.setText("Nome:");
 
@@ -192,10 +192,15 @@ public class FormProvas extends javax.swing.JFrame {
 
     jLabel3.setText("Situação:");
 
-    cbSituação.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
-    cbSituação.setName("Situação"); // NOI18N
+    cbSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
+    cbSituacao.setName("Situação"); // NOI18N
 
     btSalvar.setText("Salvar");
+    btSalvar.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btSalvarActionPerformed(evt);
+      }
+    });
 
     btExcluir.setText("Excluir");
     btExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -231,7 +236,7 @@ public class FormProvas extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbSituação, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
               .addComponent(tfNome))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
             .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -261,7 +266,7 @@ public class FormProvas extends javax.swing.JFrame {
               .addComponent(jLabel4)
               .addComponent(cbDificuldade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(jLabel3)
-              .addComponent(cbSituação, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+              .addComponent(cbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -309,6 +314,37 @@ public class FormProvas extends javax.swing.JFrame {
       QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva());
   }//GEN-LAST:event_btExcluirActionPerformed
 
+  private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+    if (!Metodos.Consistencia(true, tfNome)) 
+      return;
+    
+    if (GPerguntasSelModel.getRowCount() == 0){
+      Metodos.Aviso(this.getTitle(), "Ao menos uma pergunta deve ser selecionada!");
+      return;
+    }
+    
+    Area a = GListaCombo.get(cbArea.getSelectedIndex());
+    
+    //pega só o número da dificuldade pra guardar no banco
+    int dif = Integer.parseInt(Metodos.Pedaco((String)cbDificuldade.getSelectedItem(), " - ", 1));
+    
+    char sit = ((String)cbSituacao.getSelectedItem()).charAt(0);
+
+    Prova p = new Prova(tfNome.getText(), a, dif, sit);
+
+    ArrayList<Pergunta> cadPerSel = new ArrayList<>();
+    
+    for(int x = 0;x < GPerguntasSelModel.getRowCount();x++)
+      cadPerSel.add(GPerguntasSelModel.getPergunta(x));
+    
+    
+    if(QuizIFCliente.ccont.InserirProva(p, cadPerSel)){
+      Metodos.Sucesso(this.getTitle(), "Prova gravada com sucesso!");
+    } else {
+      Metodos.Erro(this.getTitle(),"Erro ao cadastrar a prova!");
+    }
+  }//GEN-LAST:event_btSalvarActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btAdicionar;
   private javax.swing.JButton btExcluir;
@@ -317,7 +353,7 @@ public class FormProvas extends javax.swing.JFrame {
   private javax.swing.JButton btSalvar;
   private javax.swing.JComboBox<String> cbArea;
   private javax.swing.JComboBox<String> cbDificuldade;
-  private javax.swing.JComboBox<String> cbSituação;
+  private javax.swing.JComboBox<String> cbSituacao;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
@@ -351,9 +387,9 @@ public class FormProvas extends javax.swing.JFrame {
   }
 
   private void attComboArea() {
-    ArrayList<Area> listaCombo = QuizIFCliente.ccont.getListaArea();
+    GListaCombo = QuizIFCliente.ccont.getListaArea();
     
-    ComboBoxArea.preencheComboboxArea(-1, cbArea, listaCombo, false);
+    ComboBoxArea.preencheComboboxArea(-1, cbArea, GListaCombo, false);
   }
   
   public void AtualizaInfo(){

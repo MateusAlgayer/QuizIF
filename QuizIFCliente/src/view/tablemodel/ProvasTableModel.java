@@ -38,7 +38,7 @@ public class ProvasTableModel extends AbstractTableModel{
     return switch(columnIndex){
       case 0 -> p.getNomeProva();
       case 1 -> p.getAreaGeral().getNome();
-      case 2 -> p.getDificuldade();
+      case 2 -> p.getDificuldadeLiteral();
       case 3 -> p.getPontuacao();
       default -> "";
     };

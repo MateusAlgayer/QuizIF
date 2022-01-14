@@ -12,7 +12,7 @@ public class Prova implements Serializable{
     private int codigoProva;
     private String nomeProva;
     private Area areaGeral;
-    private String dificuldade;
+    private int dificuldade;
     private char situacao;
     private int pontuacao;
 
@@ -40,11 +40,11 @@ public class Prova implements Serializable{
         this.areaGeral = areaGeral;
     }
 
-    public String getDificuldade() {
+    public int getDificuldade() {
         return dificuldade;
     }
 
-    public void setDificuludade(String dificuldade) {
+    public void setDificuludade(int dificuldade) {
         this.dificuldade = dificuldade;
     }
 
@@ -64,7 +64,7 @@ public class Prova implements Serializable{
     this.pontuacao = pontuacao;
   }
 
-    public Prova(int codigoProva, String nomeProva, Area areaGeral, String dificuldade, char situacao, int pontuacao) {
+    public Prova(int codigoProva, String nomeProva, Area areaGeral, int dificuldade, char situacao, int pontuacao) {
         this.codigoProva = codigoProva;
         this.nomeProva = nomeProva;
         this.areaGeral = areaGeral;
@@ -73,7 +73,7 @@ public class Prova implements Serializable{
         this.pontuacao = pontuacao; //Mateus Roberto Algayer - 29/12/2021
     }
 
-    public Prova(String nomeProva, Area areaGeral, String dificuldade, char situacao) {
+    public Prova(String nomeProva, Area areaGeral, int dificuldade, char situacao) {
         this.nomeProva = nomeProva;
         this.areaGeral = areaGeral;
         this.dificuldade = dificuldade;
@@ -84,12 +84,21 @@ public class Prova implements Serializable{
         this.codigoProva = codigoProva;
     }
     
-    public Prova(int codigoProva, String nomeProva, Area areaGeral, String dificuldade, int pontuacao) {
+    public Prova(int codigoProva, String nomeProva, Area areaGeral, int dificuldade, int pontuacao) {
       this.codigoProva = codigoProva;
       this.nomeProva = nomeProva;
       this.areaGeral = areaGeral;
       this.dificuldade = dificuldade;
       this.pontuacao = pontuacao;
+    }
+    
+    public String getDificuldadeLiteral(){
+      return switch(this.dificuldade){
+        case 1 -> "Fácil";
+        case 2 -> "Médio";
+        case 3 -> "Difícil";
+        default -> "";
+      };
     }
     
     @Override

@@ -19,18 +19,17 @@ import static util.Metodos.GravaLogErro;
 import static util.Metodos.GravaLog;
 import view.FormConfirmaCodigoEmail;
 import view.FormConfirmaSenha;
-import view.FormPerfil;
 
 public class ConexaoController {
     
-  private final Socket wSocket;
-  private final ObjectOutputStream wOut;
-  private final ObjectInputStream wIn;
+  private final Socket socket;
+  private final ObjectOutputStream out;
+  private final ObjectInputStream in;
 
   public ConexaoController(Socket pSocket, ObjectOutputStream pOut, ObjectInputStream pIn) {
-    this.wSocket = pSocket;
-    this.wOut = pOut;
-    this.wIn = pIn;
+    this.socket = pSocket;
+    this.out = pOut;
+    this.in = pIn;
   }
   
   public Usuario Login(Usuario pUsu){
@@ -40,12 +39,12 @@ public class ConexaoController {
     try {
       GravaLog("LOG", 0, "Efetuar login - INI");
       
-      wOut.writeObject("EFETUARLOGIN");
+      out.writeObject("EFETUARLOGIN");
       
-      msg = (String) wIn.readObject();
-      wOut.writeObject(pUsu.getEmail());
+      msg = (String) in.readObject();
+      out.writeObject(pUsu.getEmail());
       
-      String sal = (String)wIn.readObject();
+      String sal = (String)in.readObject();
       
       if(sal.isEmpty()){
         return null;
@@ -53,9 +52,9 @@ public class ConexaoController {
       
       pUsu.setSenha(CriptoHash.Cripto(pUsu.getSenha(), sal, 0));
       
-      wOut.writeObject(pUsu);
+      out.writeObject(pUsu);
       
-      wUsu = (Usuario) wIn.readObject();
+      wUsu = (Usuario) in.readObject();
       GravaLog("LOG", 0, "Efetuar login - FIM");
       
     } catch (IOException | ClassNotFoundException e) {
@@ -70,13 +69,13 @@ public class ConexaoController {
     GravaLog("GET", 0, "Provas - INI");
     String msg = "";
     try {
-      wOut.writeObject("GETLISTAPROVAS");
+      out.writeObject("GETLISTAPROVAS");
       
-      msg = (String) wIn.readObject();
-      wOut.writeObject(InfoApp.getGUsuLogado());
-      wOut.writeObject(usuEspec);
+      msg = (String) in.readObject();
+      out.writeObject(InfoApp.getGUsuLogado());
+      out.writeObject(usuEspec);
       
-      ArrayList<Prova> listaProvas = (ArrayList<Prova>) wIn.readObject();
+      ArrayList<Prova> listaProvas = (ArrayList<Prova>) in.readObject();
       
       GravaLog("GET", 0, "Provas - FIM");
       return listaProvas;
@@ -92,16 +91,16 @@ public class ConexaoController {
     String msg = "";
     GravaLog("VAL", 0, "Codigo email - INI");
     try {
-      wOut.writeObject("VALIDACODIGOEMAIL");
+      out.writeObject("VALIDACODIGOEMAIL");
       
-      if (!((String)wIn.readObject()).equals("ok")){
+      if (!((String)in.readObject()).equals("ok")){
         Metodos.GravaLog("REQ", 0, "Ocorreu um erro ao requisitar codigo via email");
         return false;
       }
       
-      wOut.writeObject(pEmail);
+      out.writeObject(pEmail);
       
-      String sal = (String) wIn.readObject();
+      String sal = (String) in.readObject();
       
       if(sal.equals("")){
         Metodos.GravaLog("REQ", 0, "Ocorreu um problema na criptografia");
@@ -127,15 +126,15 @@ public class ConexaoController {
         switch (InfoApp.getGCodConfirmacao()) {
           case "Fechou" -> {
             if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? \n O Cadastro será perdido.")){
-              wOut.writeObject("Cancelar");
+              out.writeObject("Cancelar");
             } else {
-              wOut.writeObject("");
+              out.writeObject("");
             }
           }
-          default -> wOut.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
+          default -> out.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
         }
         
-        msg = (String) wIn.readObject();
+        msg = (String) in.readObject();
         
         switch (msg) {
             case "ok" -> {
@@ -164,15 +163,15 @@ public class ConexaoController {
     
     String msg = "";
     try {
-      wOut.writeObject("CADASTROUSU");
+      out.writeObject("CADASTROUSU");
       
-      msg = (String) wIn.readObject();
+      msg = (String) in.readObject();
       
-      wOut.writeObject(usu);
+      out.writeObject(usu);
       
       GravaLog("INS", 0, "Usuário - FIM");
 
-      msg = (String)wIn.readObject();
+      msg = (String)in.readObject();
       
       return msg.equals("ok");
     } catch (IOException | ClassNotFoundException e) {
@@ -187,12 +186,12 @@ public class ConexaoController {
     try {
       GravaLog("UPD", 0, "Redefinir senha - INI");
       
-      wOut.writeObject("REDEFINESENHA");
+      out.writeObject("REDEFINESENHA");
       
-      msg = (String) wIn.readObject();
-      wOut.writeObject(email);
+      msg = (String) in.readObject();
+      out.writeObject(email);
       
-      String sal = (String)wIn.readObject();
+      String sal = (String)in.readObject();
       
       if(sal.isEmpty()){
         return false;
@@ -212,15 +211,15 @@ public class ConexaoController {
         switch (InfoApp.getGCodConfirmacao()) {
           case "Fechou" -> {
             if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? \n A redefinição de senha será perdida.")){
-              wOut.writeObject("Cancelar");
+              out.writeObject("Cancelar");
             } else {
-              wOut.writeObject("");
+              out.writeObject("");
             }
           }
-          default -> wOut.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
+          default -> out.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
         }
         
-        msg = (String) wIn.readObject();
+        msg = (String) in.readObject();
         
         switch (msg) {
             case "ok" -> {
@@ -253,17 +252,17 @@ public class ConexaoController {
 
         if(InfoApp.getGSenhaCripto().equals("Fechou")) {
           if(Metodos.msgConfirma("Deseja interromper o processo de redefinição de senha?")){
-            wOut.writeObject(null);
+            out.writeObject(null);
             return false;
           } 
         } else if(!InfoApp.getGSenhaCripto().equals("")){
           //altera
           Comum novoUsu = new Comum(email, InfoApp.getGSenhaCripto());
           
-          wOut.writeObject(novoUsu);
+          out.writeObject(novoUsu);
           
           GravaLog("CAD", 0, "Cadastro - FIM");
-          return ((String)wIn.readObject()).equals("ok");
+          return ((String)in.readObject()).equals("ok");
         }
       }
       
@@ -280,11 +279,11 @@ public class ConexaoController {
     GravaLog("GET", 0, "Areas - INI");
     String msg = "";
     try {
-      wOut.writeObject("GETLISTAAREA");
+      out.writeObject("GETLISTAAREA");
       
-      msg = (String) wIn.readObject();
+      msg = (String) in.readObject();
       
-      lista = (ArrayList<Area>) wIn.readObject();
+      lista = (ArrayList<Area>) in.readObject();
       
       GravaLog("GET", 0, "Areas - FIM");
       return lista;
@@ -293,23 +292,23 @@ public class ConexaoController {
       GravaLogErro("ERR", 0, "Erro na requisição de areas\n"+e.toString());
     }
     
-    return null; 
+    return lista; 
   }
 
   public void getPerguntasProva(ArrayList<Pergunta> listaSel, ArrayList<Pergunta> listaDis, int numProva) {
     GravaLog("GET", 0,"Perguntas de uma prova - INI");
     String msg = "";
     try{
-      wOut.writeObject("GETPERGUNTASPROVA");
+      out.writeObject("GETPERGUNTASPROVA");
       
-      msg = (String) wIn.readObject();
+      msg = (String) in.readObject();
       
-      wOut.writeObject(numProva);
+      out.writeObject(numProva);
       
-      listaDis.addAll((ArrayList<Pergunta>) wIn.readObject());
+      listaDis.addAll((ArrayList<Pergunta>) in.readObject());
       
       if(numProva != 0){
-        listaSel.addAll((ArrayList<Pergunta>) wIn.readObject());
+        listaSel.addAll((ArrayList<Pergunta>) in.readObject());
       }
       
     } catch(IOException | ClassNotFoundException e){
@@ -328,12 +327,12 @@ public class ConexaoController {
     try {
       GravaLog("DEL", 0, "Deletar Usuario - INI");
       
-      wOut.writeObject("VALIDACODIGOEMAILDELUSU");
+      out.writeObject("VALIDACODIGOEMAILDELUSU");
       
-      msg = (String) wIn.readObject();
-      wOut.writeObject(email);
+      msg = (String) in.readObject();
+      out.writeObject(email);
       
-      String sal = (String)wIn.readObject();
+      String sal = (String)in.readObject();
       
       if(sal.isEmpty()){
         return false;
@@ -353,15 +352,15 @@ public class ConexaoController {
         switch (InfoApp.getGCodConfirmacao()) {
           case "Fechou" -> {
             if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? ")){
-              wOut.writeObject("Cancelar");
+              out.writeObject("Cancelar");
             } else {
-              wOut.writeObject("");
+              out.writeObject("");
             }
           }
-          default -> wOut.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
+          default -> out.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
         }
         
-        msg = (String) wIn.readObject();
+        msg = (String) in.readObject();
         
         switch (msg) {
             case "ok" -> {
@@ -390,18 +389,35 @@ public class ConexaoController {
   public boolean DeletaUsu (Usuario usu){
       String msg;
         try {
-            wOut.writeObject("Deletar Usuário");
-            msg = (String) wIn.readObject();
-            wOut.writeObject(usu);
-            msg = (String) wIn.readObject();
-            if(msg.equals("ok")){
-                return true;
-            }else {
-                return false;
-            }
-        } catch (Exception e) {
+            out.writeObject("Deletar Usuário");
+            msg = (String) in.readObject();
+            out.writeObject(usu);
+            msg = (String) in.readObject();
+          
+            return msg.equals("ok");
+        } catch (IOException | ClassNotFoundException e) {
             GravaLog("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
             return false;
         }
+  }
+
+  public boolean InserirProva(Prova p,ArrayList<Pergunta> perSel) {
+    GravaLog("CAD", 0,"Cadastro de prova - INI");
+    String msg = "";
+    try{
+      out.writeObject("INSERIRPROVA");
+      
+      msg = (String) in.readObject();
+      
+      out.writeObject(p);
+      out.writeObject(perSel);
+          
+      GravaLog("CAD", 0,"Cadastro de prova - FIM");
+      return ((String)in.readObject()).equals("ok");
+      
+    } catch(IOException | ClassNotFoundException e){
+      GravaLogErro("ERR", 0, "Erro no cadastro de provas\n"+e.toString());
+      return false;
+    }
   }
 }

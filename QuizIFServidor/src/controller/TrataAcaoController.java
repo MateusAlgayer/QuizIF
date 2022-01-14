@@ -26,12 +26,14 @@ public class TrataAcaoController extends Thread{
   private final ObjectInputStream in;
   private final Socket cliente;
   private final int idUnico;
+  private int usuLogado;
 
   public TrataAcaoController(ObjectOutputStream pOut, ObjectInputStream pIn, Socket pCliente, int pIdUnico) {
     this.out = pOut;
     this.in = pIn;
     this.cliente = pCliente;
     this.idUnico = pIdUnico;
+    this.usuLogado = 0;
   }
 
   @Override
@@ -59,7 +61,14 @@ public class TrataAcaoController extends Thread{
           
           if (!sal.isEmpty()){
             Usuario user = (Usuario) in.readObject();
-            out.writeObject((new UsuarioDAO()).efetuarLogin(user, idUnico));
+            
+            Usuario usu = (new UsuarioDAO()).efetuarLogin(user, idUnico);
+            out.writeObject(usu);
+            
+            if (usu != null){
+              this.usuLogado = usu.getCodUsuario();
+              GravaLog("USU", idUnico, "Usuário conectado: "+usuLogado);
+            }
           }
           
           GravaLog("REQ", idUnico, "Requisição de login - FIM");
@@ -272,6 +281,25 @@ public class TrataAcaoController extends Thread{
           }
           
           GravaLog("REQ", idUnico, "Lista perguntas prova - FIM");
+        } else if(wCom.equalsIgnoreCase("INSERIRPROVA")){
+          GravaLog("CAD", idUnico, "Cadastro de prova - INI");
+          
+          out.writeObject("ok");
+          
+          Prova p = (Prova)in.readObject();
+          
+          ArrayList<Pergunta> cadPerSel = (ArrayList<Pergunta>) in.readObject();
+          
+          int status = (new ProvaDAO()).InserirProva(p, cadPerSel, idUnico, usuLogado);
+          
+          if(status == -1){
+            out.writeObject("ok");
+          } else {
+            out.writeObject("nok");
+            GravaLogErro("ERR", idUnico, "Erro ao inserir a prova\nStatus erro:"+status);
+          }
+          
+          GravaLog("CAD", idUnico, "Cadastro de prova - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");
