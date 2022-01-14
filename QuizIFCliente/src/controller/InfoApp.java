@@ -46,6 +46,4 @@ public class InfoApp {
   public static void setGCodConfirmacao(String GCodConfirmacao) {
     InfoApp.GCodConfirmacao = GCodConfirmacao;
   }
-  
-  
 }

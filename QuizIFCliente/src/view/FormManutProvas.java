@@ -26,6 +26,7 @@ public class FormManutProvas extends javax.swing.JFrame {
     jScrollPane1 = new javax.swing.JScrollPane();
     tbProvas = new javax.swing.JTable();
     btNovo = new javax.swing.JButton();
+    btAtualizar = new javax.swing.JButton();
     btEditar = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -80,6 +81,13 @@ public class FormManutProvas extends javax.swing.JFrame {
       }
     });
 
+    btAtualizar.setText("Atualizar");
+    btAtualizar.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btAtualizarActionPerformed(evt);
+      }
+    });
+
     btEditar.setText("Editar");
     btEditar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,15 +103,15 @@ public class FormManutProvas extends javax.swing.JFrame {
         .addGap(0, 0, Short.MAX_VALUE)
         .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        .addGap(22, 22, 22)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(28, 28, 28)
+            .addGap(18, 18, 18)
             .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(22, 22, 22)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+          .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addGap(33, 33, 33))
     );
     layout.setVerticalGroup(
@@ -113,9 +121,10 @@ public class FormManutProvas extends javax.swing.JFrame {
         .addGap(18, 18, 18)
         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
           .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(btAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(32, 32, 32))
     );
 
@@ -132,16 +141,20 @@ public class FormManutProvas extends javax.swing.JFrame {
     frmProvas.setVisible(true);
   }//GEN-LAST:event_btNovoActionPerformed
 
+  private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
+    AtualizaTabela();
+  }//GEN-LAST:event_btAtualizarActionPerformed
+
   private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
     if(tbProvas.getSelectedRow() == -1)
-      return;
-    
+      return; 
     
     FormProvas frmProvas = new FormProvas(GProvaModel.getProva(tbProvas.getSelectedRow()));
     frmProvas.setVisible(true);
   }//GEN-LAST:event_btEditarActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton btAtualizar;
   private javax.swing.JButton btEditar;
   private javax.swing.JButton btNovo;
   private javax.swing.JButton btVoltar;
@@ -150,7 +163,7 @@ public class FormManutProvas extends javax.swing.JFrame {
   private javax.swing.JTable tbProvas;
   // End of variables declaration//GEN-END:variables
   
-  private void AtualizaTabela() {
+  public void AtualizaTabela() {
     
     ArrayList<Prova> listaProvas = QuizIFCliente.ccont.getProvas(InfoApp.getGUsuLogado().getCodUsuario());
     
@@ -160,5 +173,4 @@ public class FormManutProvas extends javax.swing.JFrame {
       tbProvas.setModel(GProvaModel);
     }
   }
-
 }

@@ -311,7 +311,15 @@ public class FormProvas extends javax.swing.JFrame {
 
   private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
     if(Metodos.msgConfirma("Tem certeza que deseja excluir a prova '"+GProva.getNomeProva()+"'?"))
-      QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva());
+      
+    switch(QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva())){
+      case 1 -> Metodos.Aviso(this.getTitle(), "Prova não pode ser deletada pois já foi realizada por algum usuário\n utilize o campo 'Situação' para inativar a prova");
+      case 2 -> Metodos.Erro(this.getTitle(), "Erro ao deletar a prova!");
+      default -> {
+        Metodos.Sucesso(this.getTitle(), "Prova deletada com sucesso!");
+        dispose();
+      }
+    }  
   }//GEN-LAST:event_btExcluirActionPerformed
 
   private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
@@ -323,25 +331,15 @@ public class FormProvas extends javax.swing.JFrame {
       return;
     }
     
-    Area a = GListaCombo.get(cbArea.getSelectedIndex());
+    if (GPerguntasSelModel.getRowCount() > 30){
+      Metodos.Aviso(this.getTitle(), "Número de perguntas selecionadas não pode ultrapassar 30!");
+      return;
+    }
     
-    //pega só o número da dificuldade pra guardar no banco
-    int dif = Integer.parseInt(Metodos.Pedaco((String)cbDificuldade.getSelectedItem(), " - ", 1));
-    
-    char sit = ((String)cbSituacao.getSelectedItem()).charAt(0);
-
-    Prova p = new Prova(tfNome.getText(), a, dif, sit);
-
-    ArrayList<Pergunta> cadPerSel = new ArrayList<>();
-    
-    for(int x = 0;x < GPerguntasSelModel.getRowCount();x++)
-      cadPerSel.add(GPerguntasSelModel.getPergunta(x));
-    
-    
-    if(QuizIFCliente.ccont.InserirProva(p, cadPerSel)){
-      Metodos.Sucesso(this.getTitle(), "Prova gravada com sucesso!");
+    if (GModoEdicao){
+      Editar();
     } else {
-      Metodos.Erro(this.getTitle(),"Erro ao cadastrar a prova!");
+      Salvar();
     }
   }//GEN-LAST:event_btSalvarActionPerformed
 
@@ -403,4 +401,30 @@ public class FormProvas extends javax.swing.JFrame {
     lbPerguntasDisp.setText(Integer.toString(GPerguntasDisModel.getRowCount()));
     lbPerguntasSel.setText(Integer.toString(GPerguntasSelModel.getRowCount())+"/30");
   }
+  
+  public void Salvar(){
+    Area a = GListaCombo.get(cbArea.getSelectedIndex());
+    
+    //pega só o número da dificuldade pra guardar no banco
+    int dif = Integer.parseInt(Metodos.Pedaco((String)cbDificuldade.getSelectedItem(), " - ", 1));
+    
+    char sit = ((String)cbSituacao.getSelectedItem()).charAt(0);
+
+    Prova p = new Prova(tfNome.getText(), a, dif, sit);
+
+    ArrayList<Pergunta> cadPerSel = new ArrayList<>();
+    
+    for(int x = 0;x < GPerguntasSelModel.getRowCount();x++)
+      cadPerSel.add(GPerguntasSelModel.getPergunta(x));  
+    
+    if(QuizIFCliente.ccont.InserirProva(p, cadPerSel)){
+      Metodos.Sucesso(this.getTitle(), "Prova gravada com sucesso!");
+    } else {
+      Metodos.Erro(this.getTitle(),"Erro ao cadastrar a prova!");
+    }
+  }
+  
+  public void Editar(){
+    //código do modo de edição
+  }  
 }

@@ -318,8 +318,23 @@ public class ConexaoController {
     GravaLog("GET", 0,"Perguntas de uma prova - FIM");
   }
 
-  public void ExcluirProva(int codigoProva) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  public int ExcluirProva(int codigoProva) {
+    String msg;
+    try {
+      out.writeObject("DELETAPROVA");
+      msg = (String) in.readObject();
+      out.writeObject(codigoProva);
+      msg = (String) in.readObject();
+
+      return switch (msg) {
+        case "ok" -> 0;
+        case "jautiliz" -> 1;
+        default -> 2;
+      };
+    } catch (IOException | ClassNotFoundException e) {
+        GravaLog("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
+        return 2;
+    }
   }
   
   public boolean EnviaDelUsu(String email){

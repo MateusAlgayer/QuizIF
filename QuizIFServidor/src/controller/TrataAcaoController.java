@@ -300,6 +300,23 @@ public class TrataAcaoController extends Thread{
           }
           
           GravaLog("CAD", idUnico, "Cadastro de prova - FIM");
+        } else if(wCom.equalsIgnoreCase("DELETAPROVA")){
+          GravaLog("DEL", idUnico, "Deletar prova - INI");
+          
+          out.writeObject("ok");
+          
+          int prova = (int)in.readObject();
+          
+          int status = (new ProvaDAO()).DeletaProva(prova, idUnico);
+          
+          switch (status) {
+            case -1 -> out.writeObject("ok");
+            case 1451 -> //código de erro pra quando o que está sendo deletado já foi referenciado como estrangeira em uma tabela filha
+              out.writeObject("jautiliz");
+            default -> out.writeObject("nok");
+          }
+          
+          GravaLog("DEL", idUnico, "Deletar prova - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

@@ -134,6 +134,8 @@ public class ProvaDAO {
   }
 
   public int InserirProva(Prova p, ArrayList<Pergunta> cadPerSel, int idUnico, int usuLogado) {
+    //precisou executar 3 querys, como o JDBC barra o uso de mais de uma query por statement então 
+    //usei 1 statement pra cada query;
     PreparedStatement stmt = null;
     PreparedStatement stmt2 = null;
     PreparedStatement stmt3 = null;
@@ -210,5 +212,46 @@ public class ProvaDAO {
           GravaLogErro("ERR", idUnico, "Erro ao cadastrar prova\n"+ex.toString());
         }
       }
+  }
+
+  public int DeletaProva(int prova, int idUnico) {
+    PreparedStatement stmt = null;
+
+    try {
+        try {
+
+            con.setAutoCommit(false);
+
+            String sql = "DELETE FROM TABPRO "+
+                         " WHERE CODIGO = ?";
+            stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, prova);
+
+            stmt.execute();
+
+            con.commit();
+            return -1;
+        } catch (SQLException e) {
+            try {
+                GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
+                con.rollback();
+                return e.getErrorCode();
+            } catch (SQLException ex) {
+                GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + ex.toString());
+                return ex.getErrorCode();
+            }
+        }
+    } finally {
+        try {
+            if(stmt != null)
+              stmt.close();
+            con.setAutoCommit(true);
+            con.close();
+        } catch (SQLException e) {
+            GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
+            return e.getErrorCode();
+        }
+    }
   }
 }
