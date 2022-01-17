@@ -8,15 +8,28 @@ import ModelDominio.Criador;
 import ModelDominio.Prova;
 import controller.InfoApp;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import view.tablemodel.ProvasTableModel;
 
-public class FormPrincipal extends javax.swing.JFrame {
+public class FormPrincipal extends javax.swing.JFrame{
 
   public FormPrincipal() {
     initComponents();
     
     btAdmin.setVisible(InfoApp.getGUsuLogado() instanceof Administrador);
     btCriador.setVisible(InfoApp.getGUsuLogado() instanceof Criador);
+    
+    Timer TimerAtualizaTabela = new Timer();
+    TimerTask timer = new TimerTask() {
+      @Override
+      public void run() {
+        AtualizaTabela();
+      }
+    };
+    
+    TimerAtualizaTabela.schedule(timer, 5000, 5000);
     
     AtualizaTabela();
   }                        
@@ -245,7 +258,7 @@ public class FormPrincipal extends javax.swing.JFrame {
   // End of variables declaration//GEN-END:variables
 
 
-  private void AtualizaTabela() {
+  private void AtualizaTabela(){
     
     ArrayList<Prova> listaProvas = QuizIFCliente.ccont.getProvas(0);
     

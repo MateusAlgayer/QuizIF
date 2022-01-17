@@ -435,4 +435,24 @@ public class ConexaoController {
       return false;
     }
   }
+
+  public boolean ModificarProva(Prova p, ArrayList<Pergunta> cadPerSel) {
+    GravaLog("UPD", 0,"Alteração de prova - INI");
+    String msg = "";
+    try{
+      out.writeObject("ALTERARPROVA");
+      
+      msg = (String) in.readObject();
+      
+      out.writeObject(p);
+      out.writeObject(cadPerSel);
+          
+      GravaLog("CAD", 0,"Alteração de prova - FIM");
+      return ((String)in.readObject()).equals("ok");
+      
+    } catch(IOException | ClassNotFoundException e){
+      GravaLogErro("ERR", 0, "Erro ao editar prova\n"+e.toString());
+      return false;
+    }
+  }
 }

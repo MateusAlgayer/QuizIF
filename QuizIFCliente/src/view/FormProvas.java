@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import util.Metodos;
 import view.util.ComboBoxArea;
 import ModelDominio.Pergunta;
+import java.awt.Color;
 import view.tablemodel.PerguntasTableModel;
 
-public class FormProvas extends javax.swing.JFrame {
+public class FormProvas extends javax.swing.JDialog {
 
   PerguntasTableModel GPerguntasDisModel;
   PerguntasTableModel GPerguntasSelModel;
@@ -24,18 +25,19 @@ public class FormProvas extends javax.swing.JFrame {
     initComponents();
     Metodos.GeraConsistenciaCampos(rootPane);
     
-    attComboArea();
-    
     if(prova != null){
       AtualizaTabelas(prova.getCodigoProva());
       btExcluir.setVisible(true);
       GModoEdicao = true;
       GProva = prova;
+      CarregaInfoProva(prova); 
     } else {
       AtualizaTabelas(0);
       btExcluir.setVisible(false);
       GModoEdicao = false;
     }
+        
+    attComboArea();
   }
 
   @SuppressWarnings("unchecked")
@@ -188,8 +190,6 @@ public class FormProvas extends javax.swing.JFrame {
 
     jLabel2.setText("Área:");
 
-    cbArea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
     jLabel3.setText("Situação:");
 
     cbSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
@@ -299,7 +299,12 @@ public class FormProvas extends javax.swing.JFrame {
   private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
     if(tbPerDis.getSelectedRow() == -1)
       return;
-     
+    
+    if(GPerguntasSelModel.getRowCount() >= 30){
+      Metodos.Aviso(this.getTitle(), "Número máximo de perguntas atingido!");
+      return;
+    }  
+    
     Pergunta p = GPerguntasDisModel.getPergunta(tbPerDis.getSelectedRow());
     
     GPerguntasDisModel.removePergunta(tbPerDis.getSelectedRow());
@@ -336,10 +341,36 @@ public class FormProvas extends javax.swing.JFrame {
       return;
     }
     
+    Area a = GListaCombo.get(cbArea.getSelectedIndex());
+    
+    //pega só o número da dificuldade pra guardar no banco
+    int dif = Integer.parseInt(Metodos.Pedaco((String)cbDificuldade.getSelectedItem(), " - ", 1));
+
+    char sit = ((String)cbSituacao.getSelectedItem()).charAt(0);
+
+    Prova p = new Prova(tfNome.getText(), a, dif, sit);
+
+    ArrayList<Pergunta> cadPerSel = new ArrayList<>();
+
+    for(int x = 0;x < GPerguntasSelModel.getRowCount();x++)
+      cadPerSel.add(GPerguntasSelModel.getPergunta(x));  
+    
     if (GModoEdicao){
-      Editar();
+      //seta o codigo do objeto de alteração pra o código da prova a ser editada.
+      //cuidado, se entrar aqui sem uma prova explode
+      p.setCodigoProva(GProva.getCodigoProva());
+      
+      if(QuizIFCliente.ccont.ModificarProva(p, cadPerSel)){
+        Metodos.Sucesso(this.getTitle(), "Prova alterada com sucesso!");
+      } else {
+        Metodos.Erro(this.getTitle(),"Erro ao editar a prova!");
+      }
     } else {
-      Salvar();
+      if(QuizIFCliente.ccont.InserirProva(p, cadPerSel)){
+        Metodos.Sucesso(this.getTitle(), "Prova gravada com sucesso!");
+      } else {
+        Metodos.Erro(this.getTitle(),"Erro ao cadastrar a prova!");
+      }
     }
   }//GEN-LAST:event_btSalvarActionPerformed
 
@@ -349,7 +380,7 @@ public class FormProvas extends javax.swing.JFrame {
   private javax.swing.JButton btRemover;
   private javax.swing.JButton btSair;
   private javax.swing.JButton btSalvar;
-  private javax.swing.JComboBox<String> cbArea;
+  private javax.swing.JComboBox<Area> cbArea;
   private javax.swing.JComboBox<String> cbDificuldade;
   private javax.swing.JComboBox<String> cbSituacao;
   private javax.swing.JLabel jLabel1;
@@ -387,7 +418,7 @@ public class FormProvas extends javax.swing.JFrame {
   private void attComboArea() {
     GListaCombo = QuizIFCliente.ccont.getListaArea();
     
-    ComboBoxArea.preencheComboboxArea(-1, cbArea, GListaCombo, false);
+    ComboBoxArea.preencheComboboxArea((GProva != null ? GProva.getAreaGeral().getCodArea() : -1), cbArea, GListaCombo, false);
   }
   
   public void AtualizaInfo(){
@@ -400,31 +431,25 @@ public class FormProvas extends javax.swing.JFrame {
     
     lbPerguntasDisp.setText(Integer.toString(GPerguntasDisModel.getRowCount()));
     lbPerguntasSel.setText(Integer.toString(GPerguntasSelModel.getRowCount())+"/30");
-  }
-  
-  public void Salvar(){
-    Area a = GListaCombo.get(cbArea.getSelectedIndex());
     
-    //pega só o número da dificuldade pra guardar no banco
-    int dif = Integer.parseInt(Metodos.Pedaco((String)cbDificuldade.getSelectedItem(), " - ", 1));
-    
-    char sit = ((String)cbSituacao.getSelectedItem()).charAt(0);
-
-    Prova p = new Prova(tfNome.getText(), a, dif, sit);
-
-    ArrayList<Pergunta> cadPerSel = new ArrayList<>();
-    
-    for(int x = 0;x < GPerguntasSelModel.getRowCount();x++)
-      cadPerSel.add(GPerguntasSelModel.getPergunta(x));  
-    
-    if(QuizIFCliente.ccont.InserirProva(p, cadPerSel)){
-      Metodos.Sucesso(this.getTitle(), "Prova gravada com sucesso!");
+    if(GPerguntasSelModel.getRowCount() >= 30){
+      lbPerguntasSel.setForeground(Color.red);
     } else {
-      Metodos.Erro(this.getTitle(),"Erro ao cadastrar a prova!");
+      lbPerguntasSel.setForeground(Color.black);
     }
   }
   
-  public void Editar(){
-    //código do modo de edição
-  }  
+  private void CarregaInfoProva(Prova prova) {
+    tfNome.setText(prova.getNomeProva());
+    
+    int dif = switch (prova.getDificuldade()) {
+      case 1 -> 0;  //fácil
+      case 2 -> 1;  //médio
+      case 3 -> 2;  //difícil
+      default -> 1; //médio
+    };
+    
+    cbDificuldade.setSelectedIndex(dif);   
+    cbSituacao.setSelectedIndex((prova.getSituacao() == 'A' ? 0 : 1));
+  }
 }

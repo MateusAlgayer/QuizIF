@@ -317,6 +317,25 @@ public class TrataAcaoController extends Thread{
           }
           
           GravaLog("DEL", idUnico, "Deletar prova - FIM");
+        } else if(wCom.equalsIgnoreCase("ALTERARPROVA")){
+          GravaLog("UPD", idUnico, "Alteração de prova - INI");
+          
+          out.writeObject("ok");
+          
+          Prova p = (Prova)in.readObject();
+          
+          ArrayList<Pergunta> cadPerSel = (ArrayList<Pergunta>) in.readObject();
+          
+          int status = (new ProvaDAO()).AlterarProva(p, cadPerSel, idUnico, usuLogado);
+          
+          if(status == -1){
+            out.writeObject("ok");
+          } else {
+            out.writeObject("nok");
+            GravaLogErro("ERR", idUnico, "Erro ao editar prova\nStatus erro:"+status);
+          }
+          
+          GravaLog("UPD", idUnico, "Alteração de prova - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

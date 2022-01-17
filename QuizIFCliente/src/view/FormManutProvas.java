@@ -138,7 +138,9 @@ public class FormManutProvas extends javax.swing.JFrame {
 
   private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
     FormProvas frmProvas = new FormProvas(null);
+    frmProvas.setModal(true);
     frmProvas.setVisible(true);
+    AtualizaTabela();
   }//GEN-LAST:event_btNovoActionPerformed
 
   private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
@@ -150,7 +152,9 @@ public class FormManutProvas extends javax.swing.JFrame {
       return; 
     
     FormProvas frmProvas = new FormProvas(GProvaModel.getProva(tbProvas.getSelectedRow()));
+    frmProvas.setModal(true);
     frmProvas.setVisible(true);
+    AtualizaTabela();
   }//GEN-LAST:event_btEditarActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -163,7 +167,7 @@ public class FormManutProvas extends javax.swing.JFrame {
   private javax.swing.JTable tbProvas;
   // End of variables declaration//GEN-END:variables
   
-  public void AtualizaTabela() {
+  private void AtualizaTabela() {
     
     ArrayList<Prova> listaProvas = QuizIFCliente.ccont.getProvas(InfoApp.getGUsuLogado().getCodUsuario());
     

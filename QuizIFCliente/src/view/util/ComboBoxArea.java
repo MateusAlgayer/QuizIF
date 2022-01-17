@@ -10,9 +10,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 public class ComboBoxArea{
- 
-  private final String nome;
-  private final int codigo;
+
+  private String nome;
+  private int codigo;
 
   public ComboBoxArea(String nome, int codigo) {
     this.nome = nome;
