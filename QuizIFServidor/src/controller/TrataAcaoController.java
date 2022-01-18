@@ -348,6 +348,18 @@ public class TrataAcaoController extends Thread{
             //TERMINAR
             
             GravaLog("GET", idUnico, "Get Ranking - FIM");
+        } else if(wCom.equalsIgnoreCase("GETPERGUNTASJOGO")){
+          GravaLog("REQ", idUnico, "perguntas jogo - INI");
+          
+          out.writeObject("ok");
+          
+          int numProva = (int)in.readObject();
+          
+          ArrayList<Pergunta> listaSel = (new ProvaDAO()).getPerguntasJogo(numProva, idUnico);
+          
+          out.writeObject(listaSel);
+          
+          GravaLog("REQ", idUnico, "perguntas jogo - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

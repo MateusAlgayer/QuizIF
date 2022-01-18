@@ -31,7 +31,7 @@ public class FormPrincipal extends javax.swing.JFrame{
       }
     };
     
-    TimerAtualizaTabela.schedule(timer, 5000, 5000);
+    TimerAtualizaTabela.schedule(timer, 5000, 60000);
     
     AtualizaTabela();
   }                        
@@ -279,6 +279,7 @@ public class FormPrincipal extends javax.swing.JFrame{
     ArrayList<Prova> listaProvas = QuizIFCliente.ccont.getProvas(0);
     
     if(listaProvas != null){
+      
       GProvas = new ProvasTableModel(listaProvas, true);
       tbProvas.setModel(GProvas);
     }
