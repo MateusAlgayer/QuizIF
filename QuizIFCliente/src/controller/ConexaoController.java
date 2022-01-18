@@ -1,5 +1,6 @@
 
 //Mateus Roberto Algayer - 28/12/2021 :: Criação
+//João Felipe Staub - 18/01/2022 :: getRanking
 
 package controller;
 
@@ -7,6 +8,7 @@ import ModelDominio.Comum;
 import ModelDominio.Prova;
 import ModelDominio.Usuario;
 import ModelDominio.Area;
+import ModelDominio.Jogo;
 import ModelDominio.Pergunta;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -455,4 +457,27 @@ public class ConexaoController {
       return false;
     }
   }
+  
+  public ArrayList<Jogo> getRanking(int filtro){
+    GravaLog("GET", 0, "Ranking - INI");
+    String msg = "";
+    
+    try {
+      out.writeObject("GETRANKING");
+      
+      msg = (String) in.readObject();
+      out.writeObject(filtro);
+      
+      ArrayList<Jogo> listaJogos = (ArrayList<Jogo>) in.readObject();
+      
+      GravaLog("GET", 0, "Ranking - FIM");
+      return listaJogos;
+      
+    } catch (IOException | ClassNotFoundException e) {
+      GravaLogErro("ERR", 0, "Erro ao enviar Ranking\n"+e.toString());
+    }
+    
+    return null;
+  }
+  
 }

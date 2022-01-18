@@ -1,5 +1,6 @@
 /*
     //João Jorge Stahl Gomes - 29/12/2021 ::Criação
+    //João Felipe Staub - 18/01/2022 :: Alteração de Classe
  */
 package ModelDominio;
 
@@ -8,20 +9,12 @@ import java.io.Serializable;
 public class Jogo implements Serializable{
     private static final long serialVersionUID = 123456789L;
     
-    private int codJogo;
     private Prova prova;
-    private Usuario jogador;
+    private String jogador;
     private int numPerguntas;
     private int numAcertos;
-
-    public int getCodJogo() {
-        return codJogo;
-    }
-
-    public void setCodJogo(int codJogo) {
-        this.codJogo = codJogo;
-    }
-
+    private int pontuacao;
+    
     public Prova getProva() {
         return prova;
     }
@@ -30,11 +23,11 @@ public class Jogo implements Serializable{
         this.prova = prova;
     }
 
-    public Usuario getJogador() {
+    public String getJogador() {
         return jogador;
     }
 
-    public void setJogador(Usuario jogador) {
+    public void setJogador(String jogador) {
         this.jogador = jogador;
     }
 
@@ -53,30 +46,32 @@ public class Jogo implements Serializable{
     public void setNumAcertos(int numAcertos) {
         this.numAcertos = numAcertos;
     }
+    
+    public int getPontuacao() {
+        return pontuacao;
+    }
 
-    public Jogo(int codJogo, Prova prova, Usuario jogador, int numPerguntas, int numAcertos) {
-        this.codJogo = codJogo;
+    public void setPontuacao(int pontuacao) {
+        this.pontuacao = pontuacao;
+    }
+
+    public Jogo(Prova prova, String jogador, int numPerguntas, int numAcertos, int pontuacao) {
         this.prova = prova;
         this.jogador = jogador;
         this.numPerguntas = numPerguntas;
         this.numAcertos = numAcertos;
+        this.pontuacao = pontuacao;
     }
 
-    public Jogo(Prova prova, Usuario jogador, int numPerguntas, int numAcertos) {
+    public Jogo(Prova prova, String jogador, int numPerguntas, int numAcertos) {
         this.prova = prova;
         this.jogador = jogador;
         this.numPerguntas = numPerguntas;
         this.numAcertos = numAcertos;
-    }
-
-    public Jogo(int codJogo) {
-        this.codJogo = codJogo;
     }
 
     @Override
     public String toString() {
-        return "Jogo{" + "codJogo=" + codJogo + ", prova=" + prova + ", jogador=" + jogador + ", numPerguntas=" + numPerguntas + ", numAcertos=" + numAcertos + '}';
+        return "Jogo{" + ", prova=" + prova + ", jogador=" + jogador + ", numPerguntas=" + numPerguntas + ", numAcertos=" + numAcertos + '}';
     }
-    
-    
 }

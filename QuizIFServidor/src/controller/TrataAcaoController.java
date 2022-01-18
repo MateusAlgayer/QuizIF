@@ -1,11 +1,13 @@
 
 //Mateus Roberto Algayer - 27/12/2021 :: Criação
+//João Felipe Staub - 18/01/2022 :: GETRANKING
 
 package controller;
 
 import Model.AreaDAO;
 import Model.ProvaDAO;
 import Model.UsuarioDAO;
+import ModelDominio.Jogo;
 import ModelDominio.Prova;
 import ModelDominio.Usuario;
 import java.io.IOException;
@@ -336,6 +338,16 @@ public class TrataAcaoController extends Thread{
           }
           
           GravaLog("UPD", idUnico, "Alteração de prova - FIM");
+        }else if(wCom.equalsIgnoreCase("GETRANKING")){
+            GravaLog("GET", idUnico, "Get Ranking - INI");
+            
+            out.writeObject("ok");
+            
+            ArrayList<Jogo> listaJogos = (ArrayList<Jogo>) in.readObject();
+            
+            //TERMINAR
+            
+            GravaLog("GET", idUnico, "Get Ranking - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");
