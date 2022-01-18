@@ -362,12 +362,14 @@ public class FormProvas extends javax.swing.JDialog {
       
       if(QuizIFCliente.ccont.ModificarProva(p, cadPerSel)){
         Metodos.Sucesso(this.getTitle(), "Prova alterada com sucesso!");
+        dispose();
       } else {
         Metodos.Erro(this.getTitle(),"Erro ao editar a prova!");
       }
     } else {
       if(QuizIFCliente.ccont.InserirProva(p, cadPerSel)){
         Metodos.Sucesso(this.getTitle(), "Prova gravada com sucesso!");
+        dispose();
       } else {
         Metodos.Erro(this.getTitle(),"Erro ao cadastrar a prova!");
       }

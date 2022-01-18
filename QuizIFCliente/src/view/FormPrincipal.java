@@ -15,6 +15,8 @@ import view.tablemodel.ProvasTableModel;
 
 public class FormPrincipal extends javax.swing.JFrame{
 
+  ProvasTableModel GProvas;
+  
   public FormPrincipal() {
     initComponents();
     
@@ -113,6 +115,11 @@ public class FormPrincipal extends javax.swing.JFrame{
     jScrollPane1.setViewportView(tbProvas);
 
     btJogar.setText("Jogar");
+    btJogar.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btJogarActionPerformed(evt);
+      }
+    });
 
     btAtualizar.setText("Atualizar");
     btAtualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -238,8 +245,18 @@ public class FormPrincipal extends javax.swing.JFrame{
   }//GEN-LAST:event_btAtualizarActionPerformed
 
   private void btRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRankingActionPerformed
-    // TODO add your handling code here:
+    FormRanking frmRanking = new FormRanking();
+    frmRanking.setVisible(true);
   }//GEN-LAST:event_btRankingActionPerformed
+
+  private void btJogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJogarActionPerformed
+    if(tbProvas.getSelectedRow() == -1)
+      return;
+    
+    FormJogo frmJogo = new FormJogo(GProvas.getProva(tbProvas.getSelectedRow()));
+    frmJogo.setModal(true);
+    frmJogo.setVisible(true);
+  }//GEN-LAST:event_btJogarActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JMenuItem MIManutPerguntas;
@@ -257,13 +274,13 @@ public class FormPrincipal extends javax.swing.JFrame{
   private javax.swing.JTable tbProvas;
   // End of variables declaration//GEN-END:variables
 
-
   private void AtualizaTabela(){
     
     ArrayList<Prova> listaProvas = QuizIFCliente.ccont.getProvas(0);
     
     if(listaProvas != null){
-      tbProvas.setModel(new ProvasTableModel(listaProvas, true));
+      GProvas = new ProvasTableModel(listaProvas, true);
+      tbProvas.setModel(GProvas);
     }
   }
 }
