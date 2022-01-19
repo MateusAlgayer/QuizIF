@@ -101,6 +101,12 @@ public class Usuario implements Serializable{
         this.email = email;
         this.senha = senha;
     }
+
+    public Usuario(int codUsuario, String nomeUsuario, String apelido) {
+        this.codUsuario = codUsuario;
+        this.nomeUsuario = nomeUsuario;
+        this.apelido = apelido;
+    }
     
     @Override
     public String toString() {

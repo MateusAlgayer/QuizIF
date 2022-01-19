@@ -1,5 +1,6 @@
 
 //Mateus Roberto Algayer - 29/12/2021 :: Criação
+//João Felipe Staub - 19/01/2022 :: getListaUsuarios
 
 package Model;
 
@@ -12,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import static util.Metodos.GravaLog;
 import static util.Metodos.GravaLogErro;
 
@@ -255,4 +257,97 @@ public class UsuarioDAO {
             }
         }
     }
+    
+    public ArrayList<Usuario> getListaUsuarios(int id){
+        try {
+            PreparedStatement stmt;
+            Usuario usu;
+            
+            String sql = "SELECT * FROM TABUSU";
+            
+            stmt = con.prepareStatement(sql);
+            
+            ResultSet result = stmt.executeQuery();
+            
+            ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+            
+            while (result.next()) {
+                listaUsuarios.add(switch (result.getString("TIPO")) {
+                    case "C" ->
+                        usu = new Comum(result.getInt("CODIGO"),
+                        result.getString("NOME"),
+                        result.getString("APELIDO"));
+                    case "J" ->
+                        usu = new Criador(result.getInt("CODIGO"),
+                        result.getString("NOME"),
+                        result.getString("APELIDO"));
+                    case "A" ->
+                        usu = new Administrador(result.getInt("CODIGO"),
+                        result.getString("NOME"),
+                        result.getString("APELIDO"));
+                    default ->
+                        usu = new Comum(result.getInt("CODIGO"),
+                        result.getString("NOME"),
+                        result.getString("APELIDO"));
+                });
+            }
+            
+            stmt.close();
+            con.close();
+            
+            GravaLog("SQL", id, "Recuperou um objeto do banco: ListaUsuarios");
+            return listaUsuarios;
+
+        } catch (Exception e) {
+            GravaLogErro("ERR", id, e.toString());
+        }
+        return null;
+    }
+    
+    //TERMINAR
+    /*public int AlteraTipoUsu(Usuario usu, int id){
+        PreparedStatement stmt;
+        Usuario wUsu = null;
+
+        try {
+            String sql = "SELECT * FROM TABUSU "
+                    + "WHERE EMAIL = ? AND SENHA = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, usu.getEmail());
+            stmt.setString(2, usu.getSenha());
+
+            ResultSet result = stmt.executeQuery();
+
+            while (result.next()) {
+                switch (result.getString("TIPO")) {
+                    case "C" ->
+                        wUsu = new Comum(result.getInt("CODIGO"),
+                                result.getString("NOME"),
+                                result.getString("APELIDO"),
+                                result.getString("EMAIL"),
+                                result.getString("SENHA"));
+                    case "J" ->
+                        wUsu = new Criador(result.getInt("CODIGO"),
+                                result.getString("NOME"),
+                                result.getString("APELIDO"),
+                                result.getString("EMAIL"),
+                                result.getString("SENHA"));
+                    case "A" ->
+                        wUsu = new Administrador(result.getInt("CODIGO"),
+                                result.getString("NOME"),
+                                result.getString("APELIDO"),
+                                result.getString("EMAIL"),
+                                result.getString("SENHA"));
+                }
+
+                GravaLog("SQL", Id, "Recuperou um objeto do banco");
+            }
+
+            stmt.close();
+            con.close();
+        } catch (SQLException e) {
+            GravaLogErro("ERR", id, e.toString());
+        }
+        return wUsu;
+    }*/ 
 }

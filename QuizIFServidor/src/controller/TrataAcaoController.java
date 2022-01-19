@@ -364,6 +364,31 @@ public class TrataAcaoController extends Thread{
           out.writeObject(listaSel);
           
           GravaLog("REQ", idUnico, "perguntas jogo - FIM");
+        } else if(wCom.equalsIgnoreCase("AlteraTipoUsu")){
+          GravaLog("UPD", idUnico, "Alterar Tipo Usuário - INI");
+          
+          out.writeObject("ok");
+          
+          Usuario usu = (Usuario) in.readObject();
+          
+          //int id = (new UsuarioDAO()).AlteraTipoUsu(usu, idUnico);
+          
+          //TERMINAR
+          
+          
+          GravaLog("UPD", idUnico, "Deletar prova - FIM");
+        } else if(wCom.equalsIgnoreCase("GETUSU")){
+            GravaLog("REQ", idUnico, "Get Usuarios - INI");
+            
+            out.writeObject("ok");
+            
+            String msg = (String) in.readObject();
+            
+            UsuarioDAO usudao = new UsuarioDAO();
+            ArrayList<Usuario> listaUsuarios = usudao.getListaUsuarios(idUnico);
+            out.writeObject(listaUsuarios);
+            
+            GravaLog("REQ", idUnico, "Get Usuarios - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

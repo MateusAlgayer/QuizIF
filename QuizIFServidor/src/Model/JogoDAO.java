@@ -1,6 +1,5 @@
 
 //João Felipe Staub - 18/01/2022 :: Criação
-//João Felipe Staub - 18/01/2022 :: Término
 
 package Model;
 

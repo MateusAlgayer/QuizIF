@@ -1,6 +1,7 @@
 /*
     //João Jorge Stahl Gomes - 29/12/2021 ::Criação
     //Staub - 30/12/2021 :: Edit Criador/add sal
+    //João Felipe Staub - 19/01/2022 :: Add construtor para listaUsuarios   
  */
 package ModelDominio;
 
@@ -38,7 +39,9 @@ public class Criador extends Usuario implements Serializable{
     public String toString() {
         return super.toString() + "Criador{" + '}';
     }
-    
-    
+
+    public Criador(int codUsuario, String nomeUsuario, String apelido) {
+        super(codUsuario, nomeUsuario, apelido);
+    }
     
 }

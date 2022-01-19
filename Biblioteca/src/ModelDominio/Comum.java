@@ -1,6 +1,7 @@
 /*
     //João Jorge Stahl Gomes - 29/12/2021 ::Criação
-//Staub - 30/12/2021 :: Edit Comum/add sal
+    //Staub - 30/12/2021 :: Edit Comum/add sal
+    //João Felipe Staub - 19/01/2022 :: Add construtor para listaUsuarios
  */
 package ModelDominio;
 
@@ -34,6 +35,10 @@ public class Comum extends Usuario implements Serializable{
       super(email, senha);
     }
 
+    public Comum(int codUsuario, String nomeUsuario, String apelido) {
+        super(codUsuario, nomeUsuario, apelido);
+    }
+    
     @Override
     public String toString() {
         return super.toString() + "Comum{" + '}';

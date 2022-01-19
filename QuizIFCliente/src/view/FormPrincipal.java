@@ -226,7 +226,7 @@ public class FormPrincipal extends javax.swing.JFrame{
   }//GEN-LAST:event_btCriadorActionPerformed
 
   private void MIManutPermissoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MIManutPermissoActionPerformed
-    FormManutPermisso frmPermisso = new FormManutPermisso();
+    FormManutPermissao frmPermisso = new FormManutPermissao();
     frmPermisso.setVisible(true);
   }//GEN-LAST:event_MIManutPermissoActionPerformed
 

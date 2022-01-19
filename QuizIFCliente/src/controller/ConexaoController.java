@@ -1,6 +1,7 @@
 
 //Mateus Roberto Algayer - 28/12/2021 :: Criação
 //João Felipe Staub - 18/01/2022 :: getRanking
+//João Felipe Staub - 19/01/2022 :: getUsuarios
 
 package controller;
 
@@ -417,6 +418,24 @@ public class ConexaoController {
             return false;
         }
   }
+  
+  public boolean AlteraTipoUsu(Usuario usu){
+      String msg;
+      
+      try {
+          
+          out.writeObject("AlteraTipoUsu");
+          msg = (String) in.readObject();
+          out.writeObject(usu);
+          msg = (String) in.readObject();
+          
+          return msg.equals("ok");
+          
+      } catch (IOException | ClassNotFoundException e) {
+          GravaLog("ERR", 0, "Erro ao alterar Usuário \n" + e.toString());
+          return false;
+      }
+  }
 
   public boolean InserirProva(Prova p,ArrayList<Pergunta> perSel) {
     GravaLog("CAD", 0,"Cadastro de prova - INI");
@@ -480,6 +499,26 @@ public class ConexaoController {
     return null;
   }
   
+  public ArrayList<Usuario> getUsuarios(){
+      GravaLog("GET", 0, "Usuarios - INI");
+      String msg = "";
+      
+      try {
+          out.writeObject("GETUSU");
+          
+          msg = (String) in.readObject();
+          out.writeObject("ok");
+          
+          ArrayList<Usuario> listaUsuarios = (ArrayList<Usuario>) in.readObject();
+          
+          GravaLog("GET", 0, "Usuarios - FIM");
+          return listaUsuarios;
+          
+      } catch (Exception e) {
+          GravaLogErro("ERR", 0, "Erro ao enviar Usuarios\n"+e.toString());
+      }
+      return null;
+  }
 
   public void getPerguntasJogo(ArrayList<Pergunta> listaPergunta, int codigoProva) {
     GravaLog("GET", 0,"perguntas jogo - INI");
