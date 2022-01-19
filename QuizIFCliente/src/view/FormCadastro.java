@@ -126,7 +126,7 @@ public class FormCadastro extends javax.swing.JDialog {
       while(continua){
         GravaLog("SEN", 0, "Codigo email rep:"+(cont++));
         
-        FormConfirmaSenha frm = new FormConfirmaSenha(sal);
+        FormConfirmaSenha frm = new FormConfirmaSenha(sal, false);
         frm.setModal(true);
         frm.setVisible(true);
 

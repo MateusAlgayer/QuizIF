@@ -69,12 +69,13 @@ public class Usuario implements Serializable{
     
     //Construtores
 
-    public Usuario(int codUsuario, String nomeUsuario, String apelido, String email, String senha) {
+    public Usuario(int codUsuario, String nomeUsuario, String apelido, String email, String senha, String sal) {
         this.codUsuario = codUsuario;
         this.nomeUsuario = nomeUsuario;
         this.apelido = apelido;
         this.email = email;
         this.senha = senha;
+        this.sal = sal;
     }
     
     /**só para cadastro

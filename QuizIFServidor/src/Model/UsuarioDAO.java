@@ -43,17 +43,20 @@ public class UsuarioDAO {
                                      result.getString("NOME"),
                                      result.getString("APELIDO"), 
                                      result.getString("EMAIL"), 
-                                     result.getString("SENHA"));
+                                     result.getString("SENHA"),
+                                     result.getString("SAL"));
           case "J" -> wUsu = new Criador(result.getInt("CODIGO"), 
                                        result.getString("NOME"),
                                        result.getString("APELIDO"), 
                                        result.getString("EMAIL"), 
-                                       result.getString("SENHA"));
+                                       result.getString("SENHA"),
+                                       result.getString("SAL"));
           case "A" -> wUsu = new Administrador(result.getInt("CODIGO"), 
                                              result.getString("NOME"),
                                              result.getString("APELIDO"), 
                                              result.getString("EMAIL"), 
-                                             result.getString("SENHA"));
+                                             result.getString("SENHA"),
+                                             result.getString("SAL"));
         }
 
         GravaLog("SQL", Id, "Recuperou um objeto do banco");
@@ -255,4 +258,46 @@ public class UsuarioDAO {
             }
         }
     }
+    
+    public int AlteraSenha(Usuario usu, int id){
+    PreparedStatement stmt = null;
+    
+    try {
+      try {
+        con.setAutoCommit(false);
+
+        String sql = "UPDATE TABUSU SET SENHA = ? WHERE EMAIL = ?";
+
+        stmt = con.prepareStatement(sql);
+        
+        stmt.setString(1, usu.getSenha());
+        stmt.setString(2, usu.getEmail());
+
+        stmt.execute();
+
+        con.commit();
+
+        } catch (SQLException e) {
+          try {
+            con.rollback();
+            GravaLogErro("ERR", id, "Erro ao alterar senha\n"+e.toString());
+          } catch (SQLException ex) {
+            GravaLogErro("ERR", id, "Erro ao alterar senha\n"+ex.toString());
+          }
+          return e.getErrorCode();
+        }
+
+        return -1;
+      } finally {
+        try {
+          if(stmt != null){
+            stmt.close();
+          }
+          con.setAutoCommit(true);
+          con.close();
+        } catch (SQLException ex) {
+          GravaLogErro("ERR", id, "Erro ao alterar senha\n"+ex.toString());
+        }
+      }
+  }
 }
