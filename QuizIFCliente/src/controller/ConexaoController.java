@@ -249,7 +249,7 @@ public class ConexaoController {
       while(continua){
         GravaLog("UPD", 0, "Codigo email rep:"+(cont++));
         
-        FormConfirmaSenha frm = new FormConfirmaSenha(sal);
+        FormConfirmaSenha frm = new FormConfirmaSenha(sal, false);
         frm.setModal(true);
         frm.setVisible(true);
 
@@ -411,7 +411,7 @@ public class ConexaoController {
             msg = (String) in.readObject();
             out.writeObject(usu);
             msg = (String) in.readObject();
-          
+                     
             return msg.equals("ok");
         } catch (IOException | ClassNotFoundException e) {
             GravaLog("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
@@ -430,10 +430,36 @@ public class ConexaoController {
           msg = (String) in.readObject();
           
           return msg.equals("ok");
-          
       } catch (IOException | ClassNotFoundException e) {
-          GravaLog("ERR", 0, "Erro ao alterar Usuário \n" + e.toString());
-          return false;
+        GravaLog("ERRO", 0, "Erro ao alterar usuário \n" + e.toString());
+        return false;
+      }
+  }
+  
+  public boolean AlteraSenhaUsu (){
+      String msg;
+      try {
+          
+          String sal = InfoApp.getGUsuLogado().getSal();
+          
+          FormConfirmaSenha frm = new FormConfirmaSenha(sal, true);
+          frm.setModal(true);
+          frm.setVisible(true);
+          
+          if(InfoApp.getGSenhaCripto().equals("Fechou")){
+              return false;
+          }
+          
+          out.writeObject("Alterar Senha Usuário");
+          msg = (String) in.readObject();
+          Usuario usu = new Usuario(InfoApp.getGUsuLogado().getEmail(), InfoApp.getGSenhaCripto());
+          out.writeObject(usu);
+          msg = (String) in.readObject();
+          
+          return msg.equals("ok");
+      } catch (IOException | ClassNotFoundException e) {
+        GravaLog("ERRO", 0, "Erro ao alterar senha \n" + e.toString());
+        return false;
       }
   }
 
