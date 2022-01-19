@@ -104,11 +104,6 @@ public class FormPerfil extends javax.swing.JDialog {
         );
 
         btAltSenha.setText("Alterar Senha");
-        btAltSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAltSenhaActionPerformed(evt);
-            }
-        });
 
         btExcluirConta.setText("Excluir Conta");
         btExcluirConta.addActionListener(new java.awt.event.ActionListener() {
@@ -179,17 +174,6 @@ public class FormPerfil extends javax.swing.JDialog {
           }
         }
     }//GEN-LAST:event_btExcluirContaActionPerformed
-
-    private void btAltSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAltSenhaActionPerformed
-       GravaLog("UPD", 0, "Alterar Usuario - INI");
-       if(QuizIFCliente.ccont.AlteraSenhaUsu()){
-           InfoApp.getGUsuLogado().setSenha(InfoApp.getGSenhaCripto());
-           System.out.println(InfoApp.getGUsuLogado().getSenha().toString());
-       }
-       
-       System.out.println(InfoApp.getGUsuLogado().getSenha());
-       GravaLog("UPD", 0, "Alterar Usuario - FIM");
-    }//GEN-LAST:event_btAltSenhaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAltSenha;

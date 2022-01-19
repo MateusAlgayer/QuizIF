@@ -30,7 +30,6 @@ public class TrataAcaoController extends Thread{
   private final ObjectInputStream in;
   private final Socket cliente;
   private final int idUnico;
-  private String emailLogado;
   private int usuLogado;
 
   public TrataAcaoController(ObjectOutputStream pOut, ObjectInputStream pIn, Socket pCliente, int pIdUnico) {
@@ -39,7 +38,6 @@ public class TrataAcaoController extends Thread{
     this.cliente = pCliente;
     this.idUnico = pIdUnico;
     this.usuLogado = 0;
-    this.emailLogado = "";
   }
 
   @Override
@@ -73,8 +71,7 @@ public class TrataAcaoController extends Thread{
             
             if (usu != null){
               this.usuLogado = usu.getCodUsuario();
-              this.emailLogado = usu.getEmail();
-              GravaLog("USU", idUnico, "Usuário conectado: "+usuLogado + "\nEmail: " +emailLogado);
+              GravaLog("USU", idUnico, "Usuário conectado: "+usuLogado);
             }
           }
           
@@ -261,25 +258,6 @@ public class TrataAcaoController extends Thread{
               GravaLog("UPD", idUnico, "Redefinir senha - senha - FIM");
             }
           }
-        } else if(wCom.equalsIgnoreCase("Alterar Senha Usuário")){
-          GravaLog("UPD", idUnico, "Alterar senha INI");
-          
-          out.writeObject("ok");
-          
-          GravaLog("UPD", idUnico, "Alterar senha - FIM");
-          
-          GravaLog("UPD", idUnico, "Alterar senha - INI");
-
-          Usuario usu = (Usuario)in.readObject();
-
-          if (usu != null){
-            if((new UsuarioDAO()).AlteraSenha(usu, idUnico) == -1){
-                out.writeObject("ok");
-            } else {
-                out.writeObject("nok");
-            }
-          }
-          GravaLog("UPD", idUnico, "Alterar senha - FIM");
         } else if(wCom.equalsIgnoreCase("GETLISTAAREA")){
           GravaLog("REQ", idUnico, "Lista areas - INI");
           

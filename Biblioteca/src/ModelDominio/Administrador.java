@@ -9,8 +9,8 @@ import java.io.Serializable;
 public class Administrador extends Criador implements Serializable{
     private static final long serialVersionUID = 123456789L;
 
-    public Administrador(int codUsuario, String nomeUsuario, String apelido, String email, String senha, String sal) {
-        super(codUsuario, nomeUsuario, apelido, email, senha, sal);
+    public Administrador(int codUsuario, String nomeUsuario, String apelido, String email, String senha) {
+        super(codUsuario, nomeUsuario, apelido, email, senha);
     }
 
     /**
