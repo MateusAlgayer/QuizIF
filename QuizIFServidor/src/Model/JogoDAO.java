@@ -1,9 +1,9 @@
 
 //João Felipe Staub - 18/01/2022 :: Criação
+//João Felipe Staub - 18/01/2022 :: Término
 
 package Model;
 
-import ModelDominio.Area;
 import ModelDominio.Jogo;
 import factory.Conector;
 import java.sql.*;
@@ -19,7 +19,7 @@ public class JogoDAO {
     
     private final Connection con;
 
-    public JogoDAO(Connection con) {
+    public JogoDAO() {
         this.con = Conector.getConnection();
     }
     

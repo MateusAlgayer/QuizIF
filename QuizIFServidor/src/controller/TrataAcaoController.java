@@ -1,10 +1,12 @@
 
 //Mateus Roberto Algayer - 27/12/2021 :: Criação
 //João Felipe Staub - 18/01/2022 :: GETRANKING
+//João Felipe Staub - 18/01/2022 :: GETRANKING TÉRMINO
 
 package controller;
 
 import Model.AreaDAO;
+import Model.JogoDAO;
 import Model.ProvaDAO;
 import Model.UsuarioDAO;
 import ModelDominio.Jogo;
@@ -339,15 +341,17 @@ public class TrataAcaoController extends Thread{
           
           GravaLog("UPD", idUnico, "Alteração de prova - FIM");
         }else if(wCom.equalsIgnoreCase("GETRANKING")){
-            GravaLog("GET", idUnico, "Get Ranking - INI");
+            GravaLog("REQ", idUnico, "Get Ranking - INI");
             
             out.writeObject("ok");
             
-            ArrayList<Jogo> listaJogos = (ArrayList<Jogo>) in.readObject();
+            int filtro = (Integer) in.readObject();
             
-            //TERMINAR
+            JogoDAO jgdao = new JogoDAO();
+            ArrayList<Jogo> listaRanking = jgdao.getListaRanking(filtro, idUnico);
+            out.writeObject(listaRanking);
             
-            GravaLog("GET", idUnico, "Get Ranking - FIM");
+            GravaLog("REQ", idUnico, "Get Ranking - FIM");
         } else if(wCom.equalsIgnoreCase("GETPERGUNTASJOGO")){
           GravaLog("REQ", idUnico, "perguntas jogo - INI");
           

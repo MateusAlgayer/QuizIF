@@ -1,15 +1,19 @@
 
 //Mateus Roberto Algayer - 17/01/2022
-//João Felipe Staub - 18/01/2022
+//João Felipe Staub - 18/01/2022 :: Término
 
 package view;
 
-public class FormRanking extends javax.swing.JFrame {
+import view.tablemodel.RankingTableModel;
 
+public class FormRanking extends javax.swing.JDialog {
+
+    private RankingTableModel rankingModel;
+    
   public FormRanking() {
+      
     initComponents();
-    
-    
+    AtualizaTabela();
     
   }
 
@@ -70,8 +74,13 @@ public class FormRanking extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<<Selecionar>>", "Item 2", "Item 3", "Item 4" }));
+        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pontuação", "Nº Acertos", "Nº Questões" }));
         cbFiltro.setName("Filtro"); // NOI18N
+        cbFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbFiltroActionPerformed(evt);
+            }
+        });
 
         btAtualizar.setText("Atualizar");
         btAtualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -131,8 +140,12 @@ public class FormRanking extends javax.swing.JFrame {
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-        // TODO add your handling code here:
+        AtualizaTabela();
     }//GEN-LAST:event_btAtualizarActionPerformed
+
+    private void cbFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFiltroActionPerformed
+        AtualizaTabela();
+    }//GEN-LAST:event_cbFiltroActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAtualizar;
@@ -145,6 +158,14 @@ public class FormRanking extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void AtualizaTabela(){
+        
+        switch(cbFiltro.getSelectedIndex()){
+            case 1 -> rankingModel = new RankingTableModel(QuizIFCliente.ccont.getRanking(cbFiltro.getSelectedIndex()));
+            case 2 -> rankingModel = new RankingTableModel(QuizIFCliente.ccont.getRanking(cbFiltro.getSelectedIndex()));
+            default -> rankingModel = new RankingTableModel(QuizIFCliente.ccont.getRanking(cbFiltro.getSelectedIndex()));
+        }
+        
+        tRanking.setModel(rankingModel);
         
     }
     
