@@ -15,11 +15,9 @@ public class RankingTableModel extends AbstractTableModel{
     
     private final ArrayList<Jogo> listaJogos;
     private final int numCols;
-    private int colocacao;
     
     public RankingTableModel(ArrayList<Jogo> listaJogos){
         this.listaJogos = listaJogos;
-        this.colocacao = 1;
         this.numCols = 5;
     }
 
@@ -37,7 +35,7 @@ public class RankingTableModel extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         Jogo j = listaJogos.get(rowIndex);
         return switch(columnIndex){
-            case 0 -> this.colocacao++;
+            case 0 -> rowIndex+1;
             case 1 -> j.getJogador();
             case 2 -> j.getNumPerguntas();
             case 3 -> j.getNumAcertos();

@@ -43,7 +43,7 @@ public class JogoDAO {
                     "LEFT OUTER JOIN TABUSU ON TABUSUPRO.USUARIO = TABUSU.CODIGO " +
                     "GROUP BY TABUSU.CODIGO " +
                     "ORDER BY " + 
-                    wCondicao;
+                    wCondicao+ " DESC";
       
       stmt = con.prepareStatement(sql);
       

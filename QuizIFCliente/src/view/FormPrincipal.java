@@ -246,6 +246,7 @@ public class FormPrincipal extends javax.swing.JFrame{
 
   private void btRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRankingActionPerformed
     FormRanking frmRanking = new FormRanking();
+    frmRanking.setModal(true);
     frmRanking.setVisible(true);
   }//GEN-LAST:event_btRankingActionPerformed
 

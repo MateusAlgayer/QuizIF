@@ -154,11 +154,11 @@ public class FormLogin extends javax.swing.JFrame{
 
   private void btLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogarActionPerformed
     if (!Consistencia(true, tfUsu, pfSenha)) return;    
-    
+   
     Usuario wLogin = new Usuario(tfUsu.getText(), String.valueOf(pfSenha.getPassword()));
-    
+   
     Usuario wUsu = QuizIFCliente.ccont.Login(wLogin);
-    
+   
     if(wUsu != null){
       InfoApp.setGUsuLogado(wUsu);
       
@@ -166,9 +166,9 @@ public class FormLogin extends javax.swing.JFrame{
       fp.setVisible(true);
       
       dispose();
-    } else {
+   } else {
       lbAviso.setVisible(true);
-    }
+   }
   }//GEN-LAST:event_btLogarActionPerformed
 
   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
