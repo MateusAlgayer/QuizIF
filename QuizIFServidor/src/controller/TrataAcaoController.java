@@ -389,6 +389,16 @@ public class TrataAcaoController extends Thread{
             out.writeObject(listaUsuarios);
             
             GravaLog("REQ", idUnico, "Get Usuarios - FIM");
+        } else if(wCom.equalsIgnoreCase("GETPERGUNTAS")){
+          GravaLog("REQ", idUnico, "perguntas - INI");
+          
+          out.writeObject("ok");
+          
+          ArrayList<Pergunta> listaSel = (new ProvaDAO()).getPerguntas(usuLogado, idUnico);
+          
+          out.writeObject(listaSel);
+          
+          GravaLog("REQ", idUnico, "perguntas - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

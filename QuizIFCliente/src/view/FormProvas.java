@@ -14,12 +14,12 @@ import view.tablemodel.PerguntasTableModel;
 
 public class FormProvas extends javax.swing.JDialog {
 
-  PerguntasTableModel GPerguntasDisModel;
-  PerguntasTableModel GPerguntasSelModel;
+  private PerguntasTableModel GPerguntasDisModel;
+  private PerguntasTableModel GPerguntasSelModel;
   
-  boolean GModoEdicao;
-  Prova GProva;
-  ArrayList<Area> GListaCombo;
+  private final boolean GModoEdicao;
+  private Prova GProva;
+  private ArrayList<Area> GListaCombo;
   
   public FormProvas(Prova prova) {
     initComponents();

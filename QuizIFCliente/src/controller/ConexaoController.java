@@ -538,4 +538,22 @@ public class ConexaoController {
     
     GravaLog("GET", 0,"perguntas jogo - FIM");
   }
+
+  public ArrayList<Pergunta> getPerguntas() {
+    GravaLog("GET", 0,"perguntas - INI");
+    String msg = "";
+    try{
+      out.writeObject("GETPERGUNTAS");
+      
+      msg = (String) in.readObject();
+      
+      GravaLog("GET", 0,"perguntas - FIM");
+      return (ArrayList<Pergunta>) in.readObject();
+      
+    } catch(IOException | ClassNotFoundException e){
+      GravaLogErro("ERR", 0, "Erro na requisição de perguntas\n"+e.toString());
+    }
+    
+    return null;
+  }
 }

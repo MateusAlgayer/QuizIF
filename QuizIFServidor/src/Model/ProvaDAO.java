@@ -389,4 +389,41 @@ public class ProvaDAO {
       return null;
     }
   }
+
+  public ArrayList<Pergunta> getPerguntas(int dono, int idUnico) {
+    try {
+      ArrayList<Pergunta> listaSel = new ArrayList<>();
+      
+      PreparedStatement stmt;
+      String sql = "SELECT TABPER.CODIGO, TABARE.CODIGO AS CODAREA, TABARE.NOME, TABPER.PERGUNTA, TABPER.DIFICULDADE, "+
+                   "TABPER.ALTERNATIVAS, TABPER.CORRETA, TABPER.SITUACAO AS SIT "+ 
+                   "FROM TABPER "+
+                   " LEFT OUTER JOIN TABARE ON TABPER.CODAREA = TABARE.CODIGO "+
+                   "WHERE DONO = ? OR NOT FIND_IN_SET(DONO,(SELECT GROUP_CONCAT(CODIGO) FROM TABUSU))";
+
+      stmt = con.prepareStatement(sql); 
+
+      stmt.setInt(1, dono);
+      
+      ResultSet result = stmt.executeQuery();
+
+      while(result.next()){
+        listaSel.add( new Pergunta(result.getInt("CODIGO"),
+                                   new Area(result.getInt("CODAREA"),result.getString("NOME")),
+                                   result.getString("PERGUNTA"),
+                                   result.getInt("DIFICULDADE"),
+                                   result.getString("ALTERNATIVAS"),
+                                   result.getInt("CORRETA"),
+                                   result.getString("SIT").charAt(0)));
+      }
+      
+      stmt.close();
+      con.close();
+      GravaLog("SQL", idUnico, "Recuperou um objeto do banco: PerguntasJogo");
+      return listaSel;
+    } catch (SQLException e) {
+      GravaLogErro("ERR",idUnico, e.toString());
+      return null;
+    }
+  }
 }

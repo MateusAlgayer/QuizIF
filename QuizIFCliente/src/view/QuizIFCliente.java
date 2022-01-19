@@ -35,31 +35,7 @@ public class QuizIFCliente {
     try {
       GravaLog("CON", 0, "Tentando se conectar ao servidor");
       
-      String ip = Metodos.LeConf("ConexCliente");
-      
-      if(ip.isEmpty()){
-        JTextField tfConex = new JTextField();
-        Object[] campos = {"Informe o IP do servidor:",tfConex};
-        Object[] opcoes = {"Salvar","Sair"};
-        
-        int teste;
-        teste = JOptionPane.showOptionDialog(null, 
-                                        campos, 
-                                        "Servidor não encontrado!", 
-                                        JOptionPane.OK_CANCEL_OPTION, 
-                                        JOptionPane.WARNING_MESSAGE, 
-                                        null, 
-                                        opcoes, 
-                                        opcoes[1]);
-        if(teste == JOptionPane.OK_OPTION){
-          Metodos.CriaConf("ConexCliente", tfConex.getText());
-          ip = tfConex.getText();
-        } else {
-          System.exit(0);
-        }
-      }
-      
-      wSocket = new Socket(ip, 12345);
+      wSocket = new Socket(LeConex(), 12345);
       wOut = new ObjectOutputStream(wSocket.getOutputStream());
       wIn = new ObjectInputStream(wSocket.getInputStream());
       
@@ -69,6 +45,8 @@ public class QuizIFCliente {
       Erro("Erro", "Erro na conexão com o servidor:\n"+e.toString());
       GravaLogErro("CON", 0, e.toString());
       Metodos.CriaConf("ConexCliente", "");
+      LeConex();
+      Metodos.Aviso("Aviso!!", "IP do servidor gravado!!\nReinicie a aplicação!");
       System.exit(0);
     }
     
@@ -76,5 +54,31 @@ public class QuizIFCliente {
     FormLogin fl = new FormLogin();
     fl.setVisible(true);
   }
-  
+
+  private static String LeConex() {
+    String ip = Metodos.LeConf("ConexCliente");
+      
+    if(ip.isEmpty()){
+      JTextField tfConex = new JTextField();
+      Object[] campos = {"Informe o IP do servidor:",tfConex};
+      Object[] opcoes = {"Salvar","Sair"};
+
+      int teste;
+      teste = JOptionPane.showOptionDialog(null, 
+                                      campos, 
+                                      "Servidor não encontrado!", 
+                                      JOptionPane.OK_CANCEL_OPTION, 
+                                      JOptionPane.WARNING_MESSAGE, 
+                                      null, 
+                                      opcoes, 
+                                      opcoes[1]);
+      if(teste == JOptionPane.OK_OPTION){
+        Metodos.CriaConf("ConexCliente", tfConex.getText());
+        ip = tfConex.getText();
+      } else {
+        System.exit(0);
+      }
+    }
+    return ip;
+  }
 }

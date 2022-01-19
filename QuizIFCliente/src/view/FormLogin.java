@@ -165,6 +165,12 @@ public class FormLogin extends javax.swing.JFrame{
       FormPrincipal fp = new FormPrincipal();
       fp.setVisible(true);
       
+      if(chbLembraUsu.isSelected()){
+      Metodos.CriaConf("lembraUsu","1Ɵ"+tfUsu.getText());
+      } else {
+        Metodos.CriaConf("lembraUsu","0");
+      }
+      
       dispose();
    } else {
       lbAviso.setVisible(true);
