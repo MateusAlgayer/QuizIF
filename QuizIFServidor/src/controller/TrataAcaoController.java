@@ -421,6 +421,16 @@ public class TrataAcaoController extends Thread{
           out.writeObject(listaSel);
           
           GravaLog("REQ", idUnico, "perguntas - FIM");
+        } else if(wCom.equalsIgnoreCase("GETLISTAPROVASHIST")){
+          
+          GravaLog("REQ", idUnico, "Lista de provas histórico - INI");
+          out.writeObject("ok");
+          
+          ArrayList<Prova> listaProvas = ((new ProvaDAO()).getListaProvaHist(this.usuLogado, idUnico));
+          
+          GravaLog("REQ", idUnico, "Lista de provas histórico - FIM");
+          out.writeObject(listaProvas);
+          
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

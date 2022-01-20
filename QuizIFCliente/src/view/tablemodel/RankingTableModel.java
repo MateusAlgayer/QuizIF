@@ -7,10 +7,6 @@ import ModelDominio.Jogo;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
-/**
- *
- * @author felip
- */
 public class RankingTableModel extends AbstractTableModel{
     
     private final ArrayList<Jogo> listaJogos;

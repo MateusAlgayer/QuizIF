@@ -426,4 +426,46 @@ public class ProvaDAO {
       return null;
     }
   }
+
+  public ArrayList<Prova> getListaProvaHist(int usu, int idUnico) {
+    try {
+      PreparedStatement stmt;
+      
+      String sql = "SELECT TABPRO.CODIGO, TABPRO.NOME, TABPRO.AREAGERAL, TABARE.NOME AS NOMEAREA, "+
+                   "TABPRO.DIFICULDADE, TABPRO.SITUACAO, "+
+                   "ROUND((TABUSUPRO.NUMACERTOS*100) DIV TABUSUPRO.NUMPERGUNTAS) AS PONTUACAO "+
+                   "FROM TABUSUPRO "+
+                     "LEFT OUTER JOIN TABPRO ON TABUSUPRO.PROVA = TABPRO.CODIGO "+
+                     "LEFT OUTER JOIN TABARE ON TABPRO.AREAGERAL = TABARE.CODIGO "+
+                   "WHERE USUARIO = ?";
+      
+      stmt = con.prepareStatement(sql);
+      
+      stmt.setInt(1, usu);
+      
+      ResultSet result = stmt.executeQuery();
+      
+      ArrayList<Prova> listaProvas = new ArrayList<>();
+      
+      while(result.next()){
+        listaProvas.add(new Prova(result.getInt("CODIGO"),
+                                  result.getString("NOME"),
+                                  new Area(result.getInt("AREAGERAL"),result.getString("NOMEAREA")),
+                                  result.getInt("DIFICULDADE"),
+                                  result.getString("SITUACAO").charAt(0),                 
+                                  result.getInt("PONTUACAO")
+                                  ));
+      }
+
+      stmt.close();
+      con.close();
+      
+      GravaLog("SQL", idUnico, "Recuperou um objeto do banco: ListaProvasHist");
+      return listaProvas;
+      
+    } catch (SQLException e) {
+      GravaLogErro("ERR",idUnico, e.toString());
+    }
+    return null;
+  }
 }

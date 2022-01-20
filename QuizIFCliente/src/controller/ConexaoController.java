@@ -540,7 +540,7 @@ public class ConexaoController {
           GravaLog("GET", 0, "Usuarios - FIM");
           return listaUsuarios;
           
-      } catch (Exception e) {
+      } catch (IOException | ClassNotFoundException e) {
           GravaLogErro("ERR", 0, "Erro ao enviar Usuarios\n"+e.toString());
       }
       return null;
@@ -581,5 +581,26 @@ public class ConexaoController {
     }
     
     return null;
+  }
+  
+  public ArrayList<Prova> getProvasHist(int usuEspec){
+    
+    GravaLog("GET", 0, "ProvasHist - INI");
+    String msg = "";
+    try {
+      out.writeObject("GETLISTAPROVASHIST");
+      
+      msg = (String) in.readObject();
+      
+      ArrayList<Prova> listaProvas = (ArrayList<Prova>) in.readObject();
+      
+      GravaLog("GET", 0, "ProvasHist - FIM");
+      return listaProvas;
+      
+    } catch (IOException | ClassNotFoundException e) {
+      GravaLogErro("ERR", 0, "Erro ao enviar ProvasHist\n"+e.toString());
+    }
+    
+    return null; 
   }
 }
