@@ -2,6 +2,7 @@
 //Mateus Roberto Algayer - 28/12/2021 :: Criação
 //João Felipe Staub - 18/01/2022 :: getRanking
 //João Felipe Staub - 19/01/2022 :: getUsuarios
+//João Felipe Staub - 19/01/2022 :: AlteraTipoUsu
 
 package controller;
 
@@ -419,7 +420,7 @@ public class ConexaoController {
         }
   }
   
-  public boolean AlteraTipoUsu(Usuario usu){
+  public boolean AlteraTipoUsu(Usuario usu, String tipo){
       String msg;
       
       try {
@@ -427,11 +428,13 @@ public class ConexaoController {
           out.writeObject("AlteraTipoUsu");
           msg = (String) in.readObject();
           out.writeObject(usu);
+          out.writeObject(tipo);
+          msg = (String) in.readObject();
           msg = (String) in.readObject();
           
           return msg.equals("ok");
       } catch (IOException | ClassNotFoundException e) {
-        GravaLog("ERRO", 0, "Erro ao alterar usuário \n" + e.toString());
+        GravaLog("ERR", 0, "Erro ao alterar usuário \n" + e.toString());
         return false;
       }
   }

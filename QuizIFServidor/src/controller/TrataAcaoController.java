@@ -2,6 +2,7 @@
 //Mateus Roberto Algayer - 27/12/2021 :: Criação
 //João Felipe Staub - 18/01/2022 :: GETRANKING
 //João Felipe Staub - 18/01/2022 :: GETRANKING TÉRMINO
+//João Felipe Staub - 19/01/2022 :: AlteraTipoUsu
 
 package controller;
 
@@ -387,18 +388,25 @@ public class TrataAcaoController extends Thread{
           
           GravaLog("REQ", idUnico, "perguntas jogo - FIM");
         } else if(wCom.equalsIgnoreCase("AlteraTipoUsu")){
-          GravaLog("UPD", idUnico, "Alterar Tipo Usuário - INI");
+          GravaLog("DEL", idUnico, "Alterar Tipo Usuário - INI");
           
           out.writeObject("ok");
           
           Usuario usu = (Usuario) in.readObject();
+          String tipo = (String) in.readObject();
           
-          //int id = (new UsuarioDAO()).AlteraTipoUsu(usu, idUnico);
+          out.writeObject("ok");
           
-          //TERMINAR
+            UsuarioDAO usudao = new UsuarioDAO();
+            int statusCode = usudao.AlteraTipoUsu(usu, tipo, idUnico);
+            
+            if(statusCode == -1){
+                out.writeObject("ok");
+            }else{
+                out.writeObject("nok");
+            }
           
-          
-          GravaLog("UPD", idUnico, "Deletar prova - FIM");
+          GravaLog("DEL", idUnico, "Deletar prova - FIM");
         } else if(wCom.equalsIgnoreCase("GETUSU")){
             GravaLog("REQ", idUnico, "Get Usuarios - INI");
             

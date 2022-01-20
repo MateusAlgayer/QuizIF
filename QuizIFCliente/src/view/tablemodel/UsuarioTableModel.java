@@ -1,5 +1,6 @@
 
 //João Felipe Staub - 19/01/2022 ::Criação
+//João Felipe Staub - 19/01/2022 :: getUsuario
 
 package view.tablemodel;
 
@@ -18,6 +19,10 @@ public class UsuarioTableModel extends AbstractTableModel{
 
     public UsuarioTableModel(ArrayList<Usuario> listaUsuario) {
         this.listaUsuario = listaUsuario;
+    }
+    
+    public Usuario getUsuario(int x){
+        return this.listaUsuario.get(x);
     }
 
     @Override

@@ -1,6 +1,7 @@
 
 //Mateus Roberto Algayer - 29/12/2021 :: Criação
 //João Felipe Staub - 19/01/2022 :: getListaUsuarios
+//João Felipe Staub - 19/01/2022 :: AlteraTipoUsu
 
 package Model;
 
@@ -347,50 +348,44 @@ public class UsuarioDAO {
         return null;
     }
     
-    //TERMINAR
-    /*public int AlteraTipoUsu(Usuario usu, int id){
-        PreparedStatement stmt;
-        Usuario wUsu = null;
-
+    public int AlteraTipoUsu(Usuario usu, String tipo, int idUnico) {
+        PreparedStatement stmt = null;
         try {
-            String sql = "SELECT * FROM TABUSU "
-                    + "WHERE EMAIL = ? AND SENHA = ?";
-            stmt = con.prepareStatement(sql);
-            stmt.setString(1, usu.getEmail());
-            stmt.setString(2, usu.getSenha());
+            try {
+                con.setAutoCommit(false);
 
-            ResultSet result = stmt.executeQuery();
+                String sql = "UPDATE TABUSU SET TIPO = ? WHERE CODIGO = ?";
 
-            while (result.next()) {
-                switch (result.getString("TIPO")) {
-                    case "C" ->
-                        wUsu = new Comum(result.getInt("CODIGO"),
-                                result.getString("NOME"),
-                                result.getString("APELIDO"),
-                                result.getString("EMAIL"),
-                                result.getString("SENHA"));
-                    case "J" ->
-                        wUsu = new Criador(result.getInt("CODIGO"),
-                                result.getString("NOME"),
-                                result.getString("APELIDO"),
-                                result.getString("EMAIL"),
-                                result.getString("SENHA"));
-                    case "A" ->
-                        wUsu = new Administrador(result.getInt("CODIGO"),
-                                result.getString("NOME"),
-                                result.getString("APELIDO"),
-                                result.getString("EMAIL"),
-                                result.getString("SENHA"));
+                stmt = con.prepareStatement(sql);
+
+                stmt.setString(1, tipo);
+                stmt.setInt(2, usu.getCodUsuario());
+
+                stmt.execute();
+
+                con.commit();
+
+            } catch (SQLException e) {
+                try {
+                    con.rollback();
+                    GravaLogErro("ERR", idUnico, "Erro ao alterar permissão de usuário\n" + e.toString());
+                } catch (SQLException ex) {
+                    GravaLogErro("ERR", idUnico, "Erro ao alterar permissão de usuário\n" + ex.toString());
                 }
-
-                GravaLog("SQL", Id, "Recuperou um objeto do banco");
+                return e.getErrorCode();
             }
 
-            stmt.close();
-            con.close();
-        } catch (SQLException e) {
-            GravaLogErro("ERR", id, e.toString());
+            return -1;
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                con.setAutoCommit(true);
+                con.close();
+            } catch (SQLException ex) {
+                GravaLogErro("ERR", idUnico, "Erro ao alterar permissão de usuário\n" + ex.toString());
+            }
         }
-        return wUsu;
-    }*/ 
+    }
 }
