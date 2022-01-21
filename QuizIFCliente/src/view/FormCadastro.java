@@ -9,6 +9,7 @@ import static util.Metodos.Pedaco;
 import static util.Metodos.GravaLog;
 import util.CriptoHash;
 import ModelDominio.Comum;
+import java.util.Iterator;
 
 public class FormCadastro extends javax.swing.JDialog {
 
@@ -96,21 +97,52 @@ public class FormCadastro extends javax.swing.JDialog {
     private void btCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroActionPerformed
       String recNome = Pedaco(tfEmail.getText(),"@", 1);
       String dominio = Pedaco(tfEmail.getText(),"@", 2);
-              
+       
+      //validação de email - INI
+      
+      //receptor é vazio
       if(recNome.equals("")){
         Metodos.Aviso(this.getTitle(), "Email inválido!");
         return;
       }
       
+      //dominio é vazio
       if(dominio.equals("")){
         Metodos.Aviso(this.getTitle(), "Email inválido!");
         return;
       }
       
+      int i = 0;
+      int idx = 0;
+      
+      //conta o número de vezes que o . aparece no dominio
+      while(idx != -1){
+        idx = dominio.indexOf(".", idx+1);
+        
+        if(idx != -1)
+          i++;
+      }
+      
+      //se i é 0 então não tem subdominio
+      if(i == 0){
+        Metodos.Aviso(this.getTitle(), "Email inválido!");
+        return;
+      }
+      
+      //ve se algo entre os pontos está vazio, se estiver o email é inválido
+      for (int x = 1; x <= i+1; x++) {
+        if(Pedaco(dominio,".", x).equals("")){
+          Metodos.Aviso(this.getTitle(), "Email inválido!");
+          return;
+        }
+      }
+      
+      //validação de email - FIM
+      
       if(!Metodos.Consistencia(true, tfEmail,tfNome, tfApelido)){
         return;
-      } 
-
+      }
+       
       GravaLog("CAD", 0, "Cadastro - INI");
       
       if(!QuizIFCliente.ccont.EnviaCodigoEmail(tfEmail.getText())){
@@ -118,7 +150,7 @@ public class FormCadastro extends javax.swing.JDialog {
       } 
 
       boolean continua = true;
-      String sal = CriptoHash.getSalt();
+      String sal = CriptoHash.getSalt(0);
       int cont = 0;
       
       InfoApp.setGSenhaCripto("");

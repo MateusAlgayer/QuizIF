@@ -12,6 +12,13 @@ import java.security.SecureRandom;
 
 public class CriptoHash {
 
+    /**
+     * Metodo usado para criptografar uma string
+     * @param pSenha String a ser criptografada
+     * @param pSal Sal a ser utilizado
+     * @param id id para gravação de log só é necessário em threads, em outros casos é 0
+     * @return senha criptografada ou vazio caso haja erro
+     */
     public static String Cripto(String pSenha, String pSal,int id){
       try {
         String wSenhaToHash = pSenha;
@@ -26,7 +33,12 @@ public class CriptoHash {
         
     }
     
-    public static String getSalt(){
+    /**
+     * Metodo que gera um Sal para criptografia
+   * @param id id para gravação de log só é necessário em threads, em outros casos é 0
+     * @return um sal
+     */
+    public static String getSalt(int id){
     
         try {
           SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
@@ -35,7 +47,7 @@ public class CriptoHash {
           return toHexString(salt);
         
         } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-          Metodos.GravaLogErro("ERR", 0, "Erro no Sal");
+          Metodos.GravaLogErro("ERR", id, "Erro no Sal");
           return "";
         }
         

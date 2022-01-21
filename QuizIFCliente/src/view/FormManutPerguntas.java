@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import util.Metodos;
 import view.tablemodel.PerguntasTableModel;
 import view.util.ComboBoxArea;
+import static util.Metodos.Pedaco;
 
 public class FormManutPerguntas extends javax.swing.JFrame {
 
   private ArrayList<Area> GListaCombo;
   private PerguntasTableModel GPerguntas;
+  private int contAtt = 0;
+  private boolean GModoEdicao;
   
   public FormManutPerguntas() {
     initComponents();
@@ -32,8 +35,8 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     jScrollPane1 = new javax.swing.JScrollPane();
     tbPerguntas = new javax.swing.JTable();
     btAtualizar = new javax.swing.JButton();
-    jButton1 = new javax.swing.JButton();
-    jButton2 = new javax.swing.JButton();
+    btSalvar = new javax.swing.JButton();
+    btExcluir = new javax.swing.JButton();
     cbArea = new javax.swing.JComboBox<>();
     cbDificuldade = new javax.swing.JComboBox<>();
     cbSituacao = new javax.swing.JComboBox<>();
@@ -55,12 +58,14 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     tfAlt2 = new javax.swing.JTextField();
     tfAlt3 = new javax.swing.JTextField();
     tfAlt4 = new javax.swing.JTextField();
+    jLabel9 = new javax.swing.JLabel();
+    tfCodigo = new javax.swing.JTextField();
+    btNovo = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setTitle("Manutenção de perguntas");
     setMinimumSize(new java.awt.Dimension(910, 750));
     setName("Manutenção de perguntas"); // NOI18N
-    setPreferredSize(new java.awt.Dimension(910, 750));
 
     btVoltar.setText("Voltar");
     btVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -96,9 +101,14 @@ public class FormManutPerguntas extends javax.swing.JFrame {
       }
     });
 
-    jButton1.setText("Salvar");
+    btSalvar.setText("Salvar");
 
-    jButton2.setText("Excluir");
+    btExcluir.setText("Excluir");
+    btExcluir.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btExcluirActionPerformed(evt);
+      }
+    });
 
     cbDificuldade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 - Fácil", "2 - Médio", "3 - Difícil" }));
     cbDificuldade.setSelectedIndex(1);
@@ -112,6 +122,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     jLabel3.setText("Situação:");
 
     tfPergunta.setColumns(20);
+    tfPergunta.setLineWrap(true);
     tfPergunta.setRows(5);
     tfPergunta.setName("Pergunta"); // NOI18N
     jScrollPane2.setViewportView(tfPergunta);
@@ -141,6 +152,17 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     tfAlt3.setName("Alternativa 3"); // NOI18N
 
     tfAlt4.setName("Alternativa 4"); // NOI18N
+
+    jLabel9.setText("Código:");
+
+    tfCodigo.setEditable(false);
+
+    btNovo.setText("Novo");
+    btNovo.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btNovoActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -174,23 +196,13 @@ public class FormManutPerguntas extends javax.swing.JFrame {
               .addComponent(tfAlt2, javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1))
+                .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btNovo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btSalvar))
               .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addGroup(layout.createSequentialGroup()
-                    .addComponent(jLabel1)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(cbArea, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jLabel2)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(cbDificuldade, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jLabel3)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(cbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                   .addComponent(jLabel4)
                   .addGroup(layout.createSequentialGroup()
                     .addComponent(jLabel5)
@@ -200,11 +212,27 @@ public class FormManutPerguntas extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(Correta2)))
-                .addGap(0, 208, Short.MAX_VALUE)))
+                .addGap(0, 683, Short.MAX_VALUE))
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfCodigo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbArea, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbDificuldade, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap())))
     );
 
-    layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+    layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btExcluir, btNovo, btSalvar});
 
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +251,9 @@ public class FormManutPerguntas extends javax.swing.JFrame {
           .addComponent(cbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel1)
           .addComponent(jLabel2)
-          .addComponent(jLabel3))
+          .addComponent(jLabel3)
+          .addComponent(jLabel9)
+          .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(7, 7, 7)
         .addComponent(jLabel4)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -254,12 +284,13 @@ public class FormManutPerguntas extends javax.swing.JFrame {
         .addComponent(tfAlt4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jButton1))
+          .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(btSalvar)
+          .addComponent(btNovo))
         .addContainerGap())
     );
 
-    layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2});
+    layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btExcluir, btNovo, btSalvar});
 
     pack();
     setLocationRelativeTo(null);
@@ -270,7 +301,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   }//GEN-LAST:event_btVoltarActionPerformed
 
   private void btAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarActionPerformed
-    dispose();
+    AtualizaTabela();
   }//GEN-LAST:event_btAtualizarActionPerformed
 
   private void tbPerguntasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPerguntasMouseClicked
@@ -280,18 +311,27 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     AtualizaInfoPer(tbPerguntas.getSelectedRow());
   }//GEN-LAST:event_tbPerguntasMouseClicked
 
+  private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_btExcluirActionPerformed
+
+  private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
+    LimpaCampos();
+  }//GEN-LAST:event_btNovoActionPerformed
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JCheckBox Correta1;
   private javax.swing.JCheckBox Correta2;
   private javax.swing.JCheckBox Correta3;
   private javax.swing.JCheckBox Correta4;
   private javax.swing.JButton btAtualizar;
+  private javax.swing.JButton btExcluir;
+  private javax.swing.JButton btNovo;
+  private javax.swing.JButton btSalvar;
   private javax.swing.JButton btVoltar;
   private javax.swing.JComboBox<Area> cbArea;
   private javax.swing.JComboBox<String> cbDificuldade;
   private javax.swing.JComboBox<String> cbSituacao;
-  private javax.swing.JButton jButton1;
-  private javax.swing.JButton jButton2;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
@@ -300,6 +340,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel6;
   private javax.swing.JLabel jLabel7;
   private javax.swing.JLabel jLabel8;
+  private javax.swing.JLabel jLabel9;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JTable tbPerguntas;
@@ -307,12 +348,18 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   private javax.swing.JTextField tfAlt2;
   private javax.swing.JTextField tfAlt3;
   private javax.swing.JTextField tfAlt4;
+  private javax.swing.JTextField tfCodigo;
   private javax.swing.JTextArea tfPergunta;
   // End of variables declaration//GEN-END:variables
 
   private void attComboBoxArea(int i) {
-    GListaCombo = QuizIFCliente.ccont.getListaArea();
-    
+    //não precisa pegar do banco mais de uma vez, mas atualiza caso passe 10 atualizações
+    if(GListaCombo != null || contAtt != 10){
+      GListaCombo = QuizIFCliente.ccont.getListaArea();
+      contAtt = 0;
+    } else {
+      contAtt++;
+    }
     ComboBoxArea.preencheComboboxArea(i, cbArea, GListaCombo, false);
   }
 
@@ -326,6 +373,66 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   }
 
   private void AtualizaInfoPer(int selectedRow) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    // isso carrega as informações de uma pergunta da tabela
+    
+    Pergunta per = GPerguntas.getPergunta(selectedRow);
+    
+    tfCodigo.setText(String.valueOf(per.getCodPergunta()));
+    
+    attComboBoxArea(per.getArea().getCodArea());
+    
+    int dif = switch (per.getDificuldade()) {
+      case 1 -> 0;  //fácil
+      case 2 -> 1;  //médio
+      case 3 -> 2;  //difícil
+      default -> 1; //médio
+    };
+    
+    cbDificuldade.setSelectedIndex(dif);   
+    cbSituacao.setSelectedIndex((per.getSituacao() == 'A' ? 0 : 1));
+    
+    tfPergunta.setText(per.getPergunta());
+    
+    tfAlt1.setText(Pedaco(per.getAlternativas(),"Ѫ", 1));
+    tfAlt2.setText(Pedaco(per.getAlternativas(),"Ѫ", 1));
+    tfAlt3.setText(Pedaco(per.getAlternativas(),"Ѫ", 1));
+    tfAlt4.setText(Pedaco(per.getAlternativas(),"Ѫ", 1));
+    
+    Correta1.setSelected(false);
+    Correta2.setSelected(false);
+    Correta3.setSelected(false);
+    Correta4.setSelected(false);
+    
+    switch(per.getCorreta()){
+      case 1 -> Correta1.setSelected(true);
+      case 2 -> Correta2.setSelected(true);
+      case 3 -> Correta3.setSelected(true);
+      case 4 -> Correta4.setSelected(true);
+      default -> {}
+    }
+    
+  }
+
+  private void LimpaCampos() {
+    //reseta todos os campos
+    
+    tfCodigo.setText("");
+    
+    attComboBoxArea(-1);
+    
+    cbDificuldade.setSelectedIndex(1);
+    
+    cbSituacao.setSelectedIndex(0);
+    tfPergunta.setText("");
+    
+    tfAlt1.setText("");
+    tfAlt2.setText("");
+    tfAlt3.setText("");
+    tfAlt4.setText("");
+    
+    Correta1.setSelected(false);
+    Correta2.setSelected(false);
+    Correta3.setSelected(false);
+    Correta4.setSelected(false);
   }
 }

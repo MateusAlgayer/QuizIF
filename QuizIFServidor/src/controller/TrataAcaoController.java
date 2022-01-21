@@ -105,7 +105,7 @@ public class TrataAcaoController extends Thread{
           
           if(!existe){
             
-            String sal = CriptoHash.getSalt();
+            String sal = CriptoHash.getSalt(idUnico);
           
             out.writeObject(sal);
 
@@ -114,7 +114,7 @@ public class TrataAcaoController extends Thread{
             QuizIFMail.EnviaEmail(email, codigo, idUnico);
 
             String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
-
+            
             boolean continua = true;
 
             while(continua){
@@ -150,7 +150,7 @@ public class TrataAcaoController extends Thread{
           
           if(existe){
             
-            String sal = CriptoHash.getSalt();
+            String sal = CriptoHash.getSalt(idUnico);
           
             out.writeObject(sal);
 
