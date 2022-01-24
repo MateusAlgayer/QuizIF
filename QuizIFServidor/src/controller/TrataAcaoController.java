@@ -8,6 +8,7 @@ package controller;
 
 import Model.AreaDAO;
 import Model.JogoDAO;
+import Model.PerguntaDAO;
 import Model.ProvaDAO;
 import Model.UsuarioDAO;
 import ModelDominio.Jogo;
@@ -382,7 +383,7 @@ public class TrataAcaoController extends Thread{
           
           int numProva = (int)in.readObject();
           
-          ArrayList<Pergunta> listaSel = (new ProvaDAO()).getPerguntasJogo(numProva, idUnico);
+          ArrayList<Pergunta> listaSel = (new JogoDAO()).getPerguntasJogo(numProva, idUnico);
           
           out.writeObject(listaSel);
           
@@ -424,7 +425,7 @@ public class TrataAcaoController extends Thread{
           
           out.writeObject("ok");
           
-          ArrayList<Pergunta> listaSel = (new ProvaDAO()).getPerguntas(usuLogado, idUnico);
+          ArrayList<Pergunta> listaSel = (new PerguntaDAO()).getPerguntas(usuLogado, idUnico);
           
           out.writeObject(listaSel);
           
@@ -439,6 +440,57 @@ public class TrataAcaoController extends Thread{
           GravaLog("REQ", idUnico, "Lista de provas histórico - FIM");
           out.writeObject(listaProvas);
           
+        } else if(wCom.equalsIgnoreCase("DELETAPERGUNTA")){
+          GravaLog("DEL", idUnico, "Deletar pergunta - INI");
+          
+          out.writeObject("ok");
+          
+          int codPergunta = (int)in.readObject();
+          
+          int status = (new PerguntaDAO()).DeletaPergunta(codPergunta, idUnico);
+          
+          switch (status) {
+            case -1 -> out.writeObject("ok");
+            case 1451 -> //código de erro pra quando o que está sendo deletado já foi referenciado como estrangeira em uma tabela filha
+              out.writeObject("jautiliz");
+            default -> out.writeObject("nok");
+          }
+          
+          GravaLog("DEL", idUnico, "Deletar pergunta - FIM");
+        } else if(wCom.equalsIgnoreCase("INSERIRPERGUNTA")){
+          GravaLog("CAD", idUnico, "Cadastro de pergunta - INI");
+          
+          out.writeObject("ok");
+          
+          Pergunta p = (Pergunta)in.readObject();
+          
+          int status = (new PerguntaDAO()).InserirPergunta(p, idUnico, usuLogado);
+          
+          if(status == -1){
+            out.writeObject("ok");
+          } else {
+            out.writeObject("nok");
+            GravaLogErro("ERR", idUnico, "Erro ao inserir a pergunta\nStatus erro:"+status);
+          }
+          
+          GravaLog("CAD", idUnico, "Cadastro de pergunta - FIM");
+        } else if(wCom.equalsIgnoreCase("ALTERARPERGUNTA")){
+          GravaLog("UPD", idUnico, "Alteração de pergunta - INI");
+          
+          out.writeObject("ok");
+          
+          Pergunta p = (Pergunta)in.readObject();
+          
+          int status = (new PerguntaDAO()).AlterarPergunta(p, idUnico, usuLogado);
+          
+          if(status == -1){
+            out.writeObject("ok");
+          } else {
+            out.writeObject("nok");
+            GravaLogErro("ERR", idUnico, "Erro ao alterar a pergunta\nStatus erro:"+status);
+          }
+          
+          GravaLog("UPD", idUnico, "Alteração de pergunta - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

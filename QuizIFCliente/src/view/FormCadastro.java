@@ -9,7 +9,6 @@ import static util.Metodos.Pedaco;
 import static util.Metodos.GravaLog;
 import util.CriptoHash;
 import ModelDominio.Comum;
-import java.util.Iterator;
 
 public class FormCadastro extends javax.swing.JDialog {
 
@@ -139,7 +138,7 @@ public class FormCadastro extends javax.swing.JDialog {
       
       //validação de email - FIM
       
-      if(!Metodos.Consistencia(true, tfEmail,tfNome, tfApelido)){
+      if(!Metodos.Consistencia(true, tfNome, tfApelido)){
         return;
       }
        
@@ -148,7 +147,7 @@ public class FormCadastro extends javax.swing.JDialog {
       if(!QuizIFCliente.ccont.EnviaCodigoEmail(tfEmail.getText())){
          return;
       } 
-
+      
       boolean continua = true;
       String sal = CriptoHash.getSalt(0);
       int cont = 0;

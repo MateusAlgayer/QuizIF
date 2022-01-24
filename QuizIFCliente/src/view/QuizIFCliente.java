@@ -71,7 +71,7 @@ public class QuizIFCliente {
                                       JOptionPane.WARNING_MESSAGE, 
                                       null, 
                                       opcoes, 
-                                      opcoes[1]);
+                                      opcoes[0]);
       if(teste == JOptionPane.OK_OPTION){
         Metodos.CriaConf("ConexCliente", tfConex.getText());
         ip = tfConex.getText();

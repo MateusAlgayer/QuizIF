@@ -315,16 +315,16 @@ public class FormProvas extends javax.swing.JDialog {
   }//GEN-LAST:event_btAdicionarActionPerformed
 
   private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-    if(Metodos.msgConfirma("Tem certeza que deseja excluir a prova '"+GProva.getNomeProva()+"'?"))
-      
-    switch(QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva())){
-      case 1 -> Metodos.Aviso(this.getTitle(), "Prova não pode ser deletada pois já foi realizada por algum usuário\n utilize o campo 'Situação' para inativar a prova");
-      case 2 -> Metodos.Erro(this.getTitle(), "Erro ao deletar a prova!");
-      default -> {
-        Metodos.Sucesso(this.getTitle(), "Prova deletada com sucesso!");
-        dispose();
-      }
-    }  
+    if(Metodos.msgConfirma("Tem certeza que deseja excluir a prova '"+GProva.getNomeProva()+"'?")){
+      switch(QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva())){
+        case 1 -> Metodos.Aviso(this.getTitle(), "Prova não pode ser deletada pois já foi realizada por algum usuário\n utilize o campo 'Situação' para inativar a prova");
+        case 2 -> Metodos.Erro(this.getTitle(), "Erro ao deletar a prova!");
+        default -> {
+          Metodos.Sucesso(this.getTitle(), "Prova deletada com sucesso!");
+          dispose();
+        }
+      }  
+    }
   }//GEN-LAST:event_btExcluirActionPerformed
 
   private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed

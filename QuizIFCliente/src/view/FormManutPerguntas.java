@@ -25,6 +25,8 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     attComboBoxArea(-1);
     
     AtualizaTabela();
+    
+    lbEdicao.setVisible(false);
   }
 
   @SuppressWarnings("unchecked")
@@ -61,6 +63,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     jLabel9 = new javax.swing.JLabel();
     tfCodigo = new javax.swing.JTextField();
     btNovo = new javax.swing.JButton();
+    lbEdicao = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setTitle("Manutenção de perguntas");
@@ -102,6 +105,11 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     });
 
     btSalvar.setText("Salvar");
+    btSalvar.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btSalvarActionPerformed(evt);
+      }
+    });
 
     btExcluir.setText("Excluir");
     btExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -164,6 +172,9 @@ public class FormManutPerguntas extends javax.swing.JFrame {
       }
     });
 
+    lbEdicao.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+    lbEdicao.setText("Modo de Edição!");
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -195,7 +206,9 @@ public class FormManutPerguntas extends javax.swing.JFrame {
               .addComponent(tfAlt1, javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(tfAlt2, javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
+                .addComponent(lbEdicao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btNovo)
@@ -282,11 +295,12 @@ public class FormManutPerguntas extends javax.swing.JFrame {
           .addComponent(Correta4))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(tfAlt4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+        .addGap(18, 18, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(btSalvar)
-          .addComponent(btNovo))
+          .addComponent(btNovo)
+          .addComponent(lbEdicao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addContainerGap())
     );
 
@@ -312,12 +326,92 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   }//GEN-LAST:event_tbPerguntasMouseClicked
 
   private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-    // TODO add your handling code here:
+    if(tfCodigo.getText().isEmpty())
+      return;
+    
+    if(Metodos.msgConfirma("Tem certeza que deseja excluir a pergunta de código '"+tfCodigo.getText()+"'?")){
+      switch(QuizIFCliente.ccont.ExcluirPergunta(Integer.parseInt(tfCodigo.getText()))){
+        case 1 -> Metodos.Aviso(this.getTitle(), "Pergunta não pode ser deletada pois já foi utilizada por alguma prova\n utilize o campo 'Situação' para inativar a pergunta");
+        case 2 -> Metodos.Erro(this.getTitle(), "Erro ao deletar a pergunta!");
+        default -> {
+          Metodos.Sucesso(this.getTitle(), "Pergunta deletada com sucesso!");
+          LimpaCampos();
+          AtualizaTabela();
+        }
+      }  
+    }
   }//GEN-LAST:event_btExcluirActionPerformed
 
   private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
     LimpaCampos();
   }//GEN-LAST:event_btNovoActionPerformed
+
+  private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+    if(!Metodos.Consistencia(true, tfPergunta, tfAlt1, tfAlt2, tfAlt3, tfAlt4))
+      return; 
+    
+    //testa os quatro campos de checkbox com um XOR pra ver se 1 e apenas 1 está marcado
+    if(!(Correta1.isSelected() ^ Correta2.isSelected() ^ Correta3.isSelected() ^ Correta4.isSelected())){
+      Metodos.Aviso(this.getTitle(), "É necessário que uma e apenas uma alternativa seja marcada como correta!");
+      return;
+    }
+    
+    if(tfCodigo.getText().isEmpty() && GModoEdicao){
+      Metodos.Aviso(this.getTitle(), "Modo de edição sem um código de pergunta, tente recarregar a pergunta!");
+      return;
+    }
+    
+    //Cria objeto 
+    Area a = GListaCombo.get(cbArea.getSelectedIndex());
+
+    //pega só o número da dificuldade pra guardar no banco
+    int dif = Integer.parseInt(Metodos.Pedaco((String)cbDificuldade.getSelectedItem(), " - ", 1));
+
+    char sit = ((String)cbSituacao.getSelectedItem()).charAt(0);
+    
+    String per = tfPergunta.getText();
+    
+    String alternativas = "";
+    
+    alternativas = tfAlt1.getText() + "Ѫ" + tfAlt2.getText() + "Ѫ" +
+                   tfAlt3.getText() + "Ѫ" + tfAlt4.getText();
+    
+    int correta = 0;
+    
+    if(Correta1.isSelected()){
+      correta = 1;
+    } else if(Correta2.isSelected()){
+      correta = 2;
+    } else if(Correta3.isSelected()){
+      correta = 3;
+    } else if(Correta4.isSelected()){
+      correta = 4;
+    }
+    //Area area, String pergunta, int dificuldade, String alternativas, int correta, char situacao
+    Pergunta p = new Pergunta(a, per, dif, alternativas, correta, sit);
+    
+    //Cria objeto FIM
+    
+    if(GModoEdicao){
+      p.setCodPergunta(Integer.parseInt(tfCodigo.getText()));
+      
+      if(QuizIFCliente.ccont.AlteraPergunta(p)){
+        Metodos.Sucesso(this.getTitle(), "Pergunta alterada com sucesso!");
+        AtualizaTabela();
+      } else {
+        Metodos.Erro(this.getTitle(), "Erro ao alterar pergunta!");
+      }
+    } else {
+      if(QuizIFCliente.ccont.InserePergunta(p)){
+        Metodos.Sucesso(this.getTitle(), "Pergunta gravada com sucesso!");
+        LimpaCampos();
+        AtualizaTabela();
+      } else {
+        Metodos.Erro(this.getTitle(), "Erro ao gravar pergunta!");
+      }
+    }
+    
+  }//GEN-LAST:event_btSalvarActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JCheckBox Correta1;
@@ -343,6 +437,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel9;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
+  private javax.swing.JLabel lbEdicao;
   private javax.swing.JTable tbPerguntas;
   private javax.swing.JTextField tfAlt1;
   private javax.swing.JTextField tfAlt2;
@@ -373,7 +468,9 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   }
 
   private void AtualizaInfoPer(int selectedRow) {
-    // isso carrega as informações de uma pergunta da tabela
+    // isso carrega as informações de uma pergunta da tabela e liga o modo de edição
+    GModoEdicao = true;
+    lbEdicao.setVisible(true);
     
     Pergunta per = GPerguntas.getPergunta(selectedRow);
     
@@ -394,9 +491,9 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     tfPergunta.setText(per.getPergunta());
     
     tfAlt1.setText(Pedaco(per.getAlternativas(),"Ѫ", 1));
-    tfAlt2.setText(Pedaco(per.getAlternativas(),"Ѫ", 1));
-    tfAlt3.setText(Pedaco(per.getAlternativas(),"Ѫ", 1));
-    tfAlt4.setText(Pedaco(per.getAlternativas(),"Ѫ", 1));
+    tfAlt2.setText(Pedaco(per.getAlternativas(),"Ѫ", 2));
+    tfAlt3.setText(Pedaco(per.getAlternativas(),"Ѫ", 3));
+    tfAlt4.setText(Pedaco(per.getAlternativas(),"Ѫ", 4));
     
     Correta1.setSelected(false);
     Correta2.setSelected(false);
@@ -414,7 +511,9 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   }
 
   private void LimpaCampos() {
-    //reseta todos os campos
+    //reseta todos os campos e desliga o modo de edição
+    GModoEdicao = false;
+    lbEdicao.setVisible(false);
     
     tfCodigo.setText("");
     

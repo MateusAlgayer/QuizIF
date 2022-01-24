@@ -60,7 +60,9 @@
                           <Component id="tfAlt1" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfAlt2" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="lbEdicao" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="btExcluir" linkSize="1" min="-2" pref="174" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btNovo" linkSize="1" min="-2" max="-2" attributes="0"/>
@@ -162,11 +164,12 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="tfAlt4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btExcluir" linkSize="2" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                   <Component id="btSalvar" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btNovo" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbEdicao" alignment="3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -221,6 +224,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Salvar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSalvarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btExcluir">
       <Properties>
@@ -382,6 +388,14 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNovoActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbEdicao">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="18" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Modo de Edi&#xe7;&#xe3;o!"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

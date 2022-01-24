@@ -336,7 +336,7 @@ public class ConexaoController {
         default -> 2;
       };
     } catch (IOException | ClassNotFoundException e) {
-        GravaLog("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
+        GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
         return 2;
     }
   }
@@ -415,7 +415,7 @@ public class ConexaoController {
                      
             return msg.equals("ok");
         } catch (IOException | ClassNotFoundException e) {
-            GravaLog("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
+            GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
             return false;
         }
   }
@@ -434,7 +434,7 @@ public class ConexaoController {
           
           return msg.equals("ok");
       } catch (IOException | ClassNotFoundException e) {
-        GravaLog("ERR", 0, "Erro ao alterar usuário \n" + e.toString());
+        GravaLogErro("ERR", 0, "Erro ao alterar usuário \n" + e.toString());
         return false;
       }
   }
@@ -461,7 +461,7 @@ public class ConexaoController {
           
           return msg.equals("ok");
       } catch (IOException | ClassNotFoundException e) {
-        GravaLog("ERRO", 0, "Erro ao alterar senha \n" + e.toString());
+        GravaLogErro("ERRO", 0, "Erro ao alterar senha \n" + e.toString());
         return false;
       }
   }
@@ -605,5 +605,66 @@ public class ConexaoController {
     }
     
     return null; 
+  }
+
+  public int ExcluirPergunta(int codigo) {
+    String msg;
+    GravaLog("DEL", 0, "Deletar pergunta - INI");
+    
+    try {
+      
+      out.writeObject("DELETAPERGUNTA");
+      msg = (String) in.readObject();
+      out.writeObject(codigo);
+      msg = (String) in.readObject();
+
+      GravaLog("DEL", 0, "Deletar pergunta - FIM");
+      return switch (msg) {
+        case "ok" -> 0;
+        case "jautiliz" -> 1;
+        default -> 2;
+      };
+    } catch (IOException | ClassNotFoundException e) {
+        GravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + e.toString());
+        return 2;
+    }
+  }
+
+  public boolean InserePergunta(Pergunta p) {
+    GravaLog("CAD", 0,"Cadastro de pergunta - INI");
+    String msg = "";
+    try{
+      out.writeObject("INSERIRPERGUNTA");
+      
+      msg = (String) in.readObject();
+      
+      out.writeObject(p);
+          
+      GravaLog("CAD", 0,"Cadastro de pergunta - FIM");
+      return ((String)in.readObject()).equals("ok");
+      
+    } catch(IOException | ClassNotFoundException e){
+      GravaLogErro("ERR", 0, "Erro no cadastro de pergunta\n"+e.toString());
+      return false;
+    }
+  }
+
+  public boolean AlteraPergunta(Pergunta p) {
+    GravaLog("UPD", 0,"Alteração de pergunta - INI");
+    String msg = "";
+    try{
+      out.writeObject("ALTERARPERGUNTA");
+      
+      msg = (String) in.readObject();
+      
+      out.writeObject(p);
+          
+      GravaLog("CAD", 0,"Alteração de pergunta - FIM");
+      return ((String)in.readObject()).equals("ok");
+      
+    } catch(IOException | ClassNotFoundException e){
+      GravaLogErro("ERR", 0, "Erro ao alterar pergunta\n"+e.toString());
+      return false;
+    }
   }
 }
