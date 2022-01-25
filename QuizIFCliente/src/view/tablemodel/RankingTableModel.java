@@ -32,7 +32,7 @@ public class RankingTableModel extends AbstractTableModel{
         Jogo j = listaJogos.get(rowIndex);
         return switch(columnIndex){
             case 0 -> rowIndex+1;
-            case 1 -> j.getJogador();
+            case 1 -> j.getJogador().getApelido();
             case 2 -> j.getNumPerguntas();
             case 3 -> j.getNumAcertos();
             case 4 -> j.getPontuacao();

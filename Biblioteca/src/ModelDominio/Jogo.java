@@ -10,7 +10,7 @@ public class Jogo implements Serializable{
     private static final long serialVersionUID = 123456789L;
     
     private Prova prova;
-    private String jogador;
+    private Usuario jogador;
     private int numPerguntas;
     private int numAcertos;
     private int pontuacao;
@@ -23,11 +23,11 @@ public class Jogo implements Serializable{
         this.prova = prova;
     }
 
-    public String getJogador() {
+    public Usuario getJogador() {
         return jogador;
     }
 
-    public void setJogador(String jogador) {
+    public void setJogador(Usuario jogador) {
         this.jogador = jogador;
     }
 
@@ -55,7 +55,7 @@ public class Jogo implements Serializable{
         this.pontuacao = pontuacao;
     }
 
-    public Jogo(Prova prova, String jogador, int numPerguntas, int numAcertos, int pontuacao) {
+    public Jogo(Prova prova, Usuario jogador, int numPerguntas, int numAcertos, int pontuacao) {
         this.prova = prova;
         this.jogador = jogador;
         this.numPerguntas = numPerguntas;
@@ -63,7 +63,7 @@ public class Jogo implements Serializable{
         this.pontuacao = pontuacao;
     }
 
-    public Jogo(Prova prova, String jogador, int numPerguntas, int numAcertos) {
+    public Jogo(Prova prova, Usuario jogador, int numPerguntas, int numAcertos) {
         this.prova = prova;
         this.jogador = jogador;
         this.numPerguntas = numPerguntas;

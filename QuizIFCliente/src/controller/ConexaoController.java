@@ -667,4 +667,23 @@ public class ConexaoController {
       return false;
     }
   }
+
+  public boolean GravaResultJogo(Jogo resultJogo) {
+    GravaLog("INS", 0,"Grava jogo - INI");
+    String msg = "";
+    try{
+      out.writeObject("GRAVARJOGO");
+      
+      msg = (String) in.readObject();
+      
+      out.writeObject(resultJogo);
+          
+      GravaLog("INS", 0,"Grava jogo - FIM");
+      return ((String)in.readObject()).equals("ok");
+      
+    } catch(IOException | ClassNotFoundException e){
+      GravaLogErro("ERR", 0, "Erro ao gravar jogo\n"+e.toString());
+      return false;
+    }
+  }
 }

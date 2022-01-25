@@ -491,6 +491,23 @@ public class TrataAcaoController extends Thread{
           }
           
           GravaLog("UPD", idUnico, "Alteração de pergunta - FIM");
+        } else if(wCom.equalsIgnoreCase("GRAVARJOGO")){
+          GravaLog("INS", idUnico, "Grava jogo - INI");
+          
+          out.writeObject("ok");
+          
+          Jogo j = (Jogo)in.readObject();
+          
+          int status = (new JogoDAO()).GravaResultJogo(j, idUnico);
+          
+          if(status == -1){
+            out.writeObject("ok");
+          } else {
+            out.writeObject("nok");
+            GravaLogErro("ERR", idUnico, "Erro ao gravar jogo\nStatus erro:"+status);
+          }
+          
+          GravaLog("INS", idUnico, "Grava jogo - FIM");
         }
         
         GravaLog("CLI", idUnico, "Esperando comando");

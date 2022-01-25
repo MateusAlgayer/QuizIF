@@ -257,6 +257,7 @@ public class FormPrincipal extends javax.swing.JFrame{
     FormJogo frmJogo = new FormJogo(GProvas.getProva(tbProvas.getSelectedRow()));
     frmJogo.setModal(true);
     frmJogo.setVisible(true);
+    AtualizaTabela();
   }//GEN-LAST:event_btJogarActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

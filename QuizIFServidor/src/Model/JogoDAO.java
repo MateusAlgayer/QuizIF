@@ -6,6 +6,7 @@ package Model;
 import ModelDominio.Area;
 import ModelDominio.Jogo;
 import ModelDominio.Pergunta;
+import ModelDominio.Usuario;
 import factory.Conector;
 import java.sql.*;
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class JogoDAO {
       
       while(result.next()){
         listaRanking.add(new Jogo(null,
-                                  result.getString("APELIDO"),
+                                  new Usuario(0,result.getString("NOME"), result.getString("APELIDO")),
                                   result.getInt("TOTNUMPERGUNTA"),
                                   result.getInt("TOTNUMACERTO"),                 
                                   result.getInt("PONTUACAO")
@@ -110,5 +111,90 @@ public class JogoDAO {
       GravaLogErro("ERR",idUnico, e.toString());
       return null;
     }
+  }
+
+  public int GravaResultJogo(Jogo j, int idUnico) {
+    //uma query pra testar se o registro já existe e outra para inserir/atualizar
+    PreparedStatement stmt = null;
+    PreparedStatement stmt2 = null;
+    
+    try {
+      try {
+        con.setAutoCommit(false);
+        
+        int cont = 0;
+
+        String sql = "SELECT EXISTS( SELECT * FROM TABUSUPRO WHERE PROVA = ? AND USUARIO = ?) AS EXISTE;";
+        
+        //Testa se já existe um resultado gravado para aquele jogo
+        stmt = con.prepareStatement(sql);
+
+        stmt.setInt(1, j.getProva().getCodigoProva());
+        stmt.setInt(2, j.getJogador().getCodUsuario());
+
+        ResultSet result = stmt.executeQuery();
+        
+        boolean existe = false;
+        
+        while(result.next())
+          existe = result.getBoolean("EXISTE");
+        
+        stmt.close();
+        
+        String sql2;
+        
+        //prepara uma query caso exista e uma caso não exista
+        if(existe){
+          sql2 = "UPDATE TABUSUPRO SET NUMPERGUNTAS = ?, NUMACERTOS = ? WHERE PROVA = ? AND USUARIO = ?;";
+                 
+          stmt2 = con.prepareStatement(sql2);
+          
+          stmt2.setInt(1, j.getNumPerguntas());
+          stmt2.setInt(2, j.getNumAcertos());
+          stmt2.setInt(3, j.getProva().getCodigoProva());
+          stmt2.setInt(4, j.getJogador().getCodUsuario());
+          
+        } else {
+          sql2 = "INSERT INTO TABUSUPRO (PROVA, USUARIO, NUMPERGUNTAS, NUMACERTOS) VALUES (?,?,?,?);";
+                
+          stmt2 = con.prepareStatement(sql2);
+          
+          stmt2.setInt(1, j.getProva().getCodigoProva());
+          stmt2.setInt(2, j.getJogador().getCodUsuario());
+          stmt2.setInt(3, j.getNumPerguntas());
+          stmt2.setInt(4, j.getNumAcertos());
+        }
+        
+        stmt2.execute();
+        stmt2.close();
+        
+        //da commit em tudo
+        con.commit();
+
+        } catch (SQLException e) {
+          try {
+            con.rollback();
+            GravaLogErro("ERR", idUnico, "Erro ao gravar jogo\n"+e.toString());
+          } catch (SQLException ex) {
+            GravaLogErro("ERR", idUnico, "Erro ao gravar jogo\n"+ex.toString());
+          }
+          return e.getErrorCode();
+        }
+
+        return -1;
+      } finally {
+        try {
+          if(stmt != null){
+            stmt.close();
+          }
+          if(stmt2 != null){
+            stmt2.close();
+          }
+          con.setAutoCommit(true);
+          con.close();
+        } catch (SQLException ex) {
+          GravaLogErro("ERR", idUnico, "Erro ao gravar jogo\n"+ex.toString());
+        }
+      }
   }
 }
