@@ -103,6 +103,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btPerfil">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/view/imagens/icons8-usu&#xe1;rio-32 (2).png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Perfil"/>
       </Properties>
       <Events>
@@ -195,6 +198,9 @@
         </Container>
         <Component class="javax.swing.JButton" name="btJogar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/view/imagens/icoJogar32.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Jogar"/>
           </Properties>
           <Events>
@@ -203,6 +209,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btAtualizar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/view/imagens/icoAtualizar32.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Atualizar"/>
           </Properties>
           <Events>
@@ -221,6 +230,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btRanking">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/view/imagens/icoRanking32.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Ranking"/>
       </Properties>
       <Events>

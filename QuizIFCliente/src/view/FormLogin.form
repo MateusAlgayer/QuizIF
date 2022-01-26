@@ -39,12 +39,12 @@
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="btCadastro" min="-2" pref="120" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
-                              <Component id="btLogar" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="btCadastro" linkSize="1" min="-2" pref="138" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                              <Component id="btLogar" linkSize="1" min="-2" pref="155" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -87,11 +87,11 @@
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Component id="chbLembraUsu" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btCadastro" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                  <Component id="btLogar" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btLogar" max="32767" attributes="0"/>
+                  <Component id="btCadastro" pref="49" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -109,6 +109,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btLogar">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/view/imagens/icons8-login-32.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Logar"/>
       </Properties>
       <Events>
@@ -117,6 +120,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btCadastro">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/view/imagens/icoCadastro32.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cadastro"/>
       </Properties>
       <Events>

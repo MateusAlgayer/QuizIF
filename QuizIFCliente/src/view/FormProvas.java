@@ -93,6 +93,7 @@ public class FormProvas extends javax.swing.JDialog {
     tbPerSel.getTableHeader().setReorderingAllowed(false);
     jScrollPane3.setViewportView(tbPerSel);
 
+    btRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoRemove32.png"))); // NOI18N
     btRemover.setText("Remover");
     btRemover.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,6 +101,7 @@ public class FormProvas extends javax.swing.JDialog {
       }
     });
 
+    btAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoAdd32.png"))); // NOI18N
     btAdicionar.setText("Adicionar");
     btAdicionar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,6 +183,7 @@ public class FormProvas extends javax.swing.JDialog {
         .addContainerGap())
     );
 
+    btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoFechar32.png"))); // NOI18N
     btSair.setText("Voltar");
     btSair.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,6 +198,7 @@ public class FormProvas extends javax.swing.JDialog {
     cbSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
     cbSituacao.setName("Situação"); // NOI18N
 
+    btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoSalvar32.png"))); // NOI18N
     btSalvar.setText("Salvar");
     btSalvar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,6 +206,7 @@ public class FormProvas extends javax.swing.JDialog {
       }
     });
 
+    btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoExcluir32.png"))); // NOI18N
     btExcluir.setText("Excluir");
     btExcluir.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {

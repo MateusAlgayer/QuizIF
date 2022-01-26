@@ -75,6 +75,7 @@ public class FormPrincipal extends javax.swing.JFrame{
     setMinimumSize(new java.awt.Dimension(840, 600));
     setName("QuizIF"); // NOI18N
 
+    btPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icons8-usuário-32 (2).png"))); // NOI18N
     btPerfil.setText("Perfil");
     btPerfil.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +115,7 @@ public class FormPrincipal extends javax.swing.JFrame{
     tbProvas.getTableHeader().setReorderingAllowed(false);
     jScrollPane1.setViewportView(tbProvas);
 
+    btJogar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoJogar32.png"))); // NOI18N
     btJogar.setText("Jogar");
     btJogar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +123,7 @@ public class FormPrincipal extends javax.swing.JFrame{
       }
     });
 
+    btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoAtualizar32.png"))); // NOI18N
     btAtualizar.setText("Atualizar");
     btAtualizar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,6 +164,7 @@ public class FormPrincipal extends javax.swing.JFrame{
       }
     });
 
+    btRanking.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoRanking32.png"))); // NOI18N
     btRanking.setText("Ranking");
     btRanking.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {

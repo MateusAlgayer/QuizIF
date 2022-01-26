@@ -39,6 +39,7 @@ public class FormConfirmaCodigoEmail extends javax.swing.JDialog {
     jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
     jLabel1.setText("Informe o código recebido no email");
 
+    btConfirmaCodEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icons8-confirmação-de-leitura-32.png"))); // NOI18N
     btConfirmaCodEmail.setText("Confirmar");
     btConfirmaCodEmail.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,24 +62,24 @@ public class FormConfirmaCodigoEmail extends javax.swing.JDialog {
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addGap(82, 82, 82)
+            .addGap(86, 86, 86)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(tfCodEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGroup(layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addComponent(lbAviso)))))
+              .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(lbAviso)))
           .addGroup(layout.createSequentialGroup()
-            .addGap(114, 114, 114)
-            .addComponent(btConfirmaCodEmail))
+            .addGap(88, 88, 88)
+            .addComponent(btConfirmaCodEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(layout.createSequentialGroup()
             .addGap(18, 18, 18)
             .addComponent(jLabel2))
           .addGroup(layout.createSequentialGroup()
             .addGap(52, 52, 52)
-            .addComponent(jLabel1)))
-        .addContainerGap(23, Short.MAX_VALUE))
+            .addComponent(jLabel1))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(tfCodEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(68, 68, 68)))
+        .addGap(23, 23, 23))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,11 +92,11 @@ public class FormConfirmaCodigoEmail extends javax.swing.JDialog {
         .addComponent(jLabel3)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
         .addComponent(lbAviso)
-        .addGap(19, 19, 19)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(tfCodEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(33, 33, 33)
-        .addComponent(btConfirmaCodEmail)
-        .addGap(15, 15, 15))
+        .addGap(19, 19, 19)
+        .addComponent(btConfirmaCodEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(16, 16, 16))
     );
 
     pack();

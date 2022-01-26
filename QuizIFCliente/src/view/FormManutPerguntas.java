@@ -70,6 +70,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     setMinimumSize(new java.awt.Dimension(910, 750));
     setName("Manutenção de perguntas"); // NOI18N
 
+    btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoFechar32.png"))); // NOI18N
     btVoltar.setText("Voltar");
     btVoltar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,6 +98,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     });
     jScrollPane1.setViewportView(tbPerguntas);
 
+    btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoAtualizar32.png"))); // NOI18N
     btAtualizar.setText("Atualizar");
     btAtualizar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +106,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
       }
     });
 
+    btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoSalvar32.png"))); // NOI18N
     btSalvar.setText("Salvar");
     btSalvar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,6 +114,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
       }
     });
 
+    btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoExcluir32.png"))); // NOI18N
     btExcluir.setText("Excluir");
     btExcluir.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,6 +169,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
 
     tfCodigo.setEditable(false);
 
+    btNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoNovo32.png"))); // NOI18N
     btNovo.setText("Novo");
     btNovo.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {

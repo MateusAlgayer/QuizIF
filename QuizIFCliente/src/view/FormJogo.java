@@ -81,7 +81,6 @@ public class FormJogo extends javax.swing.JDialog {
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     setMinimumSize(new java.awt.Dimension(780, 600));
     setName("Jogo"); // NOI18N
-    setPreferredSize(new java.awt.Dimension(780, 600));
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
         formWindowClosing(evt);
@@ -158,6 +157,7 @@ public class FormJogo extends javax.swing.JDialog {
 
     lbProgresso.setText("ProgProva");
 
+    btSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoFechar32.png"))); // NOI18N
     btSair.setText("Sair");
     btSair.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -269,6 +269,7 @@ public class FormJogo extends javax.swing.JDialog {
 
     lbDif.setText("dif");
 
+    btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoSalvar32.png"))); // NOI18N
     btSalvar.setText("Salvar");
     btSalvar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,6 +277,7 @@ public class FormJogo extends javax.swing.JDialog {
       }
     });
 
+    btSair2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoFechar32.png"))); // NOI18N
     btSair2.setText("Sair");
     btSair2.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {

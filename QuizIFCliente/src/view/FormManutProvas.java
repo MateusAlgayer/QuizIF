@@ -34,6 +34,7 @@ public class FormManutProvas extends javax.swing.JFrame {
     setMinimumSize(new java.awt.Dimension(644, 410));
     setName("Consulta de provas"); // NOI18N
 
+    btVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoFechar32.png"))); // NOI18N
     btVoltar.setText("Voltar");
     btVoltar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,6 +75,7 @@ public class FormManutProvas extends javax.swing.JFrame {
         .addContainerGap())
     );
 
+    btNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoNovo32.png"))); // NOI18N
     btNovo.setText("Novo");
     btNovo.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +83,7 @@ public class FormManutProvas extends javax.swing.JFrame {
       }
     });
 
+    btAtualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoAtualizar32.png"))); // NOI18N
     btAtualizar.setText("Atualizar");
     btAtualizar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,6 +91,7 @@ public class FormManutProvas extends javax.swing.JFrame {
       }
     });
 
+    btEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoEditar32.png"))); // NOI18N
     btEditar.setText("Editar");
     btEditar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {

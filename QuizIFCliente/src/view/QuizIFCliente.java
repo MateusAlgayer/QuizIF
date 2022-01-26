@@ -44,7 +44,7 @@ public class QuizIFCliente {
     } catch (IOException e) {
       Erro("Erro", "Erro na conexão com o servidor:\n"+e.toString());
       GravaLogErro("CON", 0, e.toString());
-      Metodos.CriaConf("ConexCliente", "");
+      Metodos.CriaConf("ConexCliente", LeConex());
       LeConex();
       Metodos.Aviso("Aviso!!", "IP do servidor gravado!!\nReinicie a aplicação!");
       System.exit(0);
