@@ -56,7 +56,7 @@ public class FormLogin extends javax.swing.JFrame{
 
     jLabel2.setText("Senha:");
 
-    btLogar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icons8-login-32.png"))); // NOI18N
+    btLogar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoLogin32.png"))); // NOI18N
     btLogar.setText("Logar");
     btLogar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,7 +154,8 @@ public class FormLogin extends javax.swing.JFrame{
       frmCad.setModal(true);
       frmCad.setVisible(true);
       
-      tfUsu.setText(InfoApp.getGEmailUsu());
+      if(!InfoApp.getGEmailUsu().isEmpty())
+        tfUsu.setText(InfoApp.getGEmailUsu());
   }//GEN-LAST:event_btCadastroActionPerformed
 
   private void btLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogarActionPerformed
@@ -167,15 +168,15 @@ public class FormLogin extends javax.swing.JFrame{
     if(wUsu != null){
       InfoApp.setGUsuLogado(wUsu);
       
-      FormPrincipal fp = new FormPrincipal();
-      fp.setVisible(true);
-      
       if(chbLembraUsu.isSelected()){
       Metodos.CriaConf("lembraUsu","1Ɵ"+tfUsu.getText());
       } else {
         Metodos.CriaConf("lembraUsu","0");
       }
       
+      FormPrincipal fp = new FormPrincipal();
+      fp.setVisible(true);
+
       dispose();
    } else {
       lbAviso.setVisible(true);

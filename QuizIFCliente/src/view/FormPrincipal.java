@@ -75,7 +75,7 @@ public class FormPrincipal extends javax.swing.JFrame{
     setMinimumSize(new java.awt.Dimension(840, 600));
     setName("QuizIF"); // NOI18N
 
-    btPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icons8-usuário-32 (2).png"))); // NOI18N
+    btPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoUsuario32.png"))); // NOI18N
     btPerfil.setText("Perfil");
     btPerfil.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {

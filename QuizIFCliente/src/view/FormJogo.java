@@ -23,7 +23,6 @@ public class FormJogo extends javax.swing.JDialog {
   private int GProgresso = 0;
   private Pergunta GPerAtual;
   private Jogo GResultJogo;
-  private boolean GGravado;
   
   public FormJogo(Prova jogo) {
     initComponents();
@@ -81,6 +80,7 @@ public class FormJogo extends javax.swing.JDialog {
     setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     setMinimumSize(new java.awt.Dimension(780, 600));
     setName("Jogo"); // NOI18N
+    setPreferredSize(new java.awt.Dimension(780, 600));
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent evt) {
         formWindowClosing(evt);
@@ -95,7 +95,7 @@ public class FormJogo extends javax.swing.JDialog {
     });
 
     btAlt1.setText("Alt1");
-    btAlt1.setActionCommand("<html><div style=\"\"word-wrap: break-word\">FINALIZAR COMPRA</div>");
+    btAlt1.setActionCommand("");
     btAlt1.setDefaultCapable(false);
     btAlt1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -7,6 +7,9 @@
       <Dimension value="[780, 600]"/>
     </Property>
     <Property name="name" type="java.lang.String" value="Jogo" noResource="true"/>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[780, 600]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -145,7 +148,7 @@
             <Component class="javax.swing.JButton" name="btAlt1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alt1"/>
-                <Property name="actionCommand" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;&quot;word-wrap: break-word&quot;&gt;FINALIZAR COMPRA&lt;/div&gt;"/>
+                <Property name="actionCommand" type="java.lang.String" value=""/>
                 <Property name="defaultCapable" type="boolean" value="false"/>
               </Properties>
               <Events>

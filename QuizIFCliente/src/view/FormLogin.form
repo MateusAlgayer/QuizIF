@@ -110,7 +110,7 @@
     <Component class="javax.swing.JButton" name="btLogar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/view/imagens/icons8-login-32.png"/>
+          <Image iconType="3" name="/view/imagens/icoLogin32.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Logar"/>
       </Properties>
