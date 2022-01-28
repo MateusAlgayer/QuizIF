@@ -5,7 +5,6 @@ package Model;
 
 import ModelDominio.Area;
 import ModelDominio.Pergunta;
-import ModelDominio.Prova;
 import factory.Conector;
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class PerguntaDAO {
     this.con = Conector.getConnection();
   }
   
-  public int DeletaPergunta(int codPergunta, int idUnico) {
+  public String DeletaPergunta(int codPergunta, int idUnico) {
     PreparedStatement stmt = null;
 
     try {
@@ -37,15 +36,20 @@ public class PerguntaDAO {
             stmt.execute();
 
             con.commit();
-            return -1;
+            return "S^ok";
         } catch (SQLException e) {
             try {
                 GravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + e.toString());
                 con.rollback();
-                return e.getErrorCode();
+                
+                if(e.getErrorCode() == 1451){ //codigo de erro caso a chave estrangeira já esteja em uso e não possa ser deletada 
+                  return "A^Pergunta não pode ser deletada pois já foi utilizada por alguma prova\n utilize o campo 'Situação' para inativar a pergunta";
+                }
+                
+                return "E^"+e.getErrorCode()+" - "+e.toString();
             } catch (SQLException ex) {
                 GravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + ex.toString());
-                return ex.getErrorCode();
+                return "E^"+e.getErrorCode()+" - "+e.toString();
             }
         }
     } finally {
@@ -56,7 +60,6 @@ public class PerguntaDAO {
             con.close();
         } catch (SQLException e) {
             GravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + e.toString());
-            return e.getErrorCode();
         }
     }
   }

@@ -39,7 +39,7 @@ public class UsuarioTableModel extends AbstractTableModel{
     public String getColumnName(int column) {
         return switch(column){
             case 0 -> "Nome";
-            case 1 -> "Apelido";
+            case 1 -> "Email";
             case 2 -> "Permissão";
             default -> "";
         };
@@ -50,7 +50,7 @@ public class UsuarioTableModel extends AbstractTableModel{
         Usuario u = listaUsuario.get(rowIndex);
         return switch(columnIndex){
             case 0 -> u.getNomeUsuario();
-            case 1 -> u.getApelido();
+            case 1 -> u.getEmail();
             case 2 -> Metodos.Pedaco(u.getClass().toString(), ".", 2);
             default -> "";
         };

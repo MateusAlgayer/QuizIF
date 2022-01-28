@@ -150,7 +150,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
       }
     });
 
-    btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icons8-chave-2-32.png"))); // NOI18N
+    btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoSenha32.png"))); // NOI18N
     btSalvar.setText("Cadastrar");
     btSalvar.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,7 +187,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
 
     lbNova.setText("Nova");
 
-    btConfirmaSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icons8-chave-2-32.png"))); // NOI18N
+    btConfirmaSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoSenha32.png"))); // NOI18N
     btConfirmaSenha.setText("Confirma Senha");
 
     lbAntigaSenha.setText("Antiga Senha:");
@@ -267,7 +267,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
           .addComponent(jLabel2))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(lbTamanho)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(btSalvar)
           .addComponent(btConfirmaSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

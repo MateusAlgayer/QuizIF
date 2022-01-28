@@ -44,9 +44,18 @@ public class FormCadastro extends javax.swing.JDialog {
       }
     });
 
+    tfEmail.setToolTipText("Email");
+    tfEmail.setName("TABUSU.EMAIL"); // NOI18N
+
+    tfNome.setToolTipText("Nome");
+    tfNome.setName("TABUSU.NOME"); // NOI18N
+
     jLabel2.setText("Nome:");
 
     jLabel3.setText("Apelido:");
+
+    tfApelido.setToolTipText("Apelido");
+    tfApelido.setName("TABUSU.APELIDO"); // NOI18N
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -94,21 +103,72 @@ public class FormCadastro extends javax.swing.JDialog {
   }// </editor-fold>//GEN-END:initComponents
 
     private void btCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroActionPerformed
+      if(!Metodos.Consistencia(true, tfEmail, tfNome, tfApelido)){
+        return;
+      }
+      
+      if(!validaEmail()){
+        Metodos.Aviso(this.getTitle(), "Email inválido!");
+        tfEmail.requestFocus();
+        return;
+      }
+       
+      GravaLog("CAD", 0, "Cadastro - INI");
+      
+      if(!QuizIFCliente.ccont.EnviaCodigoEmail(tfEmail.getText())){
+        return;
+      } 
+      
+      boolean continua = true;
+      String sal = CriptoHash.getSalt(0);
+      int cont = 0;
+      
+      InfoApp.setGSenhaCripto("");
+      
+      while(continua){
+        GravaLog("SEN", 0, "Senha rep:"+(cont++));
+        
+        FormConfirmaSenha frm = new FormConfirmaSenha(sal, false);
+        frm.setModal(true);
+        frm.setVisible(true);
+
+        if(InfoApp.getGSenhaCripto().equals("Fechou")) {
+          if(Metodos.msgConfirma("Deseja interromper o processo de criação de senha? \n O Cadastro será perdido.")){
+            return;
+          } 
+        } else if(!InfoApp.getGSenhaCripto().equals("")){
+          //inclusão
+          Comum novoUsu = new Comum(tfNome.getText(), tfApelido.getText(), tfEmail.getText(), InfoApp.getGSenhaCripto(), sal);
+          
+          String res = QuizIFCliente.ccont.CadastraUsu(novoUsu);
+          
+          if(res.equals("ok")){
+            Metodos.Sucesso(this.getTitle(), "Usuário cadastrado com sucesso!!");
+            InfoApp.setGEmailUsu(tfEmail.getText());
+            dispose();
+          } else {
+            Metodos.Erro(this.getTitle(), "Ocorreu um erro ao cadastrar o usuário!\n"+res);
+          }
+          
+          GravaLog("CAD", 0, "Cadastro - FIM");
+          return;
+        }
+      }
+      
+    }//GEN-LAST:event_btCadastroActionPerformed
+
+    private boolean validaEmail(){
       String recNome = Pedaco(tfEmail.getText(),"@", 1);
       String dominio = Pedaco(tfEmail.getText(),"@", 2);
-       
-      //validação de email - INI
       
       //receptor é vazio
-      if(recNome.equals("")){
-        Metodos.Aviso(this.getTitle(), "Email inválido!");
-        return;
+      if(recNome.equals("")){       
+        return false;
       }
       
       //dominio é vazio
       if(dominio.equals("")){
-        Metodos.Aviso(this.getTitle(), "Email inválido!");
-        return;
+        return false;
       }
       
       int i = 0;
@@ -124,66 +184,19 @@ public class FormCadastro extends javax.swing.JDialog {
       
       //se i é 0 então não tem subdominio
       if(i == 0){
-        Metodos.Aviso(this.getTitle(), "Email inválido!");
-        return;
+        return false;
       }
       
       //ve se algo entre os pontos está vazio, se estiver o email é inválido
       for (int x = 1; x <= i+1; x++) {
         if(Pedaco(dominio,".", x).equals("")){
-          Metodos.Aviso(this.getTitle(), "Email inválido!");
-          return;
+          return false;
         }
       }
       
-      //validação de email - FIM
-      
-      if(!Metodos.Consistencia(true, tfNome, tfApelido)){
-        return;
-      }
-       
-      GravaLog("CAD", 0, "Cadastro - INI");
-      
-      if(!QuizIFCliente.ccont.EnviaCodigoEmail(tfEmail.getText())){
-         return;
-      } 
-      
-      boolean continua = true;
-      String sal = CriptoHash.getSalt(0);
-      int cont = 0;
-      
-      InfoApp.setGSenhaCripto("");
-      
-      while(continua){
-        GravaLog("SEN", 0, "Codigo email rep:"+(cont++));
-        
-        FormConfirmaSenha frm = new FormConfirmaSenha(sal, false);
-        frm.setModal(true);
-        frm.setVisible(true);
-
-        if(InfoApp.getGSenhaCripto().equals("Fechou")) {
-          if(Metodos.msgConfirma("Deseja interromper o processo de criação de senha? \n O Cadastro será perdido.")){
-            return;
-          } 
-        } else if(!InfoApp.getGSenhaCripto().equals("")){
-          //inclusão
-          Comum novoUsu = new Comum(tfNome.getText(), tfApelido.getText(), tfEmail.getText(), InfoApp.getGSenhaCripto(), sal);
-          
-          if(QuizIFCliente.ccont.CadastraUsu(novoUsu)){
-            Metodos.Sucesso(this.getTitle(), "Usuário cadastrado com sucesso!!");
-            InfoApp.setGEmailUsu(tfEmail.getText());
-            dispose();
-          } else {
-            Metodos.Erro(this.getTitle(), "Ocorreu um erro ao cadastrar o usuário!");
-          }
-          
-          GravaLog("CAD", 0, "Cadastro - FIM");
-          return;
-        }
-      }
-      
-    }//GEN-LAST:event_btCadastroActionPerformed
-
+      return true;
+    }
+    
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btCadastro;
   private javax.swing.JLabel jLabel1;

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 import javax.swing.JComponent;
@@ -24,9 +25,41 @@ import javax.swing.text.JTextComponent;
 
 public class Metodos{
   
+  //Par de nomes e tamanhos dos campos,
+  //usado no Consistencia para validar se um campo não ultrapassou o limite dos campos da base.
+  private static HashMap<String, Integer> GTamanhoCampos;
+  
+  /**
+   * setter do hashmap de tamanhos dos campos. Não é necessário setar novamente após a primeira vez
+   * @param listaCampos lista de hashMap que vem do servidor quando a aplicação inicializa
+   */
+  public static void setTamanhoCampos(HashMap<String, Integer> listaCampos){
+    GTamanhoCampos = listaCampos;
+  }
+  
+  /**
+   * metodo para adicionar tamanhos personalizados de campo no hashmap 
+   * CUIDADO: colocar uma string que já existe sobrescreve o conteudo daquele par
+   * @param campo String que representa a chave a ser utilizada para identificar o campo
+   * @param tamanho inteiro que representa o tamanho personalizado do campo
+   */
+  public static void putTamanhoCampoPerso(String campo, int tamanho){
+    GTamanhoCampos.put(campo, tamanho);
+  }
+  
+  /**
+   * getter do hashmap de tamanhos dos campos. 
+   * @param nomeCampo nomedatabela.nomedocampo
+   * @return retorna o tamanho do campo passado como parâmetro na base
+   */
+  public static int getTamanhoCampo(String nomeCampo){
+    return GTamanhoCampos.get(nomeCampo);
+  }
+  
   //Mateus Roberto Algayer - 23/11/2021
   /**
-   * O método consistencia serve demonstrar visualmente um campo inválido que não foi preenchido 
+   * O método consistencia serve para demonstrar visualmente se um campo é inválido
+   * (Vazio ou grande suficiente para não caber no banco)
    * @param pGeraAviso - variável caso tenha que ter aviso ao usuário
    * @param wComps - variavel que representa um número n de componentes a serem verificados na consistencia
    * @return true se o campo é válido, false se o campo é inválido
@@ -35,22 +68,39 @@ public class Metodos{
     
     for(JComponent wComp : wComps){
       
+      //Consistências para campos de texto
       if((wComp instanceof JTextComponent wCompTexto)) {
         
+        //testa se vazio
         if(wCompTexto.getText().trim().equals("")){
           
-          if(pGeraAviso) Aviso(wComp.getTopLevelAncestor().getName(), "campo '"+wComp.getName()+"' inválido");
+          if(pGeraAviso) Aviso(wComp.getTopLevelAncestor().getName(), "campo '"+wComp.getToolTipText()+"' inválido\nO campo está vazio.");
           
           wComp.setBackground(Color.YELLOW);
           wComp.requestFocus();
           return false; 
         }
-
+              
         wComp.setBackground(Color.WHITE);
+        
+        //não precisa continuar se não é um campo com verificação de tamanho.
+        //campos sem verificação de tamanho precisam de implementações customizadas de tamanho.
+        if(GTamanhoCampos == null || !GTamanhoCampos.containsKey(wComp.getName()))
+          continue;
+        
+        //testa o tamanho do campo
+        if(wCompTexto.getText().length() > GTamanhoCampos.get(wComp.getName())){
+          
+          if(pGeraAviso) Aviso(wComp.getTopLevelAncestor().getName(), "campo '"+wComp.getToolTipText()+"' inválido\nmáximo de caracteres suportados:\n"+
+                                                                      GTamanhoCampos.get(wComp.getName())+"\nNúmero de caracteres atual:\n"+wCompTexto.getText().length());
+          
+          wComp.setBackground(Color.YELLOW);
+          wComp.requestFocus();
+          return false; 
+        }
       } 
       
     }
-    
     return true; 
   }
   
@@ -104,7 +154,6 @@ public class Metodos{
    * @param pComps - representa o rootpane de uma tela, a raiz que possui todos os outros componentes
    */
   public static void GeraConsistenciaCampos(JRootPane pComps){
-    
     ArrayList<Component> wListaComps = new ArrayList<>();
     
     wListaComps.addAll(PegaTodosComponentes(pComps));
@@ -118,7 +167,6 @@ public class Metodos{
         
         @Override
         public void keyReleased(java.awt.event.KeyEvent evt) {
-          
           Consistencia(Boolean.FALSE, ((JTextComponent)wComp));
         }
         

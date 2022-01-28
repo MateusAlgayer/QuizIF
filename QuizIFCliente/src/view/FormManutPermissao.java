@@ -4,7 +4,11 @@
 
 package view;
 
+import ModelDominio.Administrador;
+import ModelDominio.Comum;
+import ModelDominio.Criador;
 import ModelDominio.Usuario;
+import controller.InfoApp;
 import util.Metodos;
 import view.tablemodel.UsuarioTableModel;
 
@@ -166,6 +170,24 @@ public class FormManutPermissao extends javax.swing.JFrame {
         
         Usuario usu = usuModel.getUsuario(tUsu.getSelectedRow());
         
+        boolean naoAltera = switch(tipo){
+            case "A" -> usu instanceof Administrador;
+            case "J" -> usu instanceof Criador && !(usu instanceof Administrador);
+            case "C" -> usu instanceof Comum;
+            default -> false;
+        };
+       
+        if(naoAltera){
+          Metodos.Aviso(this.getTitle(), "Usuário já é do tipo escolhido!");
+          return;
+        }
+        
+        String adicional = "";
+        
+        if(usu.getEmail().equals(InfoApp.getGUsuLogado().getEmail())){
+          adicional = "Você esta prestes a alterar a sua própria permissão!\n";
+        }
+        
         String tipoLiteral = switch(tipo){
             case "A" -> "Administrador";
             case "J" -> "Criador";
@@ -173,14 +195,16 @@ public class FormManutPermissao extends javax.swing.JFrame {
             default -> "Comum";
         };
         
-        if(Metodos.msgConfirma("Tem certeza que deseja alterar a permissão \n"+ 
-                               "do usuário "+ usu.getNomeUsuario() +" para " + tipoLiteral + "?")){
+        if(Metodos.msgConfirma(adicional+"Tem certeza que deseja alterar a permissão \n"+ 
+                               "do usuário '"+ usu.getNomeUsuario() +"' para '" + tipoLiteral + "'?")){
             //sim
-            if(QuizIFCliente.ccont.AlteraTipoUsu(usu, tipo)){
+            String res = QuizIFCliente.ccont.AlteraTipoUsu(usu, tipo);
+            if(res.equals("ok")){
                 atualizaTabela();
                 Metodos.Sucesso(this.getTitle(), "Sucesso em alterar o tipo!");
+            } else {
+              Metodos.Erro(this.getTitle(), "Erro ao alterar o tipo do usuário.\n"+res);
             }
-            
         }
         
     }

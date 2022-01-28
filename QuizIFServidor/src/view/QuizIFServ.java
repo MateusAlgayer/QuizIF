@@ -3,6 +3,7 @@
 
 package view;
 
+import Model.InfoBaseDAO;
 import controller.TrataAcaoController;
 import factory.Conector;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import util.Metodos;
 import java.sql.*;
+import java.util.HashMap;
 
 public class QuizIFServ {
 
@@ -40,6 +42,7 @@ class ConexaoUsu extends Thread{
         private final ServerSocket wServ;
         private int wIdConex = 0;
         private final Connection wCon;
+        private HashMap<String, Integer> infoCampos;
 
         public ConexaoUsu(ServerSocket pServ, Connection pCon) {
           this.wServ = pServ;
@@ -50,6 +53,14 @@ class ConexaoUsu extends Thread{
         @Override
         public void run() {
             try{
+              
+                infoCampos = (new InfoBaseDAO()).getTamanhoCampos();
+              
+                if(infoCampos == null){
+                  Metodos.GravaLogErro("ERR", 0, "Erro ao carregar tamanhos dos campos, reinicie o servidor");
+                  System.exit(0);
+                }
+                
                 while(true){
                   Socket cliente = wServ.accept();
                   ObjectInputStream in = new ObjectInputStream(cliente.getInputStream());
@@ -58,6 +69,8 @@ class ConexaoUsu extends Thread{
                   
                   Metodos.GravaLog("CON", wIdConex, "Conexão cliente");
 
+                  out.writeObject(infoCampos);
+                  
                   TrataAcaoController wTrataCliente = new TrataAcaoController(out, in, cliente, wIdConex);
                   
                   wTrataCliente.start();

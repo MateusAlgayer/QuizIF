@@ -8,8 +8,6 @@ import ModelDominio.Criador;
 import ModelDominio.Prova;
 import controller.InfoApp;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import view.tablemodel.ProvasTableModel;
 
@@ -22,16 +20,6 @@ public class FormPrincipal extends javax.swing.JFrame{
     
     btAdmin.setVisible(InfoApp.getGUsuLogado() instanceof Administrador);
     btCriador.setVisible(InfoApp.getGUsuLogado() instanceof Criador);
-    
-    Timer TimerAtualizaTabela = new Timer();
-    TimerTask timer = new TimerTask() {
-      @Override
-      public void run() {
-        AtualizaTabela();
-      }
-    };
-    
-    TimerAtualizaTabela.schedule(timer, 5000, 60000);
     
     AtualizaTabela();
   }                        

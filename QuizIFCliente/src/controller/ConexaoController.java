@@ -119,7 +119,7 @@ public class ConexaoController {
       int cont = 0;
       
       InfoApp.setGCodConfirmacao("");
-      //João Jorge - 04/01/2022 :: Criação
+      //João Jorge - 04/01/2022 
       while(continua){
         GravaLog("VAL", 0, "Codigo email rep:"+(cont++));
         
@@ -162,7 +162,7 @@ public class ConexaoController {
     return false;
   }
   
-  public boolean CadastraUsu(Usuario usu){
+  public String CadastraUsu(Usuario usu){
     GravaLog("INS", 0, "Usuário - INI");
     
     String msg = "";
@@ -177,12 +177,11 @@ public class ConexaoController {
 
       msg = (String)in.readObject();
       
-      return msg.equals("ok");
+      return msg;
     } catch (IOException | ClassNotFoundException e) {
       GravaLogErro("ERR", 0, "Erro ao cadastrar usuário\n"+e.toString());
+      return "Erro na comunicação com o servidor:\n"+e.toString(); 
     }
-    
-    return false; 
   }
   
   public boolean EnviaRedefSenha(String email){
@@ -420,7 +419,7 @@ public class ConexaoController {
         }
   }
   
-  public boolean AlteraTipoUsu(Usuario usu, String tipo){
+  public String AlteraTipoUsu(Usuario usu, String tipo){
       String msg;
       
       try {
@@ -430,12 +429,11 @@ public class ConexaoController {
           out.writeObject(usu);
           out.writeObject(tipo);
           msg = (String) in.readObject();
-          msg = (String) in.readObject();
           
-          return msg.equals("ok");
+          return msg;
       } catch (IOException | ClassNotFoundException e) {
         GravaLogErro("ERR", 0, "Erro ao alterar usuário \n" + e.toString());
-        return false;
+        return "Erro interno do servidor:\n"+e.toString();
       }
   }
   
@@ -607,7 +605,7 @@ public class ConexaoController {
     return null; 
   }
 
-  public int ExcluirPergunta(int codigo) {
+  public String ExcluirPergunta(int codigo) {
     String msg;
     GravaLog("DEL", 0, "Deletar pergunta - INI");
     
@@ -619,14 +617,14 @@ public class ConexaoController {
       msg = (String) in.readObject();
 
       GravaLog("DEL", 0, "Deletar pergunta - FIM");
-      return switch (msg) {
-        case "ok" -> 0;
-        case "jautiliz" -> 1;
-        default -> 2;
-      };
+      return msg;//switch (msg) {
+        //case "ok" -> 0;
+        //case "jautiliz" -> 1;
+        //default -> 2;
+      //};
     } catch (IOException | ClassNotFoundException e) {
         GravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + e.toString());
-        return 2;
+        return "Erro na comunicação com o servidor:\n"+e.toString();
     }
   }
 

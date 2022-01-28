@@ -93,8 +93,16 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfEmail">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Email"/>
+        <Property name="name" type="java.lang.String" value="TABUSU.EMAIL" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfNome">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Nome"/>
+        <Property name="name" type="java.lang.String" value="TABUSU.NOME" noResource="true"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -107,6 +115,10 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfApelido">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Apelido"/>
+        <Property name="name" type="java.lang.String" value="TABUSU.APELIDO" noResource="true"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

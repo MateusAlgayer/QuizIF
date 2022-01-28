@@ -119,9 +119,9 @@
                       <Component id="btAtualizar" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="163" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="163" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cbArea" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cbDificuldade" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -134,44 +134,44 @@
               </Group>
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="145" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Correta1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
               <Component id="tfAlt1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Correta2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               <Component id="tfAlt2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Correta3" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="tfAlt3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="Correta4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="tfAlt4" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="32767" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btExcluir" linkSize="2" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                   <Component id="btSalvar" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btNovo" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lbEdicao" alignment="3" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -313,7 +313,8 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="name" type="java.lang.String" value="Pergunta" noResource="true"/>
+            <Property name="toolTipText" type="java.lang.String" value="Pergunta"/>
+            <Property name="name" type="java.lang.String" value="TABPER.PERGUNTA" noResource="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -365,22 +366,26 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfAlt1">
       <Properties>
-        <Property name="name" type="java.lang.String" value="Alternativa 1" noResource="true"/>
+        <Property name="toolTipText" type="java.lang.String" value="Alternativa 1"/>
+        <Property name="name" type="java.lang.String" value="ALTERNATIVA.PERSONALIZADO" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfAlt2">
       <Properties>
-        <Property name="name" type="java.lang.String" value="Alternativa 2" noResource="true"/>
+        <Property name="toolTipText" type="java.lang.String" value="Alternativa 2"/>
+        <Property name="name" type="java.lang.String" value="ALTERNATIVA.PERSONALIZADO" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfAlt3">
       <Properties>
-        <Property name="name" type="java.lang.String" value="Alternativa 3" noResource="true"/>
+        <Property name="toolTipText" type="java.lang.String" value="Alternativa 3"/>
+        <Property name="name" type="java.lang.String" value="ALTERNATIVA.PERSONALIZADO" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfAlt4">
       <Properties>
-        <Property name="name" type="java.lang.String" value="Alternativa 4" noResource="true"/>
+        <Property name="toolTipText" type="java.lang.String" value="Alternativa 4"/>
+        <Property name="name" type="java.lang.String" value="ALTERNATIVA.PERSONALIZADO" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">

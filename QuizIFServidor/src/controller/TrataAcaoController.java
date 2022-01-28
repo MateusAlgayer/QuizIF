@@ -199,11 +199,9 @@ public class TrataAcaoController extends Thread{
           
           Usuario cadUsu = (Usuario)in.readObject();
           
-          if ((new UsuarioDAO()).CadastroUsu(cadUsu, idUnico) == -1){
-            out.writeObject("ok");
-          } else {
-            out.writeObject("nok");
-          }
+          String status = (new UsuarioDAO()).CadastroUsu(cadUsu, idUnico);
+          
+          out.writeObject("ok");
           
           GravaLog("INS", idUnico, "Cadastro de usuário - FIM");
         } else if(wCom.equalsIgnoreCase("REDEFINESENHA")){
@@ -396,16 +394,15 @@ public class TrataAcaoController extends Thread{
           Usuario usu = (Usuario) in.readObject();
           String tipo = (String) in.readObject();
           
-          out.writeObject("ok");
-          
             UsuarioDAO usudao = new UsuarioDAO();
-            int statusCode = usudao.AlteraTipoUsu(usu, tipo, idUnico);
+            String status = usudao.AlteraTipoUsu(usu, tipo, idUnico);
             
-            if(statusCode == -1){
-                out.writeObject("ok");
-            }else{
-                out.writeObject("nok");
-            }
+            out.writeObject(status);
+//            if(statusCode == -1){
+//                out.writeObject("ok");
+//            }else{
+//                out.writeObject("nok");
+//            }
           
           GravaLog("DEL", idUnico, "Deletar prova - FIM");
         } else if(wCom.equalsIgnoreCase("GETUSU")){
@@ -447,14 +444,15 @@ public class TrataAcaoController extends Thread{
           
           int codPergunta = (int)in.readObject();
           
-          int status = (new PerguntaDAO()).DeletaPergunta(codPergunta, idUnico);
+          String status = (new PerguntaDAO()).DeletaPergunta(codPergunta, idUnico);
           
-          switch (status) {
-            case -1 -> out.writeObject("ok");
-            case 1451 -> //código de erro pra quando o que está sendo deletado já foi referenciado como estrangeira em uma tabela filha
-              out.writeObject("jautiliz");
-            default -> out.writeObject("nok");
-          }
+          out.writeObject(status);
+//          switch (status) {
+//            case -1 -> out.writeObject("ok");
+//            case 1451 -> //código de erro pra quando o que está sendo deletado já foi referenciado como estrangeira em uma tabela filha
+//              out.writeObject("jautiliz");
+//            default -> out.writeObject("nok");
+//          }
           
           GravaLog("DEL", idUnico, "Deletar pergunta - FIM");
         } else if(wCom.equalsIgnoreCase("INSERIRPERGUNTA")){
@@ -527,6 +525,5 @@ public class TrataAcaoController extends Thread{
       GravaLogErro("ERR", idUnico, e.toString());
     }
   }
-  
   
 }

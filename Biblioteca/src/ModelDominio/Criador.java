@@ -40,8 +40,8 @@ public class Criador extends Usuario implements Serializable{
         return super.toString() + "Criador{" + '}';
     }
 
-    public Criador(int codUsuario, String nomeUsuario, String apelido) {
-        super(codUsuario, nomeUsuario, apelido);
+    public Criador(int codUsuario, String nomeUsuario, String email) {
+        super(codUsuario, nomeUsuario, email);
     }
     
 }

@@ -100,7 +100,7 @@ public class UsuarioDAO {
     }
   }
   
-  public int CadastroUsu(Usuario usu,int id){
+  public String CadastroUsu(Usuario usu,int id){
     PreparedStatement stmt = null;
     
     try {
@@ -128,10 +128,10 @@ public class UsuarioDAO {
           } catch (SQLException ex) {
             GravaLogErro("ERR", id, "Erro ao cadastrar usuário\n"+ex.toString());
           }
-          return e.getErrorCode();
+          return e.getErrorCode()+" - "+e.toString();
         }
 
-        return -1;
+        return "ok";
       } finally {
         try {
           if(stmt != null){
@@ -320,19 +320,19 @@ public class UsuarioDAO {
                     case "C" ->
                         usu = new Comum(result.getInt("CODIGO"),
                         result.getString("NOME"),
-                        result.getString("APELIDO"));
+                        result.getString("EMAIL"));
                     case "J" ->
                         usu = new Criador(result.getInt("CODIGO"),
                         result.getString("NOME"),
-                        result.getString("APELIDO"));
+                        result.getString("EMAIL"));
                     case "A" ->
                         usu = new Administrador(result.getInt("CODIGO"),
                         result.getString("NOME"),
-                        result.getString("APELIDO"));
+                        result.getString("EMAIL"));
                     default ->
                         usu = new Comum(result.getInt("CODIGO"),
                         result.getString("NOME"),
-                        result.getString("APELIDO"));
+                        result.getString("EMAIL"));
                 });
             }
             
@@ -342,13 +342,13 @@ public class UsuarioDAO {
             GravaLog("SQL", id, "Recuperou um objeto do banco: ListaUsuarios");
             return listaUsuarios;
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             GravaLogErro("ERR", id, e.toString());
         }
         return null;
     }
     
-    public int AlteraTipoUsu(Usuario usu, String tipo, int idUnico) {
+    public String AlteraTipoUsu(Usuario usu, String tipo, int idUnico) {
         PreparedStatement stmt = null;
         try {
             try {
@@ -372,10 +372,10 @@ public class UsuarioDAO {
                 } catch (SQLException ex) {
                     GravaLogErro("ERR", idUnico, "Erro ao alterar permissão de usuário\n" + ex.toString());
                 }
-                return e.getErrorCode();
+                return e.getErrorCode()+" - "+e.toString();
             }
 
-            return -1;
+            return "ok";
         } finally {
             try {
                 if (stmt != null) {

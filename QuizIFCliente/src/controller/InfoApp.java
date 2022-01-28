@@ -9,11 +9,11 @@ public class InfoApp {
   
   private static Usuario GUsuLogado;
   
-  private static String GCodConfirmacao;
+  private static String GCodConfirmacao = "";
   
-  private static String GSenhaCripto;
+  private static String GSenhaCripto = "";
   
-  private static String GEmailUsu;
+  private static String GEmailUsu = "";
 
   public static String getGEmailUsu() {
     return GEmailUsu;

@@ -131,12 +131,14 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfUsu">
       <Properties>
-        <Property name="name" type="java.lang.String" value="Usu&#xe1;rio" noResource="true"/>
+        <Property name="toolTipText" type="java.lang.String" value="Email"/>
+        <Property name="name" type="java.lang.String" value="TABUSU.EMAIL" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="pfSenha">
       <Properties>
-        <Property name="name" type="java.lang.String" value="Senha" noResource="true"/>
+        <Property name="toolTipText" type="java.lang.String" value="Senha"/>
+        <Property name="name" type="java.lang.String" value="" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lbAviso">

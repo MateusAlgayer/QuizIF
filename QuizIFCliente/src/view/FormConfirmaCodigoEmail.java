@@ -39,7 +39,7 @@ public class FormConfirmaCodigoEmail extends javax.swing.JDialog {
     jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
     jLabel1.setText("Informe o código recebido no email");
 
-    btConfirmaCodEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icons8-confirmação-de-leitura-32.png"))); // NOI18N
+    btConfirmaCodEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoConfirmaEmail32.png"))); // NOI18N
     btConfirmaCodEmail.setText("Confirmar");
     btConfirmaCodEmail.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {

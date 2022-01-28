@@ -18,9 +18,16 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   private int contAtt = 0;
   private boolean GModoEdicao;
   
+  
   public FormManutPerguntas() {
     initComponents();
-    Metodos.GeraConsistenciaCampos(rootPane);
+    
+    int tamanhoAlt;
+    //pega o tamanho máximo que cada campo de alternativa pode ter
+    tamanhoAlt = (Metodos.getTamanhoCampo("TABPER.ALTERNATIVAS")/4)-1;
+    Metodos.putTamanhoCampoPerso("ALTERNATIVA.PERSONALIZADO", tamanhoAlt);
+    
+    Metodos.GeraConsistenciaCampos(rootPane);    
     
     attComboBoxArea(-1);
     
@@ -136,7 +143,8 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     tfPergunta.setColumns(20);
     tfPergunta.setLineWrap(true);
     tfPergunta.setRows(5);
-    tfPergunta.setName("Pergunta"); // NOI18N
+    tfPergunta.setToolTipText("Pergunta");
+    tfPergunta.setName("TABPER.PERGUNTA"); // NOI18N
     jScrollPane2.setViewportView(tfPergunta);
 
     jLabel4.setText("Pergunta:");
@@ -157,13 +165,17 @@ public class FormManutPerguntas extends javax.swing.JFrame {
 
     Correta4.setText("Correta");
 
-    tfAlt1.setName("Alternativa 1"); // NOI18N
+    tfAlt1.setToolTipText("Alternativa 1");
+    tfAlt1.setName("ALTERNATIVA.PERSONALIZADO"); // NOI18N
 
-    tfAlt2.setName("Alternativa 2"); // NOI18N
+    tfAlt2.setToolTipText("Alternativa 2");
+    tfAlt2.setName("ALTERNATIVA.PERSONALIZADO"); // NOI18N
 
-    tfAlt3.setName("Alternativa 3"); // NOI18N
+    tfAlt3.setToolTipText("Alternativa 3");
+    tfAlt3.setName("ALTERNATIVA.PERSONALIZADO"); // NOI18N
 
-    tfAlt4.setName("Alternativa 4"); // NOI18N
+    tfAlt4.setToolTipText("Alternativa 4");
+    tfAlt4.setName("ALTERNATIVA.PERSONALIZADO"); // NOI18N
 
     jLabel9.setText("Código:");
 
@@ -261,7 +273,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
             .addContainerGap()
             .addComponent(btAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(cbArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -300,7 +312,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
           .addComponent(Correta4))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(tfAlt4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, Short.MAX_VALUE)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(btSalvar)
@@ -335,9 +347,10 @@ public class FormManutPerguntas extends javax.swing.JFrame {
       return;
     
     if(Metodos.msgConfirma("Tem certeza que deseja excluir a pergunta de código '"+tfCodigo.getText()+"'?")){
-      switch(QuizIFCliente.ccont.ExcluirPergunta(Integer.parseInt(tfCodigo.getText()))){
-        case 1 -> Metodos.Aviso(this.getTitle(), "Pergunta não pode ser deletada pois já foi utilizada por alguma prova\n utilize o campo 'Situação' para inativar a pergunta");
-        case 2 -> Metodos.Erro(this.getTitle(), "Erro ao deletar a pergunta!");
+      String res = QuizIFCliente.ccont.ExcluirPergunta(Integer.parseInt(tfCodigo.getText()));
+      switch(Pedaco(res,"^",1)){
+        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao deletar a pergunta!"+Pedaco(res,"^",2));
         default -> {
           Metodos.Sucesso(this.getTitle(), "Pergunta deletada com sucesso!");
           LimpaCampos();

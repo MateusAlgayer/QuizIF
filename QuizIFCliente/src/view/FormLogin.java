@@ -72,9 +72,11 @@ public class FormLogin extends javax.swing.JFrame{
       }
     });
 
-    tfUsu.setName("Usuário"); // NOI18N
+    tfUsu.setToolTipText("Email");
+    tfUsu.setName("TABUSU.EMAIL"); // NOI18N
 
-    pfSenha.setName("Senha"); // NOI18N
+    pfSenha.setToolTipText("Senha");
+    pfSenha.setName(""); // NOI18N
 
     lbAviso.setForeground(new java.awt.Color(255, 51, 51));
     lbAviso.setText("Usuário ou senha Incorretos!");
@@ -154,7 +156,7 @@ public class FormLogin extends javax.swing.JFrame{
       frmCad.setModal(true);
       frmCad.setVisible(true);
       
-      if(!InfoApp.getGEmailUsu().isEmpty())
+      if(!InfoApp.getGEmailUsu().equals(""))
         tfUsu.setText(InfoApp.getGEmailUsu());
   }//GEN-LAST:event_btCadastroActionPerformed
 

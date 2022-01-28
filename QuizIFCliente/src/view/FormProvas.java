@@ -74,7 +74,8 @@ public class FormProvas extends javax.swing.JDialog {
 
     jLabel1.setText("Nome:");
 
-    tfNome.setName("Nome"); // NOI18N
+    tfNome.setToolTipText("Nome");
+    tfNome.setName("TABPRO.NOME"); // NOI18N
 
     jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 

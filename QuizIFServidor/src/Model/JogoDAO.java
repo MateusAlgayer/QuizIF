@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import static util.Metodos.GravaLog;
 import static util.Metodos.GravaLogErro;
 
-/**
- *
- * @author felip
- */
 public class JogoDAO {
     
     private final Connection con;
@@ -74,43 +70,55 @@ public class JogoDAO {
     return null;
   }  
   
-  public ArrayList<Pergunta> getPerguntasJogo(int numProva, int idUnico) {
+  public ArrayList<Pergunta> getPerguntasJogo(int numProva, int idUnico){
+    PreparedStatement stmt = null;
     try {
-      ArrayList<Pergunta> listaSel = new ArrayList<>();
-      
-      PreparedStatement stmt;
-      //Pergunta(int codPergunta, Area area, String pergunta, int dificuldade, String alternativas, int correta, char situacao)
-      String sql = "SELECT TABPER.CODIGO, TABARE.CODIGO AS CODAREA, TABARE.NOME, TABPER.PERGUNTA, TABPER.DIFICULDADE, "+
-                   "TABPER.ALTERNATIVAS, TABPER.CORRETA, TABPER.SITUACAO AS SIT "+ 
-                   "FROM TABPROPER "+
-                   " LEFT OUTER JOIN TABPER ON TABPROPER.PERGUNTA = TABPER.CODIGO "+
-                   " LEFT OUTER JOIN TABARE ON TABPER.CODAREA = TABARE.CODIGO "+
-                   "WHERE TABPROPER.PROVA = ? "; 
+      try {
+        ArrayList<Pergunta> listaSel = new ArrayList<>();
 
-      stmt = con.prepareStatement(sql); 
+        
+        //Pergunta(int codPergunta, Area area, String pergunta, int dificuldade, String alternativas, int correta, char situacao)
+        String sql = "SELECT TABPER.CODIGO, TABARE.CODIGO AS CODAREA, TABARE.NOME, TABPER.PERGUNTA, TABPER.DIFICULDADE, "+
+                     "TABPER.ALTERNATIVAS, TABPER.CORRETA, TABPER.SITUACAO AS SIT "+ 
+                     "FROM TABPROPER "+
+                     " LEFT OUTER JOIN TABPER ON TABPROPER.PERGUNTA = TABPER.CODIGO "+
+                     " LEFT OUTER JOIN TABARE ON TABPER.CODAREA = TABARE.CODIGO "+
+                     "WHERE TABPROPER.PROVA = ? "; 
 
-      stmt.setInt(1, numProva);
+        stmt = con.prepareStatement(sql); 
 
-      ResultSet result = stmt.executeQuery();
+        stmt.setInt(1, numProva);
 
-      while(result.next()){
-        listaSel.add( new Pergunta(result.getInt("CODIGO"),
-                                   new Area(result.getInt("CODAREA"),result.getString("NOME")),
-                                   result.getString("PERGUNTA"),
-                                   result.getInt("DIFICULDADE"),
-                                   result.getString("ALTERNATIVAS"),
-                                   result.getInt("CORRETA"),
-                                   result.getString("SIT").charAt(0)));
+        ResultSet result = stmt.executeQuery();
+
+        while(result.next()){
+          listaSel.add( new Pergunta(result.getInt("CODIGO"),
+                                     new Area(result.getInt("CODAREA"),result.getString("NOME")),
+                                     result.getString("PERGUNTA"),
+                                     result.getInt("DIFICULDADE"),
+                                     result.getString("ALTERNATIVAS"),
+                                     result.getInt("CORRETA"),
+                                     result.getString("SIT").charAt(0)));
+        }
+
+        GravaLog("SQL", idUnico, "Recuperou um objeto do banco: PerguntasJogo");
+        return listaSel;
+      } catch (SQLException e) {
+        GravaLogErro("ERR",idUnico, e.toString());
+        return null;
+      }
+    } finally {
+      try {
+        if(stmt != null)
+          stmt.close();
+        con.close(); 
+      } catch (SQLException e) {
+        GravaLogErro("ERR",idUnico, e.toString());
+        return null;
       }
       
-      stmt.close();
-      con.close();
-      GravaLog("SQL", idUnico, "Recuperou um objeto do banco: PerguntasJogo");
-      return listaSel;
-    } catch (SQLException e) {
-      GravaLogErro("ERR",idUnico, e.toString());
-      return null;
     }
+    
   }
 
   public int GravaResultJogo(Jogo j, int idUnico) {

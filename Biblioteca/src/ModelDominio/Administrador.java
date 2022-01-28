@@ -40,8 +40,8 @@ public class Administrador extends Criador implements Serializable{
         return super.toString() + "Administrador{" + '}';
     }
 
-    public Administrador(int codUsuario, String nomeUsuario, String apelido) {
-        super(codUsuario, nomeUsuario, apelido);
+    public Administrador(int codUsuario, String nomeUsuario, String email) {
+        super(codUsuario, nomeUsuario, email);
     }
     
 }

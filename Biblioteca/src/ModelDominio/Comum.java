@@ -35,8 +35,8 @@ public class Comum extends Usuario implements Serializable{
       super(email, senha);
     }
 
-    public Comum(int codUsuario, String nomeUsuario, String apelido) {
-        super(codUsuario, nomeUsuario, apelido);
+    public Comum(int codUsuario, String nomeUsuario, String email) {
+        super(codUsuario, nomeUsuario, email);
     }
     
     @Override

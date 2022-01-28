@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import util.Metodos;
@@ -20,6 +21,7 @@ public class QuizIFCliente {
 
   public static ConexaoController ccont;
   
+  @SuppressWarnings("unchecked")
   public static void main(String[] args) {
          
     Socket wSocket;
@@ -39,13 +41,20 @@ public class QuizIFCliente {
       wOut = new ObjectOutputStream(wSocket.getOutputStream());
       wIn = new ObjectInputStream(wSocket.getInputStream());
       
+      try {
+        Metodos.setTamanhoCampos((HashMap<String, Integer>) wIn.readObject());
+      } catch (IOException | ClassNotFoundException e) {
+        GravaLogErro("ERR", 0, "Erro ao carregar informações dos campos");
+        Erro("Erro!", "Erro ao carregar informações dos campos\nreinicie a aplicação!");
+        System.exit(0);
+      }
+      
       ccont = new ConexaoController(wSocket, wOut, wIn);
       
     } catch (IOException e) {
       Erro("Erro", "Erro na conexão com o servidor:\n"+e.toString());
       GravaLogErro("CON", 0, e.toString());
-      Metodos.CriaConf("ConexCliente", LeConex());
-      LeConex();
+      Metodos.CriaConf("ConexCliente", "0ɇ"+LeConex());
       Metodos.Aviso("Aviso!!", "IP do servidor gravado!!\nReinicie a aplicação!");
       System.exit(0);
     }
@@ -56,10 +65,13 @@ public class QuizIFCliente {
   }
 
   private static String LeConex() {
-    String ip = Metodos.LeConf("ConexCliente");
+    String info = Metodos.LeConf("ConexCliente");
+    String mod = Metodos.Pedaco(info, "ɇ", 1);
+    String ip = Metodos.Pedaco(info, "ɇ", 2);
       
-    if(ip.isEmpty()){
+    if(ip.isEmpty() || mod.equals("0")){
       JTextField tfConex = new JTextField();
+      tfConex.setText(ip);
       Object[] campos = {"Informe o IP do servidor:",tfConex};
       Object[] opcoes = {"Salvar","Sair"};
 
@@ -73,7 +85,7 @@ public class QuizIFCliente {
                                       opcoes, 
                                       opcoes[0]);
       if(teste == JOptionPane.OK_OPTION){
-        Metodos.CriaConf("ConexCliente", tfConex.getText());
+        Metodos.CriaConf("ConexCliente", "1ɇ"+tfConex.getText());
         ip = tfConex.getText();
       } else {
         System.exit(0);

@@ -103,10 +103,10 @@ public class Usuario implements Serializable{
         this.senha = senha;
     }
 
-    public Usuario(int codUsuario, String nomeUsuario, String apelido) {
+    public Usuario(int codUsuario, String nomeUsuario, String email) {
         this.codUsuario = codUsuario;
         this.nomeUsuario = nomeUsuario;
-        this.apelido = apelido;
+        this.email = email;
     }
     
     @Override
