@@ -33,7 +33,7 @@ public class JogoDAO {
           default -> "PONTUACAO";
       };
       
-      String sql = "SELECT TABUSU.NOME, TABUSU.APELIDO, SUM(TABUSUPRO.NUMACERTOS) AS TOTNUMACERTO, " +
+      String sql = "SELECT TABUSU.NOME, TABUSU.EMAIL, SUM(TABUSUPRO.NUMACERTOS) AS TOTNUMACERTO, " +
                     "SUM(TABUSUPRO.NUMPERGUNTAS) AS TOTNUMPERGUNTA, " +
                     "(SELECT ROUND((SUM(NUMACERTOS)*100) DIV SUM(NUMPERGUNTAS)) FROM TABUSUPRO " +
                     "WHERE USUARIO = TABUSU.CODIGO) AS PONTUACAO " +
@@ -51,7 +51,7 @@ public class JogoDAO {
       
       while(result.next()){
         listaRanking.add(new Jogo(null,
-                                  new Usuario(0,result.getString("NOME"), result.getString("APELIDO")),
+                                  new Usuario(0,result.getString("NOME"), result.getString("EMAIL")),
                                   result.getInt("TOTNUMPERGUNTA"),
                                   result.getInt("TOTNUMACERTO"),                 
                                   result.getInt("PONTUACAO")

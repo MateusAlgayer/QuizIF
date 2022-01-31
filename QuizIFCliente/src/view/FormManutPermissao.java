@@ -21,6 +21,7 @@ public class FormManutPermissao extends javax.swing.JFrame {
         usuModel = new UsuarioTableModel(QuizIFCliente.ccont.getUsuarios());
         
         tUsu.setModel(usuModel);
+        usuModel.AtualizaColunas(tUsu);
     }
     
   public FormManutPermissao() {

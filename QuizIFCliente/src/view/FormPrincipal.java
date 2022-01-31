@@ -8,6 +8,7 @@ import ModelDominio.Criador;
 import ModelDominio.Prova;
 import controller.InfoApp;
 import java.util.ArrayList;
+import util.Metodos;
 
 import view.tablemodel.ProvasTableModel;
 
@@ -276,6 +277,7 @@ public class FormPrincipal extends javax.swing.JFrame{
       
       GProvas = new ProvasTableModel(listaProvas, true);
       tbProvas.setModel(GProvas);
+      GProvas.AtualizaColunas(tbProvas);
     }
   }
 }

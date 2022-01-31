@@ -13,7 +13,7 @@ import java.awt.Color;
 import static util.Metodos.Pedaco;
 import view.tablemodel.PerguntasTableModel;
 
-public class FormProvas extends javax.swing.JDialog {
+public class FormProvas extends javax.swing.JFrame {
 
   private PerguntasTableModel GPerguntasDisModel;
   private PerguntasTableModel GPerguntasSelModel;
@@ -70,6 +70,7 @@ public class FormProvas extends javax.swing.JDialog {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setTitle("Manutenção de provas");
+    setIconImage(null);
     setMinimumSize(new java.awt.Dimension(800, 600));
     setName("Manutenção de provas"); // NOI18N
 
@@ -447,9 +448,11 @@ public class FormProvas extends javax.swing.JDialog {
     
     GPerguntasDisModel = new PerguntasTableModel(listaDis);
     tbPerDis.setModel(GPerguntasDisModel);
+    GPerguntasDisModel.AtualizaColunas(tbPerDis);
     
     GPerguntasSelModel = new PerguntasTableModel(listaSel);
     tbPerSel.setModel(GPerguntasSelModel);
+    GPerguntasSelModel.AtualizaColunas(tbPerSel);
     
     AtualizaInfo();
   }

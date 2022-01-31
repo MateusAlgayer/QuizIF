@@ -6,6 +6,7 @@ package view.tablemodel;
 
 import ModelDominio.Usuario;
 import java.util.ArrayList;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import util.Metodos;
 
@@ -16,7 +17,8 @@ import util.Metodos;
 public class UsuarioTableModel extends AbstractTableModel{
     
     private final ArrayList<Usuario> listaUsuario;
-
+    private final int[] arrayTamanhos = {150, 300, 75};
+    
     public UsuarioTableModel(ArrayList<Usuario> listaUsuario) {
         this.listaUsuario = listaUsuario;
     }
@@ -56,6 +58,7 @@ public class UsuarioTableModel extends AbstractTableModel{
         };
     }
     
-    
-    
+    public void AtualizaColunas(JTable tabela){
+      Metodos.ajustaColunas(tabela, arrayTamanhos);
+    }
 }

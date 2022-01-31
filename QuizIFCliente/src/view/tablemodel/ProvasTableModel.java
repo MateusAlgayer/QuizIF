@@ -5,12 +5,15 @@ package view.tablemodel;
 
 import ModelDominio.Prova;
 import java.util.ArrayList;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import util.Metodos;
 
 public class ProvasTableModel extends AbstractTableModel{
 
   private final ArrayList<Prova> listaProvas;
   private final int numCols;
+  private final int arrayTamanhos[] = {0, 50, 25, 25};
   
   public ProvasTableModel(ArrayList<Prova> listaProvas, boolean principal) {
     this.listaProvas = listaProvas;
@@ -57,5 +60,9 @@ public class ProvasTableModel extends AbstractTableModel{
   
   public Prova getProva(int row){
     return listaProvas.get(row);
+  }
+  
+  public void AtualizaColunas(JTable tabela){
+    Metodos.ajustaColunas(tabela, arrayTamanhos);
   }
 }

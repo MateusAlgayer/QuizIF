@@ -142,7 +142,6 @@ public class FormManutProvas extends javax.swing.JFrame {
 
   private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
     FormProvas frmProvas = new FormProvas(null);
-    frmProvas.setModal(true);
     frmProvas.setVisible(true);
     AtualizaTabela();
   }//GEN-LAST:event_btNovoActionPerformed
@@ -156,7 +155,6 @@ public class FormManutProvas extends javax.swing.JFrame {
       return; 
     
     FormProvas frmProvas = new FormProvas(GProvaModel.getProva(tbProvas.getSelectedRow()));
-    frmProvas.setModal(true);
     frmProvas.setVisible(true);
     AtualizaTabela();
   }//GEN-LAST:event_btEditarActionPerformed
@@ -179,6 +177,7 @@ public class FormManutProvas extends javax.swing.JFrame {
       GProvaModel = new ProvasTableModel(listaProvas, false);
       
       tbProvas.setModel(GProvaModel);
+      GProvaModel.AtualizaColunas(tbProvas);
     }
   }
 }

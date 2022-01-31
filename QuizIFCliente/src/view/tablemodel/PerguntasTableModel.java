@@ -5,14 +5,16 @@ package view.tablemodel;
 
 import ModelDominio.Pergunta;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import util.Metodos;
 
 public class PerguntasTableModel extends AbstractTableModel{
 
   private final ArrayList<Pergunta> listaPergunta;
-
+  private final int[] arrayTamanhos = {0, 25, 25};
+  
   public PerguntasTableModel(ArrayList<Pergunta> listaPergunta) {
     this.listaPergunta = listaPergunta;
   }
@@ -70,5 +72,9 @@ public class PerguntasTableModel extends AbstractTableModel{
       }
     
     });
+  }
+  
+  public void AtualizaColunas(JTable tabela){
+    Metodos.ajustaColunas(tabela, arrayTamanhos);
   }
 }

@@ -509,6 +509,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     if(listaPer != null){
       GPerguntas = new PerguntasTableModel(listaPer);
       tbPerguntas.setModel(GPerguntas);
+      GPerguntas.AtualizaColunas(tbPerguntas);
     }
   }
 

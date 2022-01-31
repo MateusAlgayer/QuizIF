@@ -168,17 +168,17 @@ public class FormPerfil extends javax.swing.JDialog {
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(0, 0, 0)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
+            .addGap(11, 11, 11)
             .addComponent(jLabel4)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(layout.createSequentialGroup()
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
             .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addContainerGap())
     );
 
     pack();
@@ -234,7 +234,10 @@ public class FormPerfil extends javax.swing.JDialog {
   private void atualizaTabela() {
     ArrayList<Prova> listaHistProva = QuizIFCliente.ccont.getProvasHist(InfoApp.getGUsuLogado().getCodUsuario());
     
-    if(listaHistProva != null)
-      tbHist.setModel(new ProvasTableModel(listaHistProva, true));
+    if(listaHistProva != null){
+      ProvasTableModel hist = new ProvasTableModel(listaHistProva, true);
+      tbHist.setModel(hist);
+      hist.AtualizaColunas(tbHist);
+    }
   }
 }

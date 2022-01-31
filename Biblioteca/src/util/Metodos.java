@@ -21,6 +21,9 @@ import java.util.Scanner;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 
 public class Metodos{
@@ -390,5 +393,25 @@ public class Metodos{
       GravaLogErro("CFG", 0, "Erro ao ler o arquivo de configuração\n"+e.toString());
       return "";
     }
+  }
+  
+  /**
+   * Método para ajustar os tamanhos das colunas
+   * @param tabela a tabela onde este modelo será aplicado
+   * @param arrayTamanhos array com tamanhos de cada coluna, caso o valor passado seja 0, então a própria tabela define os mínimos e máximos
+   */
+  public static void ajustaColunas(JTable tabela,int[] arrayTamanhos){
+    TableColumnModel coluna = tabela.getColumnModel();
+    int colCount = tabela.getColumnCount();
+    for (int i = 0; i < colCount; i++) {
+      
+      //se for zero ou não ter valor vai pro próximo 
+      if(arrayTamanhos[i] == 0 || arrayTamanhos == null)
+        continue;
+        
+      coluna.getColumn(i).setMinWidth(arrayTamanhos[i]);
+      coluna.getColumn(i).setMaxWidth(arrayTamanhos[i]*6);
+    }
+    tabela.setColumnModel(coluna);
   }
 }

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 import util.Metodos;
 import static util.Metodos.Pedaco;
+import static util.Metodos.ajustaColunas;
 
 public class FormJogo extends javax.swing.JDialog {
   
@@ -481,6 +482,7 @@ public class FormJogo extends javax.swing.JDialog {
     panelPrincipal.setVisible(false);
     panelResultado.setVisible(true);    
     
+    int arrayTamanhos[] = {300, 50};
     String col[] = {"Pergunta", "Correta"};    
     DefaultTableModel model = new DefaultTableModel(col, 0);
     
@@ -500,7 +502,9 @@ public class FormJogo extends javax.swing.JDialog {
     }
 
     tbResumo.setModel(model);
+    ajustaColunas(tbResumo, arrayTamanhos);
     lbNumAcertos.setText(String.valueOf(numAcertos));
+    
     
     GResultJogo = new Jogo(GNumProva, new Usuario(InfoApp.getGUsuLogado().getCodUsuario()), GNumPerguntas, numAcertos);   
   }
