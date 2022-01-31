@@ -142,13 +142,23 @@ public class FormCadastro extends javax.swing.JDialog {
           
           String res = QuizIFCliente.ccont.CadastraUsu(novoUsu);
           
-          if(res.equals("ok")){
-            Metodos.Sucesso(this.getTitle(), "Usuário cadastrado com sucesso!!");
-            InfoApp.setGEmailUsu(tfEmail.getText());
-            dispose();
-          } else {
-            Metodos.Erro(this.getTitle(), "Ocorreu um erro ao cadastrar o usuário!\n"+res);
-          }
+          switch(Pedaco(res,"^",1)){
+            case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+            case "E" -> Metodos.Erro(this.getTitle(), "Erro ao cadastrar o usuário!\n"+Pedaco(res,"^",2));
+            default -> {
+              Metodos.Sucesso(this.getTitle(), "Usuário cadastrado com sucesso!!");
+              InfoApp.setGEmailUsu(tfEmail.getText());
+              dispose();
+            }
+          } 
+          
+//          if(res.equals("ok")){
+//            Metodos.Sucesso(this.getTitle(), "Usuário cadastrado com sucesso!!");
+//            InfoApp.setGEmailUsu(tfEmail.getText());
+//            dispose();
+//          } else {
+//            Metodos.Erro(this.getTitle(), "Ocorreu um erro ao cadastrar o usuário!\n"+res);
+//          }
           
           GravaLog("CAD", 0, "Cadastro - FIM");
           return;
@@ -193,7 +203,6 @@ public class FormCadastro extends javax.swing.JDialog {
           return false;
         }
       }
-      
       return true;
     }
     

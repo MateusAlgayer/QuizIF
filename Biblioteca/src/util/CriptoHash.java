@@ -35,7 +35,7 @@ public class CriptoHash {
     
     /**
      * Metodo que gera um Sal para criptografia
-   * @param id id para gravação de log só é necessário em threads, em outros casos é 0
+     * @param id id para gravação de log só é necessário em threads, em outros casos é 0
      * @return um sal
      */
     public static String getSalt(int id){

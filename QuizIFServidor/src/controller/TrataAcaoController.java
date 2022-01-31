@@ -109,29 +109,31 @@ public class TrataAcaoController extends Thread{
             String sal = CriptoHash.getSalt(idUnico);
           
             out.writeObject(sal);
-
-            String codigo = Metodos.GerarCodigo();
-
-            QuizIFMail.EnviaEmail(email, codigo, idUnico);
-
-            String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
             
-            boolean continua = true;
+            if(sal.isEmpty()){
+              String codigo = Metodos.GerarCodigo();
 
-            while(continua){
+              QuizIFMail.EnviaEmail(email, codigo, idUnico);
 
-              String cod = (String)in.readObject();
+              String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
 
-              if(cod.equals("Cancelar")){
-                continua = false;
-                out.writeObject("Cancelei");
-              } else if (criptocodigo.equals(cod)){
-                continua = false;
-                out.writeObject("ok");
-              } else {
-                out.writeObject("");
+              boolean continua = true;
+
+              while(continua){
+
+                String cod = (String)in.readObject();
+
+                if(cod.equals("Cancelar")){
+                  continua = false;
+                  out.writeObject("Cancelei");
+                } else if (criptocodigo.equals(cod)){
+                  continua = false;
+                  out.writeObject("ok");
+                } else {
+                  out.writeObject("nok");
+                }
+
               }
-
             }
 
             GravaLog("REQ", idUnico, "Validação de email por código - FIM");
@@ -146,41 +148,36 @@ public class TrataAcaoController extends Thread{
           out.writeObject("ok");
           
           String email = (String)in.readObject();
-          
-          boolean existe = (new UsuarioDAO()).ExisteEmail(email, idUnico);
-          
-          if(existe){
             
-            String sal = CriptoHash.getSalt(idUnico);
-          
-            out.writeObject(sal);
+          String sal = CriptoHash.getSalt(idUnico);
 
-            String codigo = Metodos.GerarCodigo();
+          out.writeObject(sal);
 
-            QuizIFMail.EnviaEmail(email, codigo, idUnico);
+          String codigo = Metodos.GerarCodigo();
 
-            String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
+          QuizIFMail.EnviaEmail(email, codigo, idUnico);
 
-            boolean continua = true;
+          String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
 
-            while(continua){
+          boolean continua = true;
 
-              String cod = (String)in.readObject();
+          while(continua){
 
-              if(cod.equals("Cancelar")){
-                continua = false;
-                out.writeObject("Cancelei");
-              } else if (criptocodigo.equals(cod)){
-                continua = false;
-                out.writeObject("ok");
-              } else {
-                out.writeObject("");
-              }
+            String cod = (String)in.readObject();
 
+            if(cod.equals("Cancelar")){
+              continua = false;
+              out.writeObject("Cancelei");
+            } else if (criptocodigo.equals(cod)){
+              continua = false;
+              out.writeObject("ok");
+            } else {
+              out.writeObject("");
             }
 
-            GravaLog("REQ", idUnico, "Validação de email por código - FIM");
           }
+
+          GravaLog("REQ", idUnico, "Validação de email por código - FIM");
         } else if(wCom.equalsIgnoreCase("Deletar Usuário")){
             out.writeObject("ok");
             Usuario usu = (Usuario) in.readObject();
@@ -201,7 +198,7 @@ public class TrataAcaoController extends Thread{
           
           String status = (new UsuarioDAO()).CadastroUsu(cadUsu, idUnico);
           
-          out.writeObject("ok");
+          out.writeObject(status);
           
           GravaLog("INS", idUnico, "Cadastro de usuário - FIM");
         } else if(wCom.equalsIgnoreCase("REDEFINESENHA")){

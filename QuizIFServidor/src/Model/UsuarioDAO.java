@@ -85,13 +85,9 @@ public class UsuarioDAO {
 
         ResultSet result = stmt.executeQuery();
 
-        if(result.next()){
-          return true;
-        }
-
-        GravaLog("CAD", id, "Testa email único - FIM");
-        return false;
+        return result.next();
       } finally {
+        GravaLog("CAD", id, "Testa email único - FIM");
         con.close();
       }
     } catch (SQLException e) {
@@ -128,10 +124,10 @@ public class UsuarioDAO {
           } catch (SQLException ex) {
             GravaLogErro("ERR", id, "Erro ao cadastrar usuário\n"+ex.toString());
           }
-          return e.getErrorCode()+" - "+e.toString();
+          return "E^"+e.getErrorCode()+" - "+e.toString();
         }
 
-        return "ok";
+        return "S^ok";
       } finally {
         try {
           if(stmt != null){
@@ -252,11 +248,12 @@ public class UsuarioDAO {
         } finally {
             try {
                 //entra aqui independente se deu erro ou não
-                stmt.close();
+                if(stmt != null)
+                  stmt.close();
                 con.setAutoCommit(true);
                 con.close();
             } catch (SQLException e) {
-                e.printStackTrace(); 
+                GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
                 return e.getErrorCode();
             }
         }
