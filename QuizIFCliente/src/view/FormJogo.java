@@ -405,12 +405,22 @@ public class FormJogo extends javax.swing.JDialog {
     if(!Metodos.msgConfirma("Após salvar a tela será fechada.\nDeseja continuar?"))
       return;
     
-    if(QuizIFCliente.ccont.GravaResultJogo(GResultJogo)){
-      Metodos.Sucesso(this.getTitle(), "Jogo gravado com sucesso!");
-      dispose();
-    } else {
-      Metodos.Erro(this.getTitle(), "Erro ao gravar o resultado");
-    }
+    String res = QuizIFCliente.ccont.GravaResultJogo(GResultJogo);
+    
+    switch(Pedaco(res,"^",1)){
+      case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+      case "E" -> Metodos.Erro(this.getTitle(), "Erro ao gravar o resultado!\n"+Pedaco(res,"^",2));
+      default -> {
+        Metodos.Sucesso(this.getTitle(), "Resultado gravado com sucesso!");
+        dispose();
+      }
+    } 
+//    if(QuizIFCliente.ccont.GravaResultJogo(GResultJogo)){
+//      Metodos.Sucesso(this.getTitle(), "Jogo gravado com sucesso!");
+//      dispose();
+//    } else {
+//      Metodos.Erro(this.getTitle(), "Erro ao gravar o resultado");
+//    }
   }//GEN-LAST:event_btSalvarActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

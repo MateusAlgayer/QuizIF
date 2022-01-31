@@ -372,10 +372,10 @@ public class UsuarioDAO {
                 } catch (SQLException ex) {
                     GravaLogErro("ERR", idUnico, "Erro ao alterar permissão de usuário\n" + ex.toString());
                 }
-                return e.getErrorCode()+" - "+e.toString();
+                return "E^"+e.getErrorCode()+" - "+e.toString();
             }
 
-            return "ok";
+            return "S^ok";
         } finally {
             try {
                 if (stmt != null) {

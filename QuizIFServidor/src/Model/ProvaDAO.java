@@ -135,7 +135,7 @@ public class ProvaDAO {
     }
   }
 
-  public int InserirProva(Prova p, ArrayList<Pergunta> cadPerSel, int idUnico, int usuLogado) {
+  public String InserirProva(Prova p, ArrayList<Pergunta> cadPerSel, int idUnico, int usuLogado) {
     //precisou executar 3 querys, como o JDBC barra o uso de mais de uma query por statement então 
     //usei 1 statement pra cada query;
     PreparedStatement stmt = null;
@@ -198,10 +198,10 @@ public class ProvaDAO {
           } catch (SQLException ex) {
             GravaLogErro("ERR", idUnico, "Erro ao cadastrar prova\n"+ex.toString());
           }
-          return e.getErrorCode();
+          return "E^"+e.getErrorCode()+" - "+e.toString();
         }
 
-        return -1;
+        return "S^ok";
       } finally {
         try {
           if(stmt != null){
@@ -221,7 +221,7 @@ public class ProvaDAO {
       }
   }
 
-  public int DeletaProva(int prova, int idUnico) {
+  public String DeletaProva(int prova, int idUnico) {
     PreparedStatement stmt = null;
 
     try {
@@ -238,15 +238,19 @@ public class ProvaDAO {
             stmt.execute();
 
             con.commit();
-            return -1;
+            return "S^ok";
         } catch (SQLException e) {
             try {
                 GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
                 con.rollback();
-                return e.getErrorCode();
+                
+                if(e.getErrorCode() == 1451)//codigo de erro caso a chave estrangeira já esteja em uso e não possa ser deletada 
+                  return "A^Prova não pode ser deletada pois já foi realizada por algum usuário\n utilize o campo 'Situação' para inativar a prova";
+                
+                return "E^"+e.getErrorCode()+" - "+e.toString(); 
             } catch (SQLException ex) {
                 GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + ex.toString());
-                return ex.getErrorCode();
+                return "E^"+ex.getErrorCode()+" - "+ex.toString();
             }
         }
     } finally {
@@ -257,12 +261,12 @@ public class ProvaDAO {
             con.close();
         } catch (SQLException e) {
             GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
-            return e.getErrorCode();
+            return "E^"+e.getErrorCode()+" - "+e.toString();
         }
     }
   }
 
-  public int AlterarProva(Prova p, ArrayList<Pergunta> cadPerSel, int idUnico, int usuLogado) {
+  public String AlterarProva(Prova p, ArrayList<Pergunta> cadPerSel, int idUnico, int usuLogado) {
     GravaLog("UPD", idUnico, "Editar prova - INI");
 
     PreparedStatement stmt = null;
@@ -327,11 +331,11 @@ public class ProvaDAO {
           } catch (SQLException ex) {
             GravaLogErro("ERR", idUnico, "Erro ao editar prova\n"+ex.toString());
           }
-          return e.getErrorCode();
+          return "E^"+e.getErrorCode()+" - "+e.toString();
         }
         
         GravaLog("UPD", idUnico, "Editar prova - FIM");
-        return -1;
+        return "S^ok";
     } finally {
       try {
         if(stmt != null){

@@ -10,6 +10,7 @@ import util.Metodos;
 import view.util.ComboBoxArea;
 import ModelDominio.Pergunta;
 import java.awt.Color;
+import static util.Metodos.Pedaco;
 import view.tablemodel.PerguntasTableModel;
 
 public class FormProvas extends javax.swing.JDialog {
@@ -322,9 +323,18 @@ public class FormProvas extends javax.swing.JDialog {
 
   private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
     if(Metodos.msgConfirma("Tem certeza que deseja excluir a prova '"+GProva.getNomeProva()+"'?")){
-      switch(QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva())){
-        case 1 -> Metodos.Aviso(this.getTitle(), "Prova não pode ser deletada pois já foi realizada por algum usuário\n utilize o campo 'Situação' para inativar a prova");
-        case 2 -> Metodos.Erro(this.getTitle(), "Erro ao deletar a prova!");
+//      switch(QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva())){
+//        case 1 -> Metodos.Aviso(this.getTitle(), "Prova não pode ser deletada pois já foi realizada por algum usuário\n utilize o campo 'Situação' para inativar a prova");
+//        case 2 -> Metodos.Erro(this.getTitle(), "Erro ao deletar a prova!");
+//        default -> {
+//          Metodos.Sucesso(this.getTitle(), "Prova deletada com sucesso!");
+//          dispose();
+//        }
+//      }  
+      String res = QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva());
+      switch(Pedaco(res,"^",1)){
+        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao deletar a prova!\n"+Pedaco(res,"^",2));
         default -> {
           Metodos.Sucesso(this.getTitle(), "Prova deletada com sucesso!");
           dispose();
@@ -361,24 +371,45 @@ public class FormProvas extends javax.swing.JDialog {
     for(int x = 0;x < GPerguntasSelModel.getRowCount();x++)
       cadPerSel.add(GPerguntasSelModel.getPergunta(x));  
     
+    String res;
+    
     if (GModoEdicao){
       //seta o codigo do objeto de alteração pra o código da prova a ser editada.
       //cuidado, se entrar aqui sem uma prova explode
       p.setCodigoProva(GProva.getCodigoProva());
+      res = QuizIFCliente.ccont.ModificarProva(p, cadPerSel);
       
-      if(QuizIFCliente.ccont.ModificarProva(p, cadPerSel)){
-        Metodos.Sucesso(this.getTitle(), "Prova alterada com sucesso!");
-        dispose();
-      } else {
-        Metodos.Erro(this.getTitle(),"Erro ao editar a prova!");
-      }
+      switch(Pedaco(res,"^",1)){
+        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao alterar a prova!\n"+Pedaco(res,"^",2));
+        default -> {
+          Metodos.Sucesso(this.getTitle(), "Prova alterada com sucesso!");
+          dispose();
+        }
+      } 
+//      if(QuizIFCliente.ccont.ModificarProva(p, cadPerSel)){
+//        Metodos.Sucesso(this.getTitle(), "Prova alterada com sucesso!");
+//        dispose();
+//      } else {
+//        Metodos.Erro(this.getTitle(),"Erro ao editar a prova!");
+//      }
     } else {
-      if(QuizIFCliente.ccont.InserirProva(p, cadPerSel)){
-        Metodos.Sucesso(this.getTitle(), "Prova gravada com sucesso!");
-        dispose();
-      } else {
-        Metodos.Erro(this.getTitle(),"Erro ao cadastrar a prova!");
-      }
+      res = QuizIFCliente.ccont.InserirProva(p, cadPerSel);
+      
+      switch(Pedaco(res,"^",1)){
+        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao gravar a prova!\n"+Pedaco(res,"^",2));
+        default -> {
+          Metodos.Sucesso(this.getTitle(), "prova gravada com sucesso!");
+          dispose();
+        }
+      } 
+//      if(QuizIFCliente.ccont.InserirProva(p, cadPerSel)){
+//        Metodos.Sucesso(this.getTitle(), "Prova gravada com sucesso!");
+//        dispose();
+//      } else {
+//        Metodos.Erro(this.getTitle(),"Erro ao cadastrar a prova!");
+//      }
     }
   }//GEN-LAST:event_btSalvarActionPerformed
 

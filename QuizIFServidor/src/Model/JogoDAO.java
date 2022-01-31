@@ -121,7 +121,7 @@ public class JogoDAO {
     
   }
 
-  public int GravaResultJogo(Jogo j, int idUnico) {
+  public String GravaResultJogo(Jogo j, int idUnico) {
     //uma query pra testar se o registro já existe e outra para inserir/atualizar
     PreparedStatement stmt = null;
     PreparedStatement stmt2 = null;
@@ -186,10 +186,10 @@ public class JogoDAO {
           } catch (SQLException ex) {
             GravaLogErro("ERR", idUnico, "Erro ao gravar jogo\n"+ex.toString());
           }
-          return e.getErrorCode();
+          return "E^"+e.getErrorCode()+" - "+e.toString();
         }
 
-        return -1;
+        return "S^ok";
       } finally {
         try {
           if(stmt != null){

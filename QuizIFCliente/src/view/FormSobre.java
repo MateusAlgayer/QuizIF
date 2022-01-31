@@ -41,7 +41,7 @@ public class FormSobre extends javax.swing.JFrame {
     jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
     jLabel1.setText("QUIZIF");
 
-    jLabel6.setText("Versão 1.0");
+    jLabel6.setText("Versão 1.2");
 
     jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Desenvolvido Por"));
 

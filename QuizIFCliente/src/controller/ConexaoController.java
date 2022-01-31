@@ -321,7 +321,7 @@ public class ConexaoController {
     GravaLog("GET", 0,"Perguntas de uma prova - FIM");
   }
 
-  public int ExcluirProva(int codigoProva) {
+  public String ExcluirProva(int codigoProva) {
     String msg;
     try {
       out.writeObject("DELETAPROVA");
@@ -329,14 +329,15 @@ public class ConexaoController {
       out.writeObject(codigoProva);
       msg = (String) in.readObject();
 
-      return switch (msg) {
-        case "ok" -> 0;
-        case "jautiliz" -> 1;
-        default -> 2;
-      };
+//      return switch (msg) {
+//        case "ok" -> 0;
+//        case "jautiliz" -> 1;
+//        default -> 2;
+//      };
+      return msg;
     } catch (IOException | ClassNotFoundException e) {
         GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
-        return 2;
+        return "Erro ao deletar a prova:\n"+e.toString();
     }
   }
   
@@ -464,7 +465,7 @@ public class ConexaoController {
       }
   }
 
-  public boolean InserirProva(Prova p,ArrayList<Pergunta> perSel) {
+  public String InserirProva(Prova p,ArrayList<Pergunta> perSel) {
     GravaLog("CAD", 0,"Cadastro de prova - INI");
     String msg = "";
     try{
@@ -476,15 +477,15 @@ public class ConexaoController {
       out.writeObject(perSel);
           
       GravaLog("CAD", 0,"Cadastro de prova - FIM");
-      return ((String)in.readObject()).equals("ok");
+      return (String)in.readObject();
       
     } catch(IOException | ClassNotFoundException e){
       GravaLogErro("ERR", 0, "Erro no cadastro de provas\n"+e.toString());
-      return false;
+      return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }
 
-  public boolean ModificarProva(Prova p, ArrayList<Pergunta> cadPerSel) {
+  public String ModificarProva(Prova p, ArrayList<Pergunta> cadPerSel) {
     GravaLog("UPD", 0,"Alteração de prova - INI");
     String msg = "";
     try{
@@ -496,11 +497,11 @@ public class ConexaoController {
       out.writeObject(cadPerSel);
           
       GravaLog("CAD", 0,"Alteração de prova - FIM");
-      return ((String)in.readObject()).equals("ok");
+      return (String)in.readObject();
       
     } catch(IOException | ClassNotFoundException e){
       GravaLogErro("ERR", 0, "Erro ao editar prova\n"+e.toString());
-      return false;
+      return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }
   
@@ -624,11 +625,11 @@ public class ConexaoController {
       //};
     } catch (IOException | ClassNotFoundException e) {
         GravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + e.toString());
-        return "Erro na comunicação com o servidor:\n"+e.toString();
+        return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }
 
-  public boolean InserePergunta(Pergunta p) {
+  public String InserePergunta(Pergunta p) {
     GravaLog("CAD", 0,"Cadastro de pergunta - INI");
     String msg = "";
     try{
@@ -639,15 +640,15 @@ public class ConexaoController {
       out.writeObject(p);
           
       GravaLog("CAD", 0,"Cadastro de pergunta - FIM");
-      return ((String)in.readObject()).equals("ok");
+      return (String)in.readObject();
       
     } catch(IOException | ClassNotFoundException e){
       GravaLogErro("ERR", 0, "Erro no cadastro de pergunta\n"+e.toString());
-      return false;
+      return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }
 
-  public boolean AlteraPergunta(Pergunta p) {
+  public String AlteraPergunta(Pergunta p) {
     GravaLog("UPD", 0,"Alteração de pergunta - INI");
     String msg = "";
     try{
@@ -658,15 +659,15 @@ public class ConexaoController {
       out.writeObject(p);
           
       GravaLog("CAD", 0,"Alteração de pergunta - FIM");
-      return ((String)in.readObject()).equals("ok");
+      return (String)in.readObject();
       
     } catch(IOException | ClassNotFoundException e){
       GravaLogErro("ERR", 0, "Erro ao alterar pergunta\n"+e.toString());
-      return false;
+      return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }
 
-  public boolean GravaResultJogo(Jogo resultJogo) {
+  public String GravaResultJogo(Jogo resultJogo) {
     GravaLog("INS", 0,"Grava jogo - INI");
     String msg = "";
     try{
@@ -677,11 +678,11 @@ public class ConexaoController {
       out.writeObject(resultJogo);
           
       GravaLog("INS", 0,"Grava jogo - FIM");
-      return ((String)in.readObject()).equals("ok");
+      return (String)in.readObject();
       
     } catch(IOException | ClassNotFoundException e){
       GravaLogErro("ERR", 0, "Erro ao gravar jogo\n"+e.toString());
-      return false;
+      return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }
 }

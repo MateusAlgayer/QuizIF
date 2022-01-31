@@ -40,6 +40,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
+    buttonGroup1 = new javax.swing.ButtonGroup();
     btVoltar = new javax.swing.JButton();
     jScrollPane1 = new javax.swing.JScrollPane();
     tbPerguntas = new javax.swing.JTable();
@@ -151,18 +152,22 @@ public class FormManutPerguntas extends javax.swing.JFrame {
 
     jLabel5.setText("Alternativa 1:");
 
+    buttonGroup1.add(Correta1);
     Correta1.setText("Correta");
 
     jLabel6.setText("Alternativa 2:");
 
+    buttonGroup1.add(Correta2);
     Correta2.setText("Correta");
 
     jLabel7.setText("Alternativa 3:");
 
+    buttonGroup1.add(Correta3);
     Correta3.setText("Correta");
 
     jLabel8.setText("Alternativa 4:");
 
+    buttonGroup1.add(Correta4);
     Correta4.setText("Correta");
 
     tfAlt1.setToolTipText("Alternativa 1");
@@ -350,7 +355,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
       String res = QuizIFCliente.ccont.ExcluirPergunta(Integer.parseInt(tfCodigo.getText()));
       switch(Pedaco(res,"^",1)){
         case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
-        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao deletar a pergunta!"+Pedaco(res,"^",2));
+        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao deletar a pergunta!\n"+Pedaco(res,"^",2));
         default -> {
           Metodos.Sucesso(this.getTitle(), "Pergunta deletada com sucesso!");
           LimpaCampos();
@@ -410,23 +415,44 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     
     //Cria objeto FIM
     
+    String res;
+    
     if(GModoEdicao){
       p.setCodPergunta(Integer.parseInt(tfCodigo.getText()));
       
-      if(QuizIFCliente.ccont.AlteraPergunta(p)){
-        Metodos.Sucesso(this.getTitle(), "Pergunta alterada com sucesso!");
-        AtualizaTabela();
-      } else {
-        Metodos.Erro(this.getTitle(), "Erro ao alterar pergunta!");
-      }
+      res = QuizIFCliente.ccont.AlteraPergunta(p);
+      switch(Pedaco(res,"^",1)){
+        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao alterar a pergunta!\n"+Pedaco(res,"^",2));
+        default -> {
+          Metodos.Sucesso(this.getTitle(), "Pergunta alterada com sucesso!");
+          AtualizaTabela();
+        }
+      }  
+//      if(QuizIFCliente.ccont.AlteraPergunta(p)){
+//        Metodos.Sucesso(this.getTitle(), "Pergunta alterada com sucesso!");
+//        AtualizaTabela();
+//      } else {
+//        Metodos.Erro(this.getTitle(), "Erro ao alterar pergunta!");
+//      }
     } else {
-      if(QuizIFCliente.ccont.InserePergunta(p)){
-        Metodos.Sucesso(this.getTitle(), "Pergunta gravada com sucesso!");
-        LimpaCampos();
-        AtualizaTabela();
-      } else {
-        Metodos.Erro(this.getTitle(), "Erro ao gravar pergunta!");
-      }
+      
+      res = QuizIFCliente.ccont.InserePergunta(p);
+      switch(Pedaco(res,"^",1)){
+        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao inserir a pergunta!\n"+Pedaco(res,"^",2));
+        default -> {
+          Metodos.Sucesso(this.getTitle(), "Pergunta gravada com sucesso!");
+          AtualizaTabela();
+        }
+      } 
+//      if(QuizIFCliente.ccont.InserePergunta(p)){
+//        Metodos.Sucesso(this.getTitle(), "Pergunta gravada com sucesso!");
+//        LimpaCampos();
+//        AtualizaTabela();
+//      } else {
+//        Metodos.Erro(this.getTitle(), "Erro ao gravar pergunta!");
+//      }
     }
     
   }//GEN-LAST:event_btSalvarActionPerformed
@@ -441,6 +467,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   private javax.swing.JButton btNovo;
   private javax.swing.JButton btSalvar;
   private javax.swing.JButton btVoltar;
+  private javax.swing.ButtonGroup buttonGroup1;
   private javax.swing.JComboBox<Area> cbArea;
   private javax.swing.JComboBox<String> cbDificuldade;
   private javax.swing.JComboBox<String> cbSituacao;

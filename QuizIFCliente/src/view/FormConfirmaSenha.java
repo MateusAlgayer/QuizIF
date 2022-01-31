@@ -7,7 +7,6 @@ import controller.InfoApp;
 import java.awt.Color;
 import util.Metodos;
 import util.CriptoHash;
-import static util.Metodos.GravaLog;
 
 public class FormConfirmaSenha extends javax.swing.JDialog {
 

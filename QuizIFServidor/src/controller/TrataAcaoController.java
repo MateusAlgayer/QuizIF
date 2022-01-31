@@ -316,15 +316,15 @@ public class TrataAcaoController extends Thread{
           
           ArrayList<Pergunta> cadPerSel = (ArrayList<Pergunta>) in.readObject();
           
-          int status = (new ProvaDAO()).InserirProva(p, cadPerSel, idUnico, usuLogado);
+          String status = (new ProvaDAO()).InserirProva(p, cadPerSel, idUnico, usuLogado);
           
-          if(status == -1){
-            out.writeObject("ok");
-          } else {
-            out.writeObject("nok");
-            GravaLogErro("ERR", idUnico, "Erro ao inserir a prova\nStatus erro:"+status);
-          }
-          
+          out.writeObject(status);
+//          if(status == -1){
+//            out.writeObject("ok");
+//          } else {
+//            out.writeObject("nok");
+//            GravaLogErro("ERR", idUnico, "Erro ao inserir a prova\nStatus erro:"+status);
+//          }
           GravaLog("CAD", idUnico, "Cadastro de prova - FIM");
         } else if(wCom.equalsIgnoreCase("DELETAPROVA")){
           GravaLog("DEL", idUnico, "Deletar prova - INI");
@@ -333,15 +333,17 @@ public class TrataAcaoController extends Thread{
           
           int prova = (int)in.readObject();
           
-          int status = (new ProvaDAO()).DeletaProva(prova, idUnico);
+          String status = (new ProvaDAO()).DeletaProva(prova, idUnico);
           
-          switch (status) {
-            case -1 -> out.writeObject("ok");
-            case 1451 -> //código de erro pra quando o que está sendo deletado já foi referenciado como estrangeira em uma tabela filha
-              out.writeObject("jautiliz");
-            default -> out.writeObject("nok");
-          }
+//          switch (status) {
+//            case -1 -> out.writeObject("ok");
+//            case 1451 -> //código de erro pra quando o que está sendo deletado já foi referenciado como estrangeira em uma tabela filha
+//              out.writeObject("jautiliz");
+//            default -> out.writeObject("nok");
+//          }
           
+          out.writeObject(status);
+
           GravaLog("DEL", idUnico, "Deletar prova - FIM");
         } else if(wCom.equalsIgnoreCase("ALTERARPROVA")){
           GravaLog("UPD", idUnico, "Alteração de prova - INI");
@@ -352,15 +354,15 @@ public class TrataAcaoController extends Thread{
           
           ArrayList<Pergunta> cadPerSel = (ArrayList<Pergunta>) in.readObject();
           
-          int status = (new ProvaDAO()).AlterarProva(p, cadPerSel, idUnico, usuLogado);
+          String status = (new ProvaDAO()).AlterarProva(p, cadPerSel, idUnico, usuLogado);
           
-          if(status == -1){
-            out.writeObject("ok");
-          } else {
-            out.writeObject("nok");
-            GravaLogErro("ERR", idUnico, "Erro ao editar prova\nStatus erro:"+status);
-          }
-          
+          out.writeObject(status);
+//          if(status == -1){
+//            out.writeObject("ok");
+//          } else {
+//            out.writeObject("nok");
+//            GravaLogErro("ERR", idUnico, "Erro ao editar prova\nStatus erro:"+status);
+//          }
           GravaLog("UPD", idUnico, "Alteração de prova - FIM");
         }else if(wCom.equalsIgnoreCase("GETRANKING")){
             GravaLog("REQ", idUnico, "Get Ranking - INI");
@@ -462,15 +464,15 @@ public class TrataAcaoController extends Thread{
           
           Pergunta p = (Pergunta)in.readObject();
           
-          int status = (new PerguntaDAO()).InserirPergunta(p, idUnico, usuLogado);
+          String status = (new PerguntaDAO()).InserirPergunta(p, idUnico, usuLogado);
           
-          if(status == -1){
-            out.writeObject("ok");
-          } else {
-            out.writeObject("nok");
-            GravaLogErro("ERR", idUnico, "Erro ao inserir a pergunta\nStatus erro:"+status);
-          }
+          out.writeObject(status);
           
+//          if(status == -1){
+//            out.writeObject("ok");
+//          } else {
+//            out.writeObject("nok");
+//          }
           GravaLog("CAD", idUnico, "Cadastro de pergunta - FIM");
         } else if(wCom.equalsIgnoreCase("ALTERARPERGUNTA")){
           GravaLog("UPD", idUnico, "Alteração de pergunta - INI");
@@ -479,14 +481,14 @@ public class TrataAcaoController extends Thread{
           
           Pergunta p = (Pergunta)in.readObject();
           
-          int status = (new PerguntaDAO()).AlterarPergunta(p, idUnico, usuLogado);
+          String status = (new PerguntaDAO()).AlterarPergunta(p, idUnico, usuLogado);
           
-          if(status == -1){
-            out.writeObject("ok");
-          } else {
-            out.writeObject("nok");
-            GravaLogErro("ERR", idUnico, "Erro ao alterar a pergunta\nStatus erro:"+status);
-          }
+          out.writeObject(status);
+//          if(status == -1){
+//            out.writeObject("ok");
+//          } else {
+//            out.writeObject("nok");
+//          }
           
           GravaLog("UPD", idUnico, "Alteração de pergunta - FIM");
         } else if(wCom.equalsIgnoreCase("GRAVARJOGO")){
@@ -496,15 +498,15 @@ public class TrataAcaoController extends Thread{
           
           Jogo j = (Jogo)in.readObject();
           
-          int status = (new JogoDAO()).GravaResultJogo(j, idUnico);
+          String status = (new JogoDAO()).GravaResultJogo(j, idUnico);
           
-          if(status == -1){
-            out.writeObject("ok");
-          } else {
-            out.writeObject("nok");
-            GravaLogErro("ERR", idUnico, "Erro ao gravar jogo\nStatus erro:"+status);
-          }
-          
+          out.writeObject(status);
+//          if(status == -1){
+//            out.writeObject("ok");
+//          } else {
+//            out.writeObject("nok");
+//            GravaLogErro("ERR", idUnico, "Erro ao gravar jogo\nStatus erro:"+status);
+//          }
           GravaLog("INS", idUnico, "Grava jogo - FIM");
         }
         

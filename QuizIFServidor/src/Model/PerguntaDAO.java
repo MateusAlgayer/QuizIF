@@ -101,7 +101,7 @@ public class PerguntaDAO {
     }
   }
 
-  public int InserirPergunta(Pergunta p, int idUnico, int usuLogado) {
+  public String InserirPergunta(Pergunta p, int idUnico, int usuLogado) {
     PreparedStatement stmt = null;
     
     try {
@@ -134,10 +134,10 @@ public class PerguntaDAO {
           } catch (SQLException ex) {
             GravaLogErro("ERR", idUnico, "Erro ao inserir pergunta\n"+ex.toString());
           }
-          return e.getErrorCode();
+          return "E^"+e.getErrorCode()+" - "+e.toString();
         }
 
-        return -1;
+        return "S^ok";
       } finally {
         try {
           //testa se não é null pq pode falhar no con.setAutoCommit e dai stmt ainda não pode usar close()
@@ -152,7 +152,7 @@ public class PerguntaDAO {
       }
   }
 
-  public int AlterarPergunta(Pergunta p, int idUnico, int usuLogado) {
+  public String AlterarPergunta(Pergunta p, int idUnico, int usuLogado) {
     PreparedStatement stmt = null;
     
     try {
@@ -186,10 +186,10 @@ public class PerguntaDAO {
           } catch (SQLException ex) {
             GravaLogErro("ERR", idUnico, "Erro ao alterar pergunta\n"+ex.toString());
           }
-          return e.getErrorCode();
+          return "E^"+e.getErrorCode()+" - "+e.toString();
         }
 
-        return -1;
+        return "S^ok";
       } finally {
         try {
           //testa se não é null pq pode falhar no con.setAutoCommit e dai stmt ainda não pode usar close()
