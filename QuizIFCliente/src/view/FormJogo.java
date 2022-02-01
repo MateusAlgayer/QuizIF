@@ -408,14 +408,18 @@ public class FormJogo extends javax.swing.JDialog {
     
     String res = QuizIFCliente.ccont.GravaResultJogo(GResultJogo);
     
-    switch(Pedaco(res,"^",1)){
-      case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
-      case "E" -> Metodos.Erro(this.getTitle(), "Erro ao gravar o resultado!\n"+Pedaco(res,"^",2));
-      default -> {
-        Metodos.Sucesso(this.getTitle(), "Resultado gravado com sucesso!");
-        dispose();
-      }
-    } 
+    if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Resultado gravado com sucesso!", "Erro ao gravar o resultado!")){
+      dispose();
+    }
+    
+//    switch(Pedaco(res,"^",1)){
+//      case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+//      case "E" -> Metodos.Erro(this.getTitle(), "Erro ao gravar o resultado!\n"+Pedaco(res,"^",2));
+//      default -> {
+//        Metodos.Sucesso(this.getTitle(), "Resultado gravado com sucesso!");
+//        dispose();
+//      }
+//    } 
 //    if(QuizIFCliente.ccont.GravaResultJogo(GResultJogo)){
 //      Metodos.Sucesso(this.getTitle(), "Jogo gravado com sucesso!");
 //      dispose();

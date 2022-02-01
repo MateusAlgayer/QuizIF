@@ -22,7 +22,6 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.text.JTextComponent;
 
@@ -413,5 +412,32 @@ public class Metodos{
       coluna.getColumn(i).setMaxWidth(arrayTamanhos[i]*6);
     }
     tabela.setColumnModel(coluna);
+  }
+  
+  /**
+   * Método usado para padronizar as mensagens de resposta do servidor
+   * @param titulo titulo da tela
+   * @param res resposta do servidor
+   * @param sucesso resposta exibida em caso de sucesso
+   * @param erro resposta complementar a ser demonstrada em casos de erro
+   * @return true caso dê sucesso false em outros casos
+   */
+  public static boolean ProcessaMsgServidor(String titulo, String res, String sucesso, String erro){
+    switch(Pedaco(res,"^",1)){
+        case "A" -> {
+          Metodos.Aviso(titulo, Pedaco(res,"^",2));
+          break;
+        }
+        case "S" -> {
+          if(!sucesso.isEmpty())
+            Metodos.Sucesso(titulo, sucesso);
+          return true;
+        }
+        default -> {
+          Metodos.Erro(titulo, erro+"\n"+Pedaco(res,"^",2));
+          break;
+        }
+    } 
+    return false;
   }
 }

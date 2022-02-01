@@ -333,14 +333,19 @@ public class FormProvas extends javax.swing.JFrame {
 //        }
 //      }  
       String res = QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva());
-      switch(Pedaco(res,"^",1)){
-        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
-        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao deletar a prova!\n"+Pedaco(res,"^",2));
-        default -> {
-          Metodos.Sucesso(this.getTitle(), "Prova deletada com sucesso!");
-          dispose();
-        }
-      }  
+      
+      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Prova deletada com sucesso!", "Erro ao deletar a prova!")){     
+        dispose();
+      }
+      
+//      switch(Pedaco(res,"^",1)){
+//        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+//        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao deletar a prova!\n"+Pedaco(res,"^",2));
+//        default -> {
+//          Metodos.Sucesso(this.getTitle(), "Prova deletada com sucesso!");
+//          dispose();
+//        }
+//      }  
     }
   }//GEN-LAST:event_btExcluirActionPerformed
 
@@ -380,14 +385,18 @@ public class FormProvas extends javax.swing.JFrame {
       p.setCodigoProva(GProva.getCodigoProva());
       res = QuizIFCliente.ccont.ModificarProva(p, cadPerSel);
       
-      switch(Pedaco(res,"^",1)){
-        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
-        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao alterar a prova!\n"+Pedaco(res,"^",2));
-        default -> {
-          Metodos.Sucesso(this.getTitle(), "Prova alterada com sucesso!");
-          dispose();
-        }
-      } 
+      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Prova alterada com sucesso!", "Erro ao alterar a prova!")){     
+        dispose();
+      }
+      
+//      switch(Pedaco(res,"^",1)){
+//        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+//        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao alterar a prova!\n"+Pedaco(res,"^",2));
+//        default -> {
+//          Metodos.Sucesso(this.getTitle(), "Prova alterada com sucesso!");
+//          dispose();
+//        }
+//      } 
 //      if(QuizIFCliente.ccont.ModificarProva(p, cadPerSel)){
 //        Metodos.Sucesso(this.getTitle(), "Prova alterada com sucesso!");
 //        dispose();
@@ -396,6 +405,10 @@ public class FormProvas extends javax.swing.JFrame {
 //      }
     } else {
       res = QuizIFCliente.ccont.InserirProva(p, cadPerSel);
+      
+      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Prova gravada com sucesso!", "Erro ao gravar a prova!")){     
+        dispose();
+      }
       
       switch(Pedaco(res,"^",1)){
         case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));

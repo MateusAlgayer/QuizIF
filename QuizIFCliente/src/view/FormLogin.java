@@ -198,9 +198,9 @@ public class FormLogin extends javax.swing.JFrame{
     
     Metodos.GravaLog("UPD", 0, "Redefinição de senha - INI");
     
-    if(QuizIFCliente.ccont.EnviaRedefSenha(tfUsu.getText())){
-      Metodos.Sucesso(this.getTitle(), "Senha alterada com sucesso!!");
-    } 
+    String res = QuizIFCliente.ccont.EnviaRedefSenha(tfUsu.getText());
+    
+    Metodos.ProcessaMsgServidor(this.getTitle(), res, "Senha redefinida com sucesso!", "Erro ao redefinir a senha!"); 
     
     Metodos.GravaLog("UPD", 0, "Redefinição de senha - FIM");
   }//GEN-LAST:event_btRedefSenhaActionPerformed

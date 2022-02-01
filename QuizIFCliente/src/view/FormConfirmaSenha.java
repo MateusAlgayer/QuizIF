@@ -188,6 +188,11 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
 
     btConfirmaSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoSenha32.png"))); // NOI18N
     btConfirmaSenha.setText("Confirma Senha");
+    btConfirmaSenha.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btConfirmaSenhaActionPerformed(evt);
+      }
+    });
 
     lbAntigaSenha.setText("Antiga Senha:");
 
@@ -331,7 +336,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
                 Metodos.Aviso(this.getTitle(), "Reveja a política de senha!");
             }
         } else {
-            Metodos.Aviso(this.getTitle(), "Senha Antiga Incorreta!");
+            Metodos.Aviso(this.getTitle(), "Senha antiga incorreta!");
         }
     }//GEN-LAST:event_btConfirmaSenhaActionPerformed
 

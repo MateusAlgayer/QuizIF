@@ -142,15 +142,20 @@ public class FormCadastro extends javax.swing.JDialog {
           
           String res = QuizIFCliente.ccont.CadastraUsu(novoUsu);
           
-          switch(Pedaco(res,"^",1)){
-            case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
-            case "E" -> Metodos.Erro(this.getTitle(), "Erro ao cadastrar o usuário!\n"+Pedaco(res,"^",2));
-            default -> {
-              Metodos.Sucesso(this.getTitle(), "Usuário cadastrado com sucesso!!");
-              InfoApp.setGEmailUsu(tfEmail.getText());
-              dispose();
-            }
-          } 
+          if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Usuário cadastrado com sucesso!!", "Erro ao cadastrar o usuário!")){
+            InfoApp.setGEmailUsu(tfEmail.getText());
+            dispose();
+          }
+          
+//          switch(Pedaco(res,"^",1)){
+//            case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+//            case "E" -> Metodos.Erro(this.getTitle(), "Erro ao cadastrar o usuário!\n"+Pedaco(res,"^",2));
+//            default -> {
+//              Metodos.Sucesso(this.getTitle(), "Usuário cadastrado com sucesso!!");
+//              InfoApp.setGEmailUsu(tfEmail.getText());
+//              dispose();
+//            }
+//          } 
           
 //          if(res.equals("ok")){
 //            Metodos.Sucesso(this.getTitle(), "Usuário cadastrado com sucesso!!");

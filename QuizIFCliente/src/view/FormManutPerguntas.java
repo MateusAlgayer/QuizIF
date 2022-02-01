@@ -353,15 +353,21 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     
     if(Metodos.msgConfirma("Tem certeza que deseja excluir a pergunta de código '"+tfCodigo.getText()+"'?")){
       String res = QuizIFCliente.ccont.ExcluirPergunta(Integer.parseInt(tfCodigo.getText()));
-      switch(Pedaco(res,"^",1)){
-        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
-        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao deletar a pergunta!\n"+Pedaco(res,"^",2));
-        default -> {
-          Metodos.Sucesso(this.getTitle(), "Pergunta deletada com sucesso!");
-          LimpaCampos();
-          AtualizaTabela();
-        }
-      }  
+      
+      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Pergunta deletada com sucesso!", "Erro ao deletar a pergunta!")){     
+        LimpaCampos();
+        AtualizaTabela();
+      }
+      
+//      switch(Pedaco(res,"^",1)){
+//        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+//        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao deletar a pergunta!\n"+Pedaco(res,"^",2));
+//        default -> {
+//          Metodos.Sucesso(this.getTitle(), "Pergunta deletada com sucesso!");
+//          LimpaCampos();
+//          AtualizaTabela();
+//        }
+//      }  
     }
   }//GEN-LAST:event_btExcluirActionPerformed
 
@@ -421,14 +427,19 @@ public class FormManutPerguntas extends javax.swing.JFrame {
       p.setCodPergunta(Integer.parseInt(tfCodigo.getText()));
       
       res = QuizIFCliente.ccont.AlteraPergunta(p);
-      switch(Pedaco(res,"^",1)){
-        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
-        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao alterar a pergunta!\n"+Pedaco(res,"^",2));
-        default -> {
-          Metodos.Sucesso(this.getTitle(), "Pergunta alterada com sucesso!");
-          AtualizaTabela();
-        }
-      }  
+      
+      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Pergunta alterada com sucesso!", "Erro ao alterar a pergunta!")){     
+        AtualizaTabela();
+      }
+      
+//      switch(Pedaco(res,"^",1)){
+//        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+//        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao alterar a pergunta!\n"+Pedaco(res,"^",2));
+//        default -> {
+//          Metodos.Sucesso(this.getTitle(), "Pergunta alterada com sucesso!");
+//          AtualizaTabela();
+//        }
+//      }  
 //      if(QuizIFCliente.ccont.AlteraPergunta(p)){
 //        Metodos.Sucesso(this.getTitle(), "Pergunta alterada com sucesso!");
 //        AtualizaTabela();
@@ -438,14 +449,19 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     } else {
       
       res = QuizIFCliente.ccont.InserePergunta(p);
-      switch(Pedaco(res,"^",1)){
-        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
-        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao inserir a pergunta!\n"+Pedaco(res,"^",2));
-        default -> {
-          Metodos.Sucesso(this.getTitle(), "Pergunta gravada com sucesso!");
-          AtualizaTabela();
-        }
-      } 
+     
+      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Pergunta gravada com sucesso!", "Erro ao inserir a pergunta!")){     
+        AtualizaTabela();
+      }
+      
+//      switch(Pedaco(res,"^",1)){
+//        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+//        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao inserir a pergunta!\n"+Pedaco(res,"^",2));
+//        default -> {
+//          Metodos.Sucesso(this.getTitle(), "Pergunta gravada com sucesso!");
+//          AtualizaTabela();
+//        }
+//      } 
 //      if(QuizIFCliente.ccont.InserePergunta(p)){
 //        Metodos.Sucesso(this.getTitle(), "Pergunta gravada com sucesso!");
 //        LimpaCampos();
@@ -541,10 +557,12 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     tfAlt3.setText(Pedaco(per.getAlternativas(),"Ѫ", 3));
     tfAlt4.setText(Pedaco(per.getAlternativas(),"Ѫ", 4));
     
-    Correta1.setSelected(false);
-    Correta2.setSelected(false);
-    Correta3.setSelected(false);
-    Correta4.setSelected(false);
+    buttonGroup1.clearSelection();
+    
+//    Correta1.setSelected(false);
+//    Correta2.setSelected(false);
+//    Correta3.setSelected(false);
+//    Correta4.setSelected(false);
     
     switch(per.getCorreta()){
       case 1 -> Correta1.setSelected(true);
@@ -575,9 +593,11 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     tfAlt3.setText("");
     tfAlt4.setText("");
     
-    Correta1.setSelected(false);
-    Correta2.setSelected(false);
-    Correta3.setSelected(false);
-    Correta4.setSelected(false);
+    buttonGroup1.clearSelection();
+    
+//    Correta1.setSelected(false);
+//    Correta2.setSelected(false);
+//    Correta3.setSelected(false);
+//    Correta4.setSelected(false);
   }
 }

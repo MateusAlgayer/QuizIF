@@ -8,7 +8,6 @@ import ModelDominio.Criador;
 import ModelDominio.Prova;
 import controller.InfoApp;
 import java.util.ArrayList;
-import util.Metodos;
 
 import view.tablemodel.ProvasTableModel;
 

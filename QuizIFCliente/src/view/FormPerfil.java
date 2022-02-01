@@ -73,6 +73,11 @@ public class FormPerfil extends javax.swing.JDialog {
 
     btAltSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoSenha32.png"))); // NOI18N
     btAltSenha.setText("Alterar Senha");
+    btAltSenha.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btAltSenhaActionPerformed(evt);
+      }
+    });
 
     btExcluirConta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/icoExcluirUsu32.png"))); // NOI18N
     btExcluirConta.setText("Excluir Conta");
@@ -195,13 +200,15 @@ public class FormPerfil extends javax.swing.JDialog {
         if(!Metodos.msgConfirma("Tem certeza que deseja excluir o usuário? ")){
             return;
         }
-        if(QuizIFCliente.ccont.EnviaDelUsu(tfEmailUsu.getText())){
-          System.out.println("chegou aqui");
+        String res = QuizIFCliente.ccont.EnviaDelUsu(tfEmailUsu.getText());
+        
+        if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "", "Erro ao validar o código via e-mail")){
           Usuario usu = new Usuario(InfoApp.getGUsuLogado().getCodUsuario());
-          boolean ok = QuizIFCliente.ccont.DeletaUsu(usu);
-          if(ok){
+          
+          res = QuizIFCliente.ccont.DeletaUsu(usu);
+          
+          if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Usuário deletado!! \n A aplicação será encerrada!", "Erro ao deletar o usuário")){
             GravaLog("DelUsu", 0, "Excluir Usuário - FIM");
-            Metodos.Sucesso(this.getTitle(), "Usuário deletado!! \n A aplicação será encerrada!");
             System.exit(0);
           }
         }
@@ -209,8 +216,10 @@ public class FormPerfil extends javax.swing.JDialog {
 
     private void btAltSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAltSenhaActionPerformed
        GravaLog("UPD", 0, "Alterar Usuario - INI");
-       if(QuizIFCliente.ccont.AlteraSenhaUsu()){
-           InfoApp.getGUsuLogado().setSenha(InfoApp.getGSenhaCripto());
+       String res = QuizIFCliente.ccont.AlteraSenhaUsu();
+       
+       if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Sucesso ao alterar a senha!", "Erro ao alterar a senha!")){
+          InfoApp.getGUsuLogado().setSenha(InfoApp.getGSenhaCripto());
        }
        GravaLog("UPD", 0, "Alterar Usuario - FIM");
     }//GEN-LAST:event_btAltSenhaActionPerformed

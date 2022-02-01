@@ -184,7 +184,7 @@ public class ConexaoController {
     }
   }
   
-  public boolean EnviaRedefSenha(String email){
+  public String EnviaRedefSenha(String email){
     String msg;
     try {
       GravaLog("UPD", 0, "Redefinir senha - INI");
@@ -197,7 +197,7 @@ public class ConexaoController {
       String sal = (String)in.readObject();
       
       if(sal.isEmpty()){
-        return false;
+        return "E^Erro na comunicação entre cliente/servidor";
       }
       
       boolean continua = true; 
@@ -225,14 +225,14 @@ public class ConexaoController {
         msg = (String) in.readObject();
         
         switch (msg) {
-            case "ok" -> {
+            case "S^ok" -> {
               GravaLog("UPD", 0, "Redefinir senha - email - FIM");
               continua = false;
             }
             case "Cancelei" -> {
               Metodos.Aviso("Redefinir senha", "Redefinir senha cancelado");
               GravaLog("UPD", 0, "Redefinir senha - email - FIM");
-              return false;
+              return "A^Redefinição de senha cancelada com sucesso!";
             }
             default -> {
               rep = true;
@@ -256,7 +256,7 @@ public class ConexaoController {
         if(InfoApp.getGSenhaCripto().equals("Fechou")) {
           if(Metodos.msgConfirma("Deseja interromper o processo de redefinição de senha?")){
             out.writeObject(null);
-            return false;
+            return "A^Redefinição de senha cancelada com sucesso!";
           } 
         } else if(!InfoApp.getGSenhaCripto().equals("")){
           //altera
@@ -265,15 +265,15 @@ public class ConexaoController {
           out.writeObject(novoUsu);
           
           GravaLog("CAD", 0, "Cadastro - FIM");
-          return ((String)in.readObject()).equals("ok");
+          return (String)in.readObject();
         }
       }
       
     }catch(IOException | ClassNotFoundException e){
       GravaLogErro("ERR", 0, "Erro ao redefinir a senha\n"+e.toString());
-      return false;
+      return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
-    return false;
+    return "E^Erro na comunicação entre cliente/servidor";
   }
 
   public ArrayList<Area> getListaArea() {
@@ -341,7 +341,7 @@ public class ConexaoController {
     }
   }
   
-  public boolean EnviaDelUsu(String email){
+  public String EnviaDelUsu(String email){
     String msg;
     try {
       GravaLog("DEL", 0, "Deletar Usuario - INI");
@@ -354,7 +354,7 @@ public class ConexaoController {
       String sal = (String)in.readObject();
       
       if(sal.isEmpty()){
-        return false;
+        return "E^Erro na comunicação entre cliente/servidor";
       }
       
       boolean continua = true; 
@@ -389,7 +389,7 @@ public class ConexaoController {
             case "Cancelei" -> {
               Metodos.Aviso("Deletar Usuario", "Deletar Usuario cancelado");
               GravaLog("DEL", 0, "Deletar Usuario - email - FIM");
-              return false;
+              return "A^Processo de exclusão de usuário cancelado!";
             }
             default -> {
               rep = true;
@@ -397,15 +397,15 @@ public class ConexaoController {
           }
       }
       
-      return true;
+      return "S^ok";
       
     }catch(IOException | ClassNotFoundException e){
       GravaLogErro("ERR", 0, "Erro ao deletar o usuário\n"+e.toString());
-      return false;
+      return "E^Erro na comunicação cliente/servidor\n"+e.toString();
     }
   }
   
-  public boolean DeletaUsu (Usuario usu){
+  public String DeletaUsu (Usuario usu){
       String msg;
         try {
             out.writeObject("Deletar Usuário");
@@ -413,10 +413,10 @@ public class ConexaoController {
             out.writeObject(usu);
             msg = (String) in.readObject();
                      
-            return msg.equals("ok");
+            return msg;
         } catch (IOException | ClassNotFoundException e) {
             GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
-            return false;
+            return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
         }
   }
   
@@ -438,7 +438,7 @@ public class ConexaoController {
       }
   }
   
-  public boolean AlteraSenhaUsu (){
+  public String AlteraSenhaUsu (){
       String msg;
       try {
           
@@ -449,19 +449,21 @@ public class ConexaoController {
           frm.setVisible(true);
           
           if(InfoApp.getGSenhaCripto().equals("Fechou")){
-              return false;
+              return "A^Processo de alteração de senha cancelado!";
           }
           
           out.writeObject("Alterar Senha Usuário");
           msg = (String) in.readObject();
+          
           Usuario usu = new Usuario(InfoApp.getGUsuLogado().getEmail(), InfoApp.getGSenhaCripto());
           out.writeObject(usu);
+          
           msg = (String) in.readObject();
           
-          return msg.equals("ok");
+          return msg;
       } catch (IOException | ClassNotFoundException e) {
         GravaLogErro("ERRO", 0, "Erro ao alterar senha \n" + e.toString());
-        return false;
+        return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
       }
   }
 

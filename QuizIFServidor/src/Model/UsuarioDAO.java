@@ -169,7 +169,7 @@ public class UsuarioDAO {
     }
   }
   
-  public int RedefSenha(Usuario usu, int id){
+  public String RedefSenha(Usuario usu, int id){
     PreparedStatement stmt = null;
     
     try {
@@ -194,10 +194,10 @@ public class UsuarioDAO {
           } catch (SQLException ex) {
             GravaLogErro("ERR", id, "Erro redefinir senha\n"+ex.toString());
           }
-          return e.getErrorCode();
+          return "E^"+e.getErrorCode()+" - "+e.toString();
         }
 
-        return -1;
+        return "S^ok";
       } finally {
         try {
           if(stmt != null){
@@ -211,10 +211,10 @@ public class UsuarioDAO {
       }
   }
   
-    //método que faz o DELETE na tabela de marcas
-    //quando o int for -1 é porque deu tudo certo
-    //quando o int fo != de -1 é porque deu ERRO ao deletar
-    public int deletausu(Usuario usu, int id) {
+    //método que faz o DELETE na tabela de usuário
+    //quando String for S^ok é porque deu tudo certo
+    //quando String começar com E^ é porque deu ERRO ao deletar
+    public String deletausu(Usuario usu, int id) {
         PreparedStatement stmt = null;
 
         try {
@@ -234,15 +234,15 @@ public class UsuarioDAO {
                 stmt.execute();
                 //efetivar a transação
                 con.commit(); // <- IMPORTANTE: efetiva a transação
-                return -1; //Deu tudo certo!
+                return "S^ok"; //Deu tudo certo!
             } catch (SQLException e) {
                 try {
                     GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
                     con.rollback(); // <- cancela a transação se deu erro
-                    return e.getErrorCode();
+                    return "E^"+e.getErrorCode()+" - "+e.toString();
                 } catch (SQLException ex) {
                     GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + ex.toString());
-                    return ex.getErrorCode();
+                    return "E^"+ex.getErrorCode()+" - "+ex.toString();
                 }
             }
         } finally {
@@ -254,12 +254,12 @@ public class UsuarioDAO {
                 con.close();
             } catch (SQLException e) {
                 GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
-                return e.getErrorCode();
+                return "E^"+e.getErrorCode()+" - "+e.toString();
             }
         }
     }
     
-    public int AlteraSenha(Usuario usu, int id){
+    public String AlteraSenha(Usuario usu, int id){
     PreparedStatement stmt = null;
     
     try {
@@ -283,9 +283,9 @@ public class UsuarioDAO {
           } catch (SQLException ex) {
             GravaLogErro("ERR", id, "Erro ao alterar senha\n"+ex.toString());
           }
-          return e.getErrorCode();
+          return "E^"+e.getErrorCode()+" - "+e.toString();
         }
-        return -1;
+        return "S^ok";
       } finally {
         try {
           if(stmt != null){

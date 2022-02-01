@@ -110,7 +110,7 @@ public class TrataAcaoController extends Thread{
           
             out.writeObject(sal);
             
-            if(sal.isEmpty()){
+            if(!sal.isEmpty()){
               String codigo = Metodos.GerarCodigo();
 
               QuizIFMail.EnviaEmail(email, codigo, idUnico);
@@ -179,16 +179,23 @@ public class TrataAcaoController extends Thread{
 
           GravaLog("REQ", idUnico, "Validação de email por código - FIM");
         } else if(wCom.equalsIgnoreCase("Deletar Usuário")){
+            GravaLog("DEL", idUnico, "Deletar usuário - INI");
+            
             out.writeObject("ok");
             Usuario usu = (Usuario) in.readObject();
             //chamar o método de deletar do UsuarioDao
             UsuarioDAO usudao = new UsuarioDAO();
-            int result = usudao.deletausu(usu, idUnico);
-            if (result == -1){
-                out.writeObject("ok");
-            }else {
-                out.writeObject("nok");
-            }
+            
+            String status = usudao.deletausu(usu, idUnico);
+            
+            out.writeObject(status);
+            
+            GravaLog("DEL", idUnico, "Deletar usuário - FIM");
+//            if (result == -1){
+//                out.writeObject("ok");
+//            }else {
+//                out.writeObject("nok");
+//            }
         } else if(wCom.equalsIgnoreCase("CADASTROUSU")){
           GravaLog("INS", idUnico, "Cadastro de usuário - INI");
           
@@ -232,7 +239,7 @@ public class TrataAcaoController extends Thread{
                 continua = false;
               } else if (criptocodigo.equals(cod)){
                 continua = false;
-                out.writeObject("ok");
+                out.writeObject("S^ok");
               } else {
                 out.writeObject("");
               }
@@ -247,11 +254,14 @@ public class TrataAcaoController extends Thread{
               Usuario usu = (Usuario)in.readObject();
 
               if (usu != null){
-                if((new UsuarioDAO()).RedefSenha(usu, idUnico) == -1){
-                  out.writeObject("ok");
-                } else {
-                  out.writeObject("nok");
-                }
+                String status = (new UsuarioDAO()).RedefSenha(usu, idUnico);
+                                
+                out.writeObject(status);
+//                if((new UsuarioDAO()).RedefSenha(usu, idUnico) == -1){
+//                  out.writeObject("ok");
+//                } else {
+//                  out.writeObject("nok");
+//                }
                 
               }
 
@@ -262,19 +272,19 @@ public class TrataAcaoController extends Thread{
           GravaLog("UPD", idUnico, "Alterar senha INI");
           
           out.writeObject("ok");
-          
-          GravaLog("UPD", idUnico, "Alterar senha - FIM");
-          
-          GravaLog("UPD", idUnico, "Alterar senha - INI");
 
           Usuario usu = (Usuario)in.readObject();
 
           if (usu != null){
-            if((new UsuarioDAO()).AlteraSenha(usu, idUnico) == -1){
-                out.writeObject("ok");
-            } else {
-                out.writeObject("nok");
-            }
+            String status = (new UsuarioDAO()).AlteraSenha(usu, idUnico);
+            
+            out.writeObject(status);
+            
+//            if((new UsuarioDAO()).AlteraSenha(usu, idUnico) == -1){
+//                out.writeObject("ok");
+//            } else {
+//                out.writeObject("nok");
+//            }
           }
           GravaLog("UPD", idUnico, "Alterar senha - FIM");
         } else if(wCom.equalsIgnoreCase("GETLISTAAREA")){

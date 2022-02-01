@@ -202,14 +202,18 @@ public class FormManutPermissao extends javax.swing.JFrame {
             //sim
             String res = QuizIFCliente.ccont.AlteraTipoUsu(usu, tipo);
             
-            switch(Pedaco(res,"^",1)){
-              case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
-              case "E" -> Metodos.Erro(this.getTitle(), "Erro ao alterar o tipo!\n"+Pedaco(res,"^",2));
-              default -> {
-                atualizaTabela();
-                Metodos.Sucesso(this.getTitle(), "Tipo alterado com sucesso!");
-              }
-            } 
+            if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Tipo alterado com sucesso!", "Erro ao alterar o tipo!")){     
+              atualizaTabela();
+            }
+            
+//            switch(Pedaco(res,"^",1)){
+//              case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
+//              case "E" -> Metodos.Erro(this.getTitle(), "Erro ao alterar o tipo!\n"+Pedaco(res,"^",2));
+//              default -> {
+//                atualizaTabela();
+//                Metodos.Sucesso(this.getTitle(), "Tipo alterado com sucesso!");
+//              }
+//            } 
 //            if(res.equals("ok")){
 //                atualizaTabela();
 //                Metodos.Sucesso(this.getTitle(), "Sucesso em alterar o tipo!");
