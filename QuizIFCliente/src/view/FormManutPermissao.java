@@ -10,7 +10,6 @@ import ModelDominio.Criador;
 import ModelDominio.Usuario;
 import controller.InfoApp;
 import util.Metodos;
-import static util.Metodos.Pedaco;
 import view.tablemodel.UsuarioTableModel;
 
 public class FormManutPermissao extends javax.swing.JFrame {

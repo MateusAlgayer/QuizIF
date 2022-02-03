@@ -68,7 +68,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="lbNova" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbSenha" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="lbAntigaSenha" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -132,7 +132,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbMinuscula" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="pfSenha" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lbNova" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -156,18 +156,19 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="lbSenha">
           <Properties>
             <Property name="text" type="java.lang.String" value="Senha:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Confirma Senha:"/>
+            <Property name="text" type="java.lang.String" value="Confirma senha:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="pfSenha">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Senha"/>
             <Property name="name" type="java.lang.String" value="Senha" noResource="true"/>
           </Properties>
           <Events>
@@ -176,6 +177,7 @@
         </Component>
         <Component class="javax.swing.JPasswordField" name="pfConfirmaSenha">
           <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Confirma senha"/>
             <Property name="name" type="java.lang.String" value="ConfirmaSenha" noResource="true"/>
           </Properties>
           <Events>
@@ -284,10 +286,13 @@
           </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="pfAntigaSenha">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Antiga senha"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbAntigaSenha">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Antiga Senha:"/>
+            <Property name="text" type="java.lang.String" value="Antiga senha:"/>
           </Properties>
         </Component>
       </SubComponents>

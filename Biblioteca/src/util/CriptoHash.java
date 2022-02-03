@@ -29,8 +29,7 @@ public class CriptoHash {
       } catch (Exception e) {
         Metodos.GravaLogErro("ERR", id, "Erro ao criptografar a senha");
         return "";
-      }
-        
+      } 
     }
     
     /**

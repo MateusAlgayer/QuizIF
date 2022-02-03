@@ -8,5 +8,6 @@
 /QuizIFCliente/QuizIFDebug.debug
 /Biblioteca/nbproject/private/
 /Biblioteca/build/
-/QuizIFCliente/Cfg
+/QuizIFCliente/Cfg/*.config
 /QuizIFCliente/dist/
+

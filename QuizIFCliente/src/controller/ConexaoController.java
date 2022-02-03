@@ -197,7 +197,7 @@ public class ConexaoController {
       String sal = (String)in.readObject();
       
       if(sal.isEmpty()){
-        return "E^Erro na comunicação entre cliente/servidor";
+        return "E^O E-mail especificado não pode ser encontrado!";
       }
       
       boolean continua = true; 
@@ -230,9 +230,8 @@ public class ConexaoController {
               continua = false;
             }
             case "Cancelei" -> {
-              Metodos.Aviso("Redefinir senha", "Redefinir senha cancelado");
               GravaLog("UPD", 0, "Redefinir senha - email - FIM");
-              return "A^Redefinição de senha cancelada com sucesso!";
+              return "A^Redefinição de senha cancelada!";
             }
             default -> {
               rep = true;
@@ -256,7 +255,7 @@ public class ConexaoController {
         if(InfoApp.getGSenhaCripto().equals("Fechou")) {
           if(Metodos.msgConfirma("Deseja interromper o processo de redefinição de senha?")){
             out.writeObject(null);
-            return "A^Redefinição de senha cancelada com sucesso!";
+            return "A^Redefinição de senha cancelada!";
           } 
         } else if(!InfoApp.getGSenhaCripto().equals("")){
           //altera
@@ -387,7 +386,6 @@ public class ConexaoController {
               continua = false;
             }
             case "Cancelei" -> {
-              Metodos.Aviso("Deletar Usuario", "Deletar Usuario cancelado");
               GravaLog("DEL", 0, "Deletar Usuario - email - FIM");
               return "A^Processo de exclusão de usuário cancelado!";
             }

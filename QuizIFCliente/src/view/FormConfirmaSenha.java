@@ -15,6 +15,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
     public FormConfirmaSenha(String sal, boolean trocasenha) {
       GSal = sal;
       initComponents();
+      Metodos.GeraConsistenciaCampos(rootPane);
       lbAntigaSenha.setVisible(false);
       lbNova.setVisible(false);
       pfAntigaSenha.setVisible(false);
@@ -27,6 +28,8 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
         btConfirmaSenha.setVisible(true);
         btSalvar.setVisible(false);
       }
+      
+      lbSenha.setText(trocasenha ? "senha:" : "Senha:");
     }
     
     public int consistSenha() {
@@ -102,7 +105,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
   private void initComponents() {
 
     jPanel1 = new javax.swing.JPanel();
-    jLabel1 = new javax.swing.JLabel();
+    lbSenha = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
     pfSenha = new javax.swing.JPasswordField();
     pfConfirmaSenha = new javax.swing.JPasswordField();
@@ -131,10 +134,11 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
 
     jPanel1.setToolTipText("");
 
-    jLabel1.setText("Senha:");
+    lbSenha.setText("Senha:");
 
-    jLabel2.setText("Confirma Senha:");
+    jLabel2.setText("Confirma senha:");
 
+    pfSenha.setToolTipText("Senha");
     pfSenha.setName("Senha"); // NOI18N
     pfSenha.addKeyListener(new java.awt.event.KeyAdapter() {
       public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -142,6 +146,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
       }
     });
 
+    pfConfirmaSenha.setToolTipText("Confirma senha");
     pfConfirmaSenha.setName("ConfirmaSenha"); // NOI18N
     pfConfirmaSenha.addKeyListener(new java.awt.event.KeyAdapter() {
       public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -194,7 +199,9 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
       }
     });
 
-    lbAntigaSenha.setText("Antiga Senha:");
+    pfAntigaSenha.setToolTipText("Antiga senha");
+
+    lbAntigaSenha.setText("Antiga senha:");
 
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
@@ -214,7 +221,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
                   .addGroup(jPanel1Layout.createSequentialGroup()
                     .addComponent(lbNova)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jLabel1))
+                    .addComponent(lbSenha))
                   .addComponent(lbAntigaSenha))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -260,7 +267,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(lbMinuscula)
           .addComponent(pfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel1)
+          .addComponent(lbSenha)
           .addComponent(lbNova))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(lbCaracteres)
@@ -323,7 +330,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
   }//GEN-LAST:event_formWindowClosing
 
     private void btConfirmaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmaSenhaActionPerformed
-        if(!Metodos.Consistencia(true, pfSenha, pfConfirmaSenha)) return;
+        if(!Metodos.Consistencia(true, pfAntigaSenha, pfSenha, pfConfirmaSenha)) return;
         
         String antigaSenha = CriptoHash.Cripto(String.valueOf(pfAntigaSenha.getPassword()), InfoApp.getGUsuLogado().getSal(), 0);
         
@@ -344,7 +351,6 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btConfirmaSenha;
   private javax.swing.JButton btSalvar;
-  private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JPanel jPanel1;
@@ -354,6 +360,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
   private javax.swing.JLabel lbMaiuscula;
   private javax.swing.JLabel lbMinuscula;
   private javax.swing.JLabel lbNova;
+  private javax.swing.JLabel lbSenha;
   private javax.swing.JLabel lbSenhas;
   private javax.swing.JLabel lbTamanho;
   private javax.swing.JPasswordField pfAntigaSenha;
