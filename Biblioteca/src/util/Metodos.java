@@ -254,10 +254,9 @@ public class Metodos{
 
         try (BufferedWriter grava = new BufferedWriter(new FileWriter(arquivo, true))) {
             grava.append("\n"+acao+" - "+id+" - "+Instant.now()+" - "+operacao);
+            grava.close();
             
-            if((new File("QuizIFDebug.debug")).exists()){
-              System.out.println(acao+" - "+id+" - "+Instant.now()+" - "+operacao);
-            }
+            System.out.println(acao+" - "+id+" - "+Instant.now()+" - "+operacao);
         }
     } catch (IOException e) {
         GravaLogErro("ERR", id, e.toString());
@@ -291,10 +290,9 @@ public class Metodos{
 
         try (BufferedWriter grava = new BufferedWriter(new FileWriter(arquivo, true))) {
             grava.append("\n"+acao+" - "+id+" - "+Instant.now()+" - "+operacao);
+            grava.close();
             
-            if((new File("QuizIFDebug.debug")).exists()){ //Mateus Roberto Algayer - 29/12/2021
-              System.out.println(acao+" - "+id+" - "+Instant.now()+" - "+operacao);
-            }
+            System.out.println(acao+" - "+id+" - "+Instant.now()+" - "+operacao);
         }
     } catch (IOException e) {
     }
