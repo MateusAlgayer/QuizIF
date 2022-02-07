@@ -53,7 +53,7 @@ public class UsuarioTableModel extends AbstractTableModel{
         return switch(columnIndex){
             case 0 -> u.getNomeUsuario();
             case 1 -> u.getEmail();
-            case 2 -> Metodos.Pedaco(u.getClass().toString(), ".", 2);
+            case 2 -> Metodos.pedaco(u.getClass().toString(), ".", 2);
             default -> "";
         };
     }

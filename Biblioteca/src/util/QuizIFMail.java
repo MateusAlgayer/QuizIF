@@ -9,7 +9,7 @@ import javax.mail.internet.*;
 
 public class QuizIFMail {
     
-  public static boolean EnviaEmail(String pEmail,String pCodigo, int id){
+  public static boolean enviaEmail(String pEmail,String pCodigo, int id){
         try {
             // Define email e senha do emissor da mensagem
             String myAddress = "QuizIFContato@outlook.com";
@@ -648,10 +648,10 @@ public class QuizIFMail {
                               "</html>";
             Message message = createMessage(session, myAddress, receiver, subject, bodyMsg);
             Transport.send(message);
-            Metodos.GravaLog("EML", id, "Mensagem Enviada!");
+            Metodos.gravaLog("EML", id, "Mensagem Enviada!");
             return true;
         } catch (MessagingException e) {
-            Metodos.GravaLogErro("Erro!", id, e.toString());
+            Metodos.gravaLogErro("Erro!", id, e.toString());
             return false;
         }
     }

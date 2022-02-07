@@ -19,7 +19,7 @@ public class AreaDAO {
   
   public ArrayList<Area> getListaArea(int id){
     try {
-      Metodos.GravaLog("SQL", id, "ListaAreas - INI");
+      Metodos.gravaLog("SQL", id, "ListaAreas - INI");
       
       PreparedStatement stmt;
       
@@ -38,11 +38,11 @@ public class AreaDAO {
       stmt.close();
       con.close();
       
-      Metodos.GravaLog("SQL", id, "ListaAreas - FIM");
+      Metodos.gravaLog("SQL", id, "ListaAreas - FIM");
       return listaProvas;
       
     } catch (SQLException e) {
-      Metodos.GravaLogErro("ERR",id, e.toString());
+      Metodos.gravaLogErro("ERR",id, e.toString());
     }
     return null;
   }

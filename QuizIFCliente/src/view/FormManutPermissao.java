@@ -165,7 +165,7 @@ public class FormManutPermissao extends javax.swing.JFrame {
     private void AlteraTipoUsuario(String tipo){
         
         if(tUsu.getSelectedRow() == -1){
-            Metodos.Aviso(this.getTitle(), "Necessário a seleção de usuário!");
+            Metodos.aviso(this.getTitle(), "Necessário a seleção de usuário!");
             return;
         }
         
@@ -179,7 +179,7 @@ public class FormManutPermissao extends javax.swing.JFrame {
         };
        
         if(naoAltera){
-          Metodos.Aviso(this.getTitle(), "Usuário já é do tipo escolhido!");
+          Metodos.aviso(this.getTitle(), "Usuário já é do tipo escolhido!");
           return;
         }
         
@@ -201,7 +201,7 @@ public class FormManutPermissao extends javax.swing.JFrame {
             //sim
             String res = QuizIFCliente.ccont.AlteraTipoUsu(usu, tipo);
             
-            if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Tipo alterado com sucesso!", "Erro ao alterar o tipo!")){     
+            if(Metodos.processaMsgServidor(this.getTitle(), res, "Tipo alterado com sucesso!", "Erro ao alterar o tipo!")){     
               atualizaTabela();
             }
             

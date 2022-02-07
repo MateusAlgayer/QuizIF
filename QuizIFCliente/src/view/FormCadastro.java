@@ -5,16 +5,16 @@ package view;
 
 import controller.InfoApp;
 import util.Metodos;
-import static util.Metodos.Pedaco;
-import static util.Metodos.GravaLog;
 import util.CriptoHash;
 import ModelDominio.Comum;
+import static util.Metodos.pedaco;
+import static util.Metodos.gravaLog;
 
 public class FormCadastro extends javax.swing.JDialog {
 
     public FormCadastro() {
         initComponents();
-        Metodos.GeraConsistenciaCampos(this.rootPane);
+        Metodos.geraConsistenciaCampos(this.rootPane);
     }
 
     @SuppressWarnings("unchecked")
@@ -103,17 +103,17 @@ public class FormCadastro extends javax.swing.JDialog {
   }// </editor-fold>//GEN-END:initComponents
 
     private void btCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroActionPerformed
-      if(!Metodos.Consistencia(true, tfEmail, tfNome, tfApelido)){
+      if(!Metodos.consistencia(true, tfEmail, tfNome, tfApelido)){
         return;
       }
       
       if(!validaEmail()){
-        Metodos.Aviso(this.getTitle(), "Email inválido!");
+        Metodos.aviso(this.getTitle(), "Email inválido!");
         tfEmail.requestFocus();
         return;
       }
        
-      GravaLog("CAD", 0, "Cadastro - INI");
+      gravaLog("CAD", 0, "Cadastro - INI");
       
       if(!QuizIFCliente.ccont.EnviaCodigoEmail(tfEmail.getText())){
         return;
@@ -126,7 +126,7 @@ public class FormCadastro extends javax.swing.JDialog {
       InfoApp.setGSenhaCripto("");
       
       while(continua){
-        GravaLog("SEN", 0, "Senha rep:"+(cont++));
+        gravaLog("SEN", 0, "Senha rep:"+(cont++));
         
         FormConfirmaSenha frm = new FormConfirmaSenha(sal, false);
         frm.setModal(true);
@@ -142,7 +142,7 @@ public class FormCadastro extends javax.swing.JDialog {
           
           String res = QuizIFCliente.ccont.CadastraUsu(novoUsu);
           
-          if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Usuário cadastrado com sucesso!!", "Erro ao cadastrar o usuário!")){
+          if(Metodos.processaMsgServidor(this.getTitle(), res, "Usuário cadastrado com sucesso!!", "Erro ao cadastrar o usuário!")){
             InfoApp.setGEmailUsu(tfEmail.getText());
             dispose();
           }
@@ -165,7 +165,7 @@ public class FormCadastro extends javax.swing.JDialog {
 //            Metodos.Erro(this.getTitle(), "Ocorreu um erro ao cadastrar o usuário!\n"+res);
 //          }
           
-          GravaLog("CAD", 0, "Cadastro - FIM");
+          gravaLog("CAD", 0, "Cadastro - FIM");
           return;
         }
       }
@@ -173,8 +173,8 @@ public class FormCadastro extends javax.swing.JDialog {
     }//GEN-LAST:event_btCadastroActionPerformed
 
     private boolean validaEmail(){
-      String recNome = Pedaco(tfEmail.getText(),"@", 1);
-      String dominio = Pedaco(tfEmail.getText(),"@", 2);
+      String recNome = pedaco(tfEmail.getText(),"@", 1);
+      String dominio = pedaco(tfEmail.getText(),"@", 2);
       
       //receptor é vazio
       if(recNome.equals("")){       
@@ -204,7 +204,7 @@ public class FormCadastro extends javax.swing.JDialog {
       
       //ve se algo entre os pontos está vazio, se estiver o email é inválido
       for (int x = 1; x <= i+1; x++) {
-        if(Pedaco(dominio,".", x).equals("")){
+        if(pedaco(dominio,".", x).equals("")){
           return false;
         }
       }

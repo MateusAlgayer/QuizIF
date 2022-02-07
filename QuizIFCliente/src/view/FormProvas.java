@@ -10,8 +10,8 @@ import util.Metodos;
 import view.util.ComboBoxArea;
 import ModelDominio.Pergunta;
 import java.awt.Color;
-import static util.Metodos.Pedaco;
 import view.tablemodel.PerguntasTableModel;
+import static util.Metodos.pedaco;
 
 public class FormProvas extends javax.swing.JFrame {
 
@@ -24,7 +24,7 @@ public class FormProvas extends javax.swing.JFrame {
   
   public FormProvas(Prova prova) {
     initComponents();
-    Metodos.GeraConsistenciaCampos(rootPane);
+    Metodos.geraConsistenciaCampos(rootPane);
     
     if(prova != null){
       AtualizaTabelas(prova.getCodigoProva());
@@ -309,7 +309,7 @@ public class FormProvas extends javax.swing.JFrame {
       return;
     
     if(GPerguntasSelModel.getRowCount() >= 30){
-      Metodos.Aviso(this.getTitle(), "Número máximo de perguntas atingido!");
+      Metodos.aviso(this.getTitle(), "Número máximo de perguntas atingido!");
       return;
     }  
     
@@ -334,7 +334,7 @@ public class FormProvas extends javax.swing.JFrame {
 //      }  
       String res = QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva());
       
-      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Prova deletada com sucesso!", "Erro ao deletar a prova!")){     
+      if(Metodos.processaMsgServidor(this.getTitle(), res, "Prova deletada com sucesso!", "Erro ao deletar a prova!")){     
         dispose();
       }
       
@@ -350,23 +350,23 @@ public class FormProvas extends javax.swing.JFrame {
   }//GEN-LAST:event_btExcluirActionPerformed
 
   private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-    if (!Metodos.Consistencia(true, tfNome)) 
+    if (!Metodos.consistencia(true, tfNome)) 
       return;
     
     if (GPerguntasSelModel.getRowCount() == 0){
-      Metodos.Aviso(this.getTitle(), "Ao menos uma pergunta deve ser selecionada!");
+      Metodos.aviso(this.getTitle(), "Ao menos uma pergunta deve ser selecionada!");
       return;
     }
     
     if (GPerguntasSelModel.getRowCount() > 30){
-      Metodos.Aviso(this.getTitle(), "Número de perguntas selecionadas não pode ultrapassar 30!");
+      Metodos.aviso(this.getTitle(), "Número de perguntas selecionadas não pode ultrapassar 30!");
       return;
     }
     
     Area a = GListaCombo.get(cbArea.getSelectedIndex());
     
     //pega só o número da dificuldade pra guardar no banco
-    int dif = Integer.parseInt(Metodos.Pedaco((String)cbDificuldade.getSelectedItem(), " - ", 1));
+    int dif = Integer.parseInt(Metodos.pedaco((String)cbDificuldade.getSelectedItem(), " - ", 1));
 
     char sit = ((String)cbSituacao.getSelectedItem()).charAt(0);
 
@@ -385,7 +385,7 @@ public class FormProvas extends javax.swing.JFrame {
       p.setCodigoProva(GProva.getCodigoProva());
       res = QuizIFCliente.ccont.ModificarProva(p, cadPerSel);
       
-      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Prova alterada com sucesso!", "Erro ao alterar a prova!")){     
+      if(Metodos.processaMsgServidor(this.getTitle(), res, "Prova alterada com sucesso!", "Erro ao alterar a prova!")){     
         dispose();
       }
       
@@ -406,15 +406,15 @@ public class FormProvas extends javax.swing.JFrame {
     } else {
       res = QuizIFCliente.ccont.InserirProva(p, cadPerSel);
       
-      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Prova gravada com sucesso!", "Erro ao gravar a prova!")){     
+      if(Metodos.processaMsgServidor(this.getTitle(), res, "Prova gravada com sucesso!", "Erro ao gravar a prova!")){     
         dispose();
       }
       
-      switch(Pedaco(res,"^",1)){
-        case "A" -> Metodos.Aviso(this.getTitle(), Pedaco(res,"^",2));
-        case "E" -> Metodos.Erro(this.getTitle(), "Erro ao gravar a prova!\n"+Pedaco(res,"^",2));
+      switch(pedaco(res,"^",1)){
+        case "A" -> Metodos.aviso(this.getTitle(), pedaco(res,"^",2));
+        case "E" -> Metodos.erro(this.getTitle(), "Erro ao gravar a prova!\n"+pedaco(res,"^",2));
         default -> {
-          Metodos.Sucesso(this.getTitle(), "prova gravada com sucesso!");
+          Metodos.sucesso(this.getTitle(), "prova gravada com sucesso!");
           dispose();
         }
       } 

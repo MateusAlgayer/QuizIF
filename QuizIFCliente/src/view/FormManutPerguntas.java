@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import util.Metodos;
 import view.tablemodel.PerguntasTableModel;
 import view.util.ComboBoxArea;
-import static util.Metodos.Pedaco;
+import static util.Metodos.pedaco;
 
 public class FormManutPerguntas extends javax.swing.JFrame {
 
@@ -27,7 +27,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     tamanhoAlt = (Metodos.getTamanhoCampo("TABPER.ALTERNATIVAS")/4)-1;
     Metodos.putTamanhoCampoPerso("ALTERNATIVA.PERSONALIZADO", tamanhoAlt);
     
-    Metodos.GeraConsistenciaCampos(rootPane);    
+    Metodos.geraConsistenciaCampos(rootPane);    
     
     attComboBoxArea(-1);
     
@@ -354,7 +354,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     if(Metodos.msgConfirma("Tem certeza que deseja excluir a pergunta de código '"+tfCodigo.getText()+"'?")){
       String res = QuizIFCliente.ccont.ExcluirPergunta(Integer.parseInt(tfCodigo.getText()));
       
-      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Pergunta deletada com sucesso!", "Erro ao deletar a pergunta!")){     
+      if(Metodos.processaMsgServidor(this.getTitle(), res, "Pergunta deletada com sucesso!", "Erro ao deletar a pergunta!")){     
         LimpaCampos();
         AtualizaTabela();
       }
@@ -376,17 +376,17 @@ public class FormManutPerguntas extends javax.swing.JFrame {
   }//GEN-LAST:event_btNovoActionPerformed
 
   private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-    if(!Metodos.Consistencia(true, tfPergunta, tfAlt1, tfAlt2, tfAlt3, tfAlt4))
+    if(!Metodos.consistencia(true, tfPergunta, tfAlt1, tfAlt2, tfAlt3, tfAlt4))
       return; 
     
     //testa os quatro campos de checkbox com um XOR pra ver se 1 e apenas 1 está marcado
     if(!(Correta1.isSelected() ^ Correta2.isSelected() ^ Correta3.isSelected() ^ Correta4.isSelected())){
-      Metodos.Aviso(this.getTitle(), "É necessário que uma e apenas uma alternativa seja marcada como correta!");
+      Metodos.aviso(this.getTitle(), "É necessário que uma e apenas uma alternativa seja marcada como correta!");
       return;
     }
     
     if(tfCodigo.getText().isEmpty() && GModoEdicao){
-      Metodos.Aviso(this.getTitle(), "Modo de edição sem um código de pergunta, tente recarregar a pergunta!");
+      Metodos.aviso(this.getTitle(), "Modo de edição sem um código de pergunta, tente recarregar a pergunta!");
       return;
     }
     
@@ -394,7 +394,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     Area a = GListaCombo.get(cbArea.getSelectedIndex());
 
     //pega só o número da dificuldade pra guardar no banco
-    int dif = Integer.parseInt(Metodos.Pedaco((String)cbDificuldade.getSelectedItem(), " - ", 1));
+    int dif = Integer.parseInt(Metodos.pedaco((String)cbDificuldade.getSelectedItem(), " - ", 1));
 
     char sit = ((String)cbSituacao.getSelectedItem()).charAt(0);
     
@@ -428,7 +428,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
       
       res = QuizIFCliente.ccont.AlteraPergunta(p);
       
-      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Pergunta alterada com sucesso!", "Erro ao alterar a pergunta!")){     
+      if(Metodos.processaMsgServidor(this.getTitle(), res, "Pergunta alterada com sucesso!", "Erro ao alterar a pergunta!")){     
         AtualizaTabela();
       }
       
@@ -450,7 +450,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
       
       res = QuizIFCliente.ccont.InserePergunta(p);
      
-      if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Pergunta gravada com sucesso!", "Erro ao inserir a pergunta!")){     
+      if(Metodos.processaMsgServidor(this.getTitle(), res, "Pergunta gravada com sucesso!", "Erro ao inserir a pergunta!")){     
         AtualizaTabela();
       }
       
@@ -552,10 +552,10 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     
     tfPergunta.setText(per.getPergunta());
     
-    tfAlt1.setText(Pedaco(per.getAlternativas(),"Ѫ", 1));
-    tfAlt2.setText(Pedaco(per.getAlternativas(),"Ѫ", 2));
-    tfAlt3.setText(Pedaco(per.getAlternativas(),"Ѫ", 3));
-    tfAlt4.setText(Pedaco(per.getAlternativas(),"Ѫ", 4));
+    tfAlt1.setText(pedaco(per.getAlternativas(),"Ѫ", 1));
+    tfAlt2.setText(pedaco(per.getAlternativas(),"Ѫ", 2));
+    tfAlt3.setText(pedaco(per.getAlternativas(),"Ѫ", 3));
+    tfAlt4.setText(pedaco(per.getAlternativas(),"Ѫ", 4));
     
     buttonGroup1.clearSelection();
     

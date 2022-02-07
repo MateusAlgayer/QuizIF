@@ -8,8 +8,8 @@ import ModelDominio.Pergunta;
 import factory.Conector;
 import java.sql.*;
 import java.util.ArrayList;
-import static util.Metodos.GravaLog;
-import static util.Metodos.GravaLogErro;
+import static util.Metodos.gravaLog;
+import static util.Metodos.gravaLogErro;
 
 public class PerguntaDAO {
   
@@ -39,7 +39,7 @@ public class PerguntaDAO {
             return "S^ok";
         } catch (SQLException e) {
             try {
-                GravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + e.toString());
+                gravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + e.toString());
                 con.rollback();
                 
                 if(e.getErrorCode() == 1451){ //codigo de erro caso a chave estrangeira já esteja em uso e não possa ser deletada 
@@ -48,7 +48,7 @@ public class PerguntaDAO {
                 
                 return "E^"+e.getErrorCode()+" - "+e.toString();
             } catch (SQLException ex) {
-                GravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + ex.toString());
+                gravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + ex.toString());
                 return "E^"+e.getErrorCode()+" - "+e.toString();
             }
         }
@@ -59,7 +59,7 @@ public class PerguntaDAO {
             con.setAutoCommit(true);
             con.close();
         } catch (SQLException e) {
-            GravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + e.toString());
+            gravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + e.toString());
         }
     }
   }
@@ -93,10 +93,10 @@ public class PerguntaDAO {
       
       stmt.close();
       con.close();
-      GravaLog("SQL", idUnico, "Recuperou um objeto do banco: PerguntasJogo");
+      gravaLog("SQL", idUnico, "Recuperou um objeto do banco: PerguntasJogo");
       return listaSel;
     } catch (SQLException e) {
-      GravaLogErro("ERR",idUnico, e.toString());
+      gravaLogErro("ERR",idUnico, e.toString());
       return null;
     }
   }
@@ -130,9 +130,9 @@ public class PerguntaDAO {
         } catch (SQLException e) {
           try {
             con.rollback();
-            GravaLogErro("ERR", idUnico, "Erro ao inserir pergunta\n"+e.toString());
+            gravaLogErro("ERR", idUnico, "Erro ao inserir pergunta\n"+e.toString());
           } catch (SQLException ex) {
-            GravaLogErro("ERR", idUnico, "Erro ao inserir pergunta\n"+ex.toString());
+            gravaLogErro("ERR", idUnico, "Erro ao inserir pergunta\n"+ex.toString());
           }
           return "E^"+e.getErrorCode()+" - "+e.toString();
         }
@@ -147,7 +147,7 @@ public class PerguntaDAO {
           con.setAutoCommit(true);
           con.close();
         } catch (SQLException ex) {
-          GravaLogErro("ERR", idUnico, "Erro ao inserir pergunta\n"+ex.toString());
+          gravaLogErro("ERR", idUnico, "Erro ao inserir pergunta\n"+ex.toString());
         }
       }
   }
@@ -182,9 +182,9 @@ public class PerguntaDAO {
         } catch (SQLException e) {
           try {
             con.rollback();
-            GravaLogErro("ERR", idUnico, "Erro ao alterar pergunta\n"+e.toString());
+            gravaLogErro("ERR", idUnico, "Erro ao alterar pergunta\n"+e.toString());
           } catch (SQLException ex) {
-            GravaLogErro("ERR", idUnico, "Erro ao alterar pergunta\n"+ex.toString());
+            gravaLogErro("ERR", idUnico, "Erro ao alterar pergunta\n"+ex.toString());
           }
           return "E^"+e.getErrorCode()+" - "+e.toString();
         }
@@ -199,7 +199,7 @@ public class PerguntaDAO {
           con.setAutoCommit(true);
           con.close();
         } catch (SQLException ex) {
-          GravaLogErro("ERR", idUnico, "Erro ao alterar pergunta\n"+ex.toString());
+          gravaLogErro("ERR", idUnico, "Erro ao alterar pergunta\n"+ex.toString());
         }
       }
   }

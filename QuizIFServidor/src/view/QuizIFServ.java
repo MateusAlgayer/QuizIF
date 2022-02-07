@@ -24,14 +24,14 @@ public class QuizIFServ {
 
         try {
           ServerSocket GServidor = new ServerSocket(12345);
-          Metodos.GravaLog("CON",0,"Servidor conectado");
+          Metodos.gravaLog("CON",0,"Servidor conectado");
 
           ConexaoUsu wConex = new ConexaoUsu(GServidor, wCon);
           
           wConex.start();
           
         } catch(IOException e){
-            Metodos.GravaLogErro("ERR", 0, e.toString());
+            Metodos.gravaLogErro("ERR", 0, e.toString());
         }
         
     }
@@ -57,7 +57,7 @@ class ConexaoUsu extends Thread{
                 infoCampos = (new InfoBaseDAO()).getTamanhoCampos();
               
                 if(infoCampos == null){
-                  Metodos.GravaLogErro("ERR", 0, "Erro ao carregar tamanhos dos campos, reinicie o servidor");
+                  Metodos.gravaLogErro("ERR", 0, "Erro ao carregar tamanhos dos campos, reinicie o servidor");
                   System.exit(0);
                 }
                 
@@ -67,7 +67,7 @@ class ConexaoUsu extends Thread{
                   ObjectOutputStream out = new ObjectOutputStream(cliente.getOutputStream());
                   wIdConex++;
                   
-                  Metodos.GravaLog("CON", wIdConex, "Conexão cliente");
+                  Metodos.gravaLog("CON", wIdConex, "Conexão cliente");
 
                   out.writeObject(infoCampos);
                   
@@ -76,7 +76,7 @@ class ConexaoUsu extends Thread{
                   wTrataCliente.start();
                 }
               } catch(IOException e){
-                Metodos.GravaLogErro("ERR", 0, e.toString());
+                Metodos.gravaLogErro("ERR", 0, e.toString());
               }
         }
                

@@ -13,9 +13,9 @@ import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import util.Metodos;
-import static util.Metodos.GravaLog;
-import static util.Metodos.GravaLogErro;
-import static util.Metodos.Erro;
+import static util.Metodos.erro;
+import static util.Metodos.gravaLog;
+import static util.Metodos.gravaLogErro;
 
 public class QuizIFCliente {
 
@@ -31,11 +31,11 @@ public class QuizIFCliente {
     try {  
       javax.swing.UIManager.setLookAndFeel(new FlatLightLaf());
     } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-      GravaLogErro("ERR", 0, "Erro ao definir Look and Feel");
+      gravaLogErro("ERR", 0, "Erro ao definir Look and Feel");
     }
    
     try {
-      GravaLog("CON", 0, "Tentando se conectar ao servidor");
+      gravaLog("CON", 0, "Tentando se conectar ao servidor");
       
       wSocket = new Socket(LeConex(), 12345);
       wOut = new ObjectOutputStream(wSocket.getOutputStream());
@@ -44,30 +44,30 @@ public class QuizIFCliente {
       try {
         Metodos.setTamanhoCampos((HashMap<String, Integer>) wIn.readObject());
       } catch (IOException | ClassNotFoundException e) {
-        GravaLogErro("ERR", 0, "Erro ao carregar informações dos campos");
-        Erro("Erro!", "Erro ao carregar informações dos campos\nreinicie a aplicação!");
+        gravaLogErro("ERR", 0, "Erro ao carregar informações dos campos");
+        erro("Erro!", "Erro ao carregar informações dos campos\nreinicie a aplicação!");
         System.exit(0);
       }
       
       ccont = new ConexaoController(wSocket, wOut, wIn);
       
     } catch (IOException e) {
-      Erro("Erro", "Erro na conexão com o servidor:\n"+e.toString());
-      GravaLogErro("CON", 0, e.toString());
-      Metodos.CriaConf("ConexCliente", "0ɇ"+LeConex());
-      Metodos.Aviso("Aviso!!", "IP do servidor gravado!!\nReinicie a aplicação!");
+      erro("Erro", "Erro na conexão com o servidor:\n"+e.toString());
+      gravaLogErro("CON", 0, e.toString());
+      Metodos.criaConf("ConexCliente", "0ɇ"+LeConex());
+      Metodos.aviso("Aviso!!", "IP do servidor gravado!!\nReinicie a aplicação!");
       System.exit(0);
     }
     
-    GravaLog("CON", 0, "Conexão efetuado com sucesso!");
+    gravaLog("CON", 0, "Conexão efetuado com sucesso!");
     FormLogin fl = new FormLogin();
     fl.setVisible(true);
   }
 
   private static String LeConex() {
-    String info = Metodos.LeConf("ConexCliente");
-    String mod = Metodos.Pedaco(info, "ɇ", 1);
-    String ip = Metodos.Pedaco(info, "ɇ", 2);
+    String info = Metodos.leConf("ConexCliente");
+    String mod = Metodos.pedaco(info, "ɇ", 1);
+    String ip = Metodos.pedaco(info, "ɇ", 2);
       
     if(ip.isEmpty() || mod.equals("0")){
       JTextField tfConex = new JTextField();
@@ -85,7 +85,7 @@ public class QuizIFCliente {
                                       opcoes, 
                                       opcoes[0]);
       if(teste == JOptionPane.OK_OPTION){
-        Metodos.CriaConf("ConexCliente", "1ɇ"+tfConex.getText());
+        Metodos.criaConf("ConexCliente", "1ɇ"+tfConex.getText());
         ip = tfConex.getText();
       } else {
         System.exit(0);

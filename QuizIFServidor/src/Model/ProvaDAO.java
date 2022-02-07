@@ -9,8 +9,8 @@ import ModelDominio.Prova;
 import factory.Conector;
 import java.sql.*;
 import java.util.ArrayList;
-import static util.Metodos.GravaLog;
-import static util.Metodos.GravaLogErro;
+import static util.Metodos.gravaLog;
+import static util.Metodos.gravaLogErro;
 
 public class ProvaDAO {
   
@@ -64,11 +64,11 @@ public class ProvaDAO {
       stmt.close();
       con.close();
       
-      GravaLog("SQL", Id, "Recuperou um objeto do banco: ListaProvas");
+      gravaLog("SQL", Id, "Recuperou um objeto do banco: ListaProvas");
       return listaProvas;
       
     } catch (SQLException e) {
-      GravaLogErro("ERR",Id, e.toString());
+      gravaLogErro("ERR",Id, e.toString());
     }
     return null;
   }
@@ -129,9 +129,9 @@ public class ProvaDAO {
       stmt.close();
       con.close();
       
-      GravaLog("SQL", Id, "Recuperou um objeto do banco: PerguntasProva");
+      gravaLog("SQL", Id, "Recuperou um objeto do banco: PerguntasProva");
     } catch (SQLException e) {
-      GravaLogErro("ERR",Id, e.toString());
+      gravaLogErro("ERR",Id, e.toString());
     }
   }
 
@@ -194,9 +194,9 @@ public class ProvaDAO {
         } catch (SQLException e) {
           try {
             con.rollback();
-            GravaLogErro("ERR", idUnico, "Erro ao cadastrar prova\n"+e.toString());
+            gravaLogErro("ERR", idUnico, "Erro ao cadastrar prova\n"+e.toString());
           } catch (SQLException ex) {
-            GravaLogErro("ERR", idUnico, "Erro ao cadastrar prova\n"+ex.toString());
+            gravaLogErro("ERR", idUnico, "Erro ao cadastrar prova\n"+ex.toString());
           }
           return "E^"+e.getErrorCode()+" - "+e.toString();
         }
@@ -216,7 +216,7 @@ public class ProvaDAO {
           con.setAutoCommit(true);
           con.close();
         } catch (SQLException ex) {
-          GravaLogErro("ERR", idUnico, "Erro ao cadastrar prova\n"+ex.toString());
+          gravaLogErro("ERR", idUnico, "Erro ao cadastrar prova\n"+ex.toString());
         }
       }
   }
@@ -241,7 +241,7 @@ public class ProvaDAO {
             return "S^ok";
         } catch (SQLException e) {
             try {
-                GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
+                gravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
                 con.rollback();
                 
                 if(e.getErrorCode() == 1451)//codigo de erro caso a chave estrangeira já esteja em uso e não possa ser deletada 
@@ -249,7 +249,7 @@ public class ProvaDAO {
                 
                 return "E^"+e.getErrorCode()+" - "+e.toString(); 
             } catch (SQLException ex) {
-                GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + ex.toString());
+                gravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + ex.toString());
                 return "E^"+ex.getErrorCode()+" - "+ex.toString();
             }
         }
@@ -260,14 +260,14 @@ public class ProvaDAO {
             con.setAutoCommit(true);
             con.close();
         } catch (SQLException e) {
-            GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
+            gravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
             return "E^"+e.getErrorCode()+" - "+e.toString();
         }
     }
   }
 
   public String AlterarProva(Prova p, ArrayList<Pergunta> cadPerSel, int idUnico, int usuLogado) {
-    GravaLog("UPD", idUnico, "Editar prova - INI");
+    gravaLog("UPD", idUnico, "Editar prova - INI");
 
     PreparedStatement stmt = null;
     PreparedStatement stmt2 = null;
@@ -327,14 +327,14 @@ public class ProvaDAO {
         } catch (SQLException e) {
           try {
             con.rollback();
-            GravaLogErro("ERR", idUnico, "Erro ao editar prova\n"+e.toString());
+            gravaLogErro("ERR", idUnico, "Erro ao editar prova\n"+e.toString());
           } catch (SQLException ex) {
-            GravaLogErro("ERR", idUnico, "Erro ao editar prova\n"+ex.toString());
+            gravaLogErro("ERR", idUnico, "Erro ao editar prova\n"+ex.toString());
           }
           return "E^"+e.getErrorCode()+" - "+e.toString();
         }
         
-        GravaLog("UPD", idUnico, "Editar prova - FIM");
+        gravaLog("UPD", idUnico, "Editar prova - FIM");
         return "S^ok";
     } finally {
       try {
@@ -350,7 +350,7 @@ public class ProvaDAO {
         con.setAutoCommit(true);
         con.close();
       } catch (SQLException ex) {
-        GravaLogErro("ERR", idUnico, "Erro ao editar prova\n"+ex.toString());
+        gravaLogErro("ERR", idUnico, "Erro ao editar prova\n"+ex.toString());
       }
     }
   }
@@ -388,11 +388,11 @@ public class ProvaDAO {
       stmt.close();
       con.close();
       
-      GravaLog("SQL", idUnico, "Recuperou um objeto do banco: ListaProvasHist");
+      gravaLog("SQL", idUnico, "Recuperou um objeto do banco: ListaProvasHist");
       return listaProvas;
       
     } catch (SQLException e) {
-      GravaLogErro("ERR",idUnico, e.toString());
+      gravaLogErro("ERR",idUnico, e.toString());
     }
     return null;
   }

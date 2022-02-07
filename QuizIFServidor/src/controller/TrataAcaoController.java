@@ -21,10 +21,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import util.CriptoHash;
 import util.Metodos;
-import static util.Metodos.GravaLog;
-import static util.Metodos.GravaLogErro;
 import util.QuizIFMail;
 import ModelDominio.Pergunta;
+import static util.Metodos.gravaLog;
+import static util.Metodos.gravaLogErro;
 
 public class TrataAcaoController extends Thread{
   
@@ -48,16 +48,16 @@ public class TrataAcaoController extends Thread{
   public void run() {
     String wCom;
     
-    GravaLog("CLI", idUnico, "Esperando comando");
+    gravaLog("CLI", idUnico, "Esperando comando");
     
     try {
       wCom = (String) in.readObject();
       
       while(!wCom.equalsIgnoreCase("FIM")){
-        GravaLog("CLI", idUnico, "Enviou o comando: '"+wCom+"'");
+        gravaLog("CLI", idUnico, "Enviou o comando: '"+wCom+"'");
         
         if(wCom.equalsIgnoreCase("EFETUARLOGIN")){
-          GravaLog("REQ", idUnico, "Requisição de login - INI");
+          gravaLog("REQ", idUnico, "Requisição de login - INI");
           
           out.writeObject("ok");
           
@@ -76,15 +76,15 @@ public class TrataAcaoController extends Thread{
             if (usu != null){
               this.usuLogado = usu.getCodUsuario();
               this.emailLogado = usu.getEmail();
-              GravaLog("USU", idUnico, "Usuário conectado: "+usuLogado + "\nEmail: " +emailLogado);
+              gravaLog("USU", idUnico, "Usuário conectado: "+usuLogado + "\nEmail: " +emailLogado);
             }
           }
           
-          GravaLog("REQ", idUnico, "Requisição de login - FIM");
+          gravaLog("REQ", idUnico, "Requisição de login - FIM");
           
         } else if(wCom.equalsIgnoreCase("GETLISTAPROVAS")){
           
-          GravaLog("REQ", idUnico, "Lista de provas - INI");
+          gravaLog("REQ", idUnico, "Lista de provas - INI");
           out.writeObject("ok");
           
           Usuario usu = (Usuario)in.readObject();
@@ -93,11 +93,11 @@ public class TrataAcaoController extends Thread{
           
           ArrayList<Prova> listaProvas = ((new ProvaDAO()).getListaProva(usu.getCodUsuario(), idUnico, usuEspec));
           
-          GravaLog("REQ", idUnico, "Lista de provas - FIM");
+          gravaLog("REQ", idUnico, "Lista de provas - FIM");
           out.writeObject(listaProvas);
         } else if(wCom.equalsIgnoreCase("VALIDACODIGOEMAIL")){
           
-          GravaLog("REQ", idUnico, "Validação de email por código - INI");
+          gravaLog("REQ", idUnico, "Validação de email por código - INI");
           out.writeObject("ok");
           
           String email = (String)in.readObject();
@@ -111,9 +111,9 @@ public class TrataAcaoController extends Thread{
             out.writeObject(sal);
             
             if(!sal.isEmpty()){
-              String codigo = Metodos.GerarCodigo();
+              String codigo = Metodos.gerarCodigo();
 
-              QuizIFMail.EnviaEmail(email, codigo, idUnico);
+              QuizIFMail.enviaEmail(email, codigo, idUnico);
 
               String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
 
@@ -136,15 +136,15 @@ public class TrataAcaoController extends Thread{
               }
             }
 
-            GravaLog("REQ", idUnico, "Validação de email por código - FIM");
+            gravaLog("REQ", idUnico, "Validação de email por código - FIM");
           } else {
             //cai aqui caso o email esteja em uso
-            GravaLog("REQ", idUnico, "Validação de email por código - FIM");
+            gravaLog("REQ", idUnico, "Validação de email por código - FIM");
             out.writeObject("EmailExiste");
           }
         } else if(wCom.equalsIgnoreCase("VALIDACODIGOEMAILDELUSU")){
           
-          GravaLog("REQ", idUnico, "Validação de email por código - INI");
+          gravaLog("REQ", idUnico, "Validação de email por código - INI");
           out.writeObject("ok");
           
           String email = (String)in.readObject();
@@ -153,9 +153,9 @@ public class TrataAcaoController extends Thread{
 
           out.writeObject(sal);
 
-          String codigo = Metodos.GerarCodigo();
+          String codigo = Metodos.gerarCodigo();
 
-          QuizIFMail.EnviaEmail(email, codigo, idUnico);
+          QuizIFMail.enviaEmail(email, codigo, idUnico);
 
           String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
 
@@ -177,9 +177,9 @@ public class TrataAcaoController extends Thread{
 
           }
 
-          GravaLog("REQ", idUnico, "Validação de email por código - FIM");
+          gravaLog("REQ", idUnico, "Validação de email por código - FIM");
         } else if(wCom.equalsIgnoreCase("Deletar Usuário")){
-            GravaLog("DEL", idUnico, "Deletar usuário - INI");
+            gravaLog("DEL", idUnico, "Deletar usuário - INI");
             
             out.writeObject("ok");
             Usuario usu = (Usuario) in.readObject();
@@ -190,14 +190,14 @@ public class TrataAcaoController extends Thread{
             
             out.writeObject(status);
             
-            GravaLog("DEL", idUnico, "Deletar usuário - FIM");
+            gravaLog("DEL", idUnico, "Deletar usuário - FIM");
 //            if (result == -1){
 //                out.writeObject("ok");
 //            }else {
 //                out.writeObject("nok");
 //            }
         } else if(wCom.equalsIgnoreCase("CADASTROUSU")){
-          GravaLog("INS", idUnico, "Cadastro de usuário - INI");
+          gravaLog("INS", idUnico, "Cadastro de usuário - INI");
           
           out.writeObject("ok");
           
@@ -207,9 +207,9 @@ public class TrataAcaoController extends Thread{
           
           out.writeObject(status);
           
-          GravaLog("INS", idUnico, "Cadastro de usuário - FIM");
+          gravaLog("INS", idUnico, "Cadastro de usuário - FIM");
         } else if(wCom.equalsIgnoreCase("REDEFINESENHA")){
-          GravaLog("UPD", idUnico, "Redefinir senha - email - INI");
+          gravaLog("UPD", idUnico, "Redefinir senha - email - INI");
           
           out.writeObject("ok");
           
@@ -220,9 +220,9 @@ public class TrataAcaoController extends Thread{
           out.writeObject(sal);
           
           if (!sal.isEmpty()){
-            String codigo = Metodos.GerarCodigo();
+            String codigo = Metodos.gerarCodigo();
 
-            QuizIFMail.EnviaEmail(email, codigo, idUnico);
+            QuizIFMail.enviaEmail(email, codigo, idUnico);
 
             String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
 
@@ -247,9 +247,9 @@ public class TrataAcaoController extends Thread{
             }
             
             if(!cancelado){
-              GravaLog("UPD", idUnico, "Redefinir senha - email - FIM");
+              gravaLog("UPD", idUnico, "Redefinir senha - email - FIM");
           
-              GravaLog("UPD", idUnico, "Redefinir senha - senha - INI");
+              gravaLog("UPD", idUnico, "Redefinir senha - senha - INI");
 
               Usuario usu = (Usuario)in.readObject();
 
@@ -265,11 +265,11 @@ public class TrataAcaoController extends Thread{
                 
               }
 
-              GravaLog("UPD", idUnico, "Redefinir senha - senha - FIM");
+              gravaLog("UPD", idUnico, "Redefinir senha - senha - FIM");
             }
           }
         } else if(wCom.equalsIgnoreCase("Alterar Senha Usuário")){
-          GravaLog("UPD", idUnico, "Alterar senha INI");
+          gravaLog("UPD", idUnico, "Alterar senha INI");
           
           out.writeObject("ok");
 
@@ -286,17 +286,17 @@ public class TrataAcaoController extends Thread{
 //                out.writeObject("nok");
 //            }
           }
-          GravaLog("UPD", idUnico, "Alterar senha - FIM");
+          gravaLog("UPD", idUnico, "Alterar senha - FIM");
         } else if(wCom.equalsIgnoreCase("GETLISTAAREA")){
-          GravaLog("REQ", idUnico, "Lista areas - INI");
+          gravaLog("REQ", idUnico, "Lista areas - INI");
           
           out.writeObject("ok");
           
           out.writeObject((new AreaDAO()).getListaArea(idUnico));
           
-          GravaLog("REQ", idUnico, "Lista areas - FIM");
+          gravaLog("REQ", idUnico, "Lista areas - FIM");
         } else if(wCom.equalsIgnoreCase("GETPERGUNTASPROVA")){
-          GravaLog("REQ", idUnico, "Lista perguntas prova - INI");
+          gravaLog("REQ", idUnico, "Lista perguntas prova - INI");
           
           out.writeObject("ok");
           
@@ -313,9 +313,9 @@ public class TrataAcaoController extends Thread{
           out.writeObject(listaSel);
           }
           
-          GravaLog("REQ", idUnico, "Lista perguntas prova - FIM");
+          gravaLog("REQ", idUnico, "Lista perguntas prova - FIM");
         } else if(wCom.equalsIgnoreCase("INSERIRPROVA")){
-          GravaLog("CAD", idUnico, "Cadastro de prova - INI");
+          gravaLog("CAD", idUnico, "Cadastro de prova - INI");
           
           out.writeObject("ok");
           
@@ -332,9 +332,9 @@ public class TrataAcaoController extends Thread{
 //            out.writeObject("nok");
 //            GravaLogErro("ERR", idUnico, "Erro ao inserir a prova\nStatus erro:"+status);
 //          }
-          GravaLog("CAD", idUnico, "Cadastro de prova - FIM");
+          gravaLog("CAD", idUnico, "Cadastro de prova - FIM");
         } else if(wCom.equalsIgnoreCase("DELETAPROVA")){
-          GravaLog("DEL", idUnico, "Deletar prova - INI");
+          gravaLog("DEL", idUnico, "Deletar prova - INI");
           
           out.writeObject("ok");
           
@@ -351,9 +351,9 @@ public class TrataAcaoController extends Thread{
           
           out.writeObject(status);
 
-          GravaLog("DEL", idUnico, "Deletar prova - FIM");
+          gravaLog("DEL", idUnico, "Deletar prova - FIM");
         } else if(wCom.equalsIgnoreCase("ALTERARPROVA")){
-          GravaLog("UPD", idUnico, "Alteração de prova - INI");
+          gravaLog("UPD", idUnico, "Alteração de prova - INI");
           
           out.writeObject("ok");
           
@@ -370,9 +370,9 @@ public class TrataAcaoController extends Thread{
 //            out.writeObject("nok");
 //            GravaLogErro("ERR", idUnico, "Erro ao editar prova\nStatus erro:"+status);
 //          }
-          GravaLog("UPD", idUnico, "Alteração de prova - FIM");
+          gravaLog("UPD", idUnico, "Alteração de prova - FIM");
         }else if(wCom.equalsIgnoreCase("GETRANKING")){
-            GravaLog("REQ", idUnico, "Get Ranking - INI");
+            gravaLog("REQ", idUnico, "Get Ranking - INI");
             
             out.writeObject("ok");
             
@@ -382,9 +382,9 @@ public class TrataAcaoController extends Thread{
             ArrayList<Jogo> listaRanking = jgdao.getListaRanking(filtro, idUnico);
             out.writeObject(listaRanking);
             
-            GravaLog("REQ", idUnico, "Get Ranking - FIM");
+            gravaLog("REQ", idUnico, "Get Ranking - FIM");
         } else if(wCom.equalsIgnoreCase("GETPERGUNTASJOGO")){
-          GravaLog("REQ", idUnico, "perguntas jogo - INI");
+          gravaLog("REQ", idUnico, "perguntas jogo - INI");
           
           out.writeObject("ok");
           
@@ -394,9 +394,9 @@ public class TrataAcaoController extends Thread{
           
           out.writeObject(listaSel);
           
-          GravaLog("REQ", idUnico, "perguntas jogo - FIM");
+          gravaLog("REQ", idUnico, "perguntas jogo - FIM");
         } else if(wCom.equalsIgnoreCase("AlteraTipoUsu")){
-          GravaLog("DEL", idUnico, "Alterar Tipo Usuário - INI");
+          gravaLog("DEL", idUnico, "Alterar Tipo Usuário - INI");
           
           out.writeObject("ok");
           
@@ -413,9 +413,9 @@ public class TrataAcaoController extends Thread{
 //                out.writeObject("nok");
 //            }
           
-          GravaLog("DEL", idUnico, "Deletar prova - FIM");
+          gravaLog("DEL", idUnico, "Deletar prova - FIM");
         } else if(wCom.equalsIgnoreCase("GETUSU")){
-            GravaLog("REQ", idUnico, "Get Usuarios - INI");
+            gravaLog("REQ", idUnico, "Get Usuarios - INI");
             
             out.writeObject("ok");
             
@@ -425,9 +425,9 @@ public class TrataAcaoController extends Thread{
             ArrayList<Usuario> listaUsuarios = usudao.getListaUsuarios(idUnico);
             out.writeObject(listaUsuarios);
             
-            GravaLog("REQ", idUnico, "Get Usuarios - FIM");
+            gravaLog("REQ", idUnico, "Get Usuarios - FIM");
         } else if(wCom.equalsIgnoreCase("GETPERGUNTAS")){
-          GravaLog("REQ", idUnico, "perguntas - INI");
+          gravaLog("REQ", idUnico, "perguntas - INI");
           
           out.writeObject("ok");
           
@@ -435,19 +435,19 @@ public class TrataAcaoController extends Thread{
           
           out.writeObject(listaSel);
           
-          GravaLog("REQ", idUnico, "perguntas - FIM");
+          gravaLog("REQ", idUnico, "perguntas - FIM");
         } else if(wCom.equalsIgnoreCase("GETLISTAPROVASHIST")){
           
-          GravaLog("REQ", idUnico, "Lista de provas histórico - INI");
+          gravaLog("REQ", idUnico, "Lista de provas histórico - INI");
           out.writeObject("ok");
           
           ArrayList<Prova> listaProvas = ((new ProvaDAO()).getListaProvaHist(this.usuLogado, idUnico));
           
-          GravaLog("REQ", idUnico, "Lista de provas histórico - FIM");
+          gravaLog("REQ", idUnico, "Lista de provas histórico - FIM");
           out.writeObject(listaProvas);
           
         } else if(wCom.equalsIgnoreCase("DELETAPERGUNTA")){
-          GravaLog("DEL", idUnico, "Deletar pergunta - INI");
+          gravaLog("DEL", idUnico, "Deletar pergunta - INI");
           
           out.writeObject("ok");
           
@@ -463,9 +463,9 @@ public class TrataAcaoController extends Thread{
 //            default -> out.writeObject("nok");
 //          }
           
-          GravaLog("DEL", idUnico, "Deletar pergunta - FIM");
+          gravaLog("DEL", idUnico, "Deletar pergunta - FIM");
         } else if(wCom.equalsIgnoreCase("INSERIRPERGUNTA")){
-          GravaLog("CAD", idUnico, "Cadastro de pergunta - INI");
+          gravaLog("CAD", idUnico, "Cadastro de pergunta - INI");
           
           out.writeObject("ok");
           
@@ -480,9 +480,9 @@ public class TrataAcaoController extends Thread{
 //          } else {
 //            out.writeObject("nok");
 //          }
-          GravaLog("CAD", idUnico, "Cadastro de pergunta - FIM");
+          gravaLog("CAD", idUnico, "Cadastro de pergunta - FIM");
         } else if(wCom.equalsIgnoreCase("ALTERARPERGUNTA")){
-          GravaLog("UPD", idUnico, "Alteração de pergunta - INI");
+          gravaLog("UPD", idUnico, "Alteração de pergunta - INI");
           
           out.writeObject("ok");
           
@@ -497,9 +497,9 @@ public class TrataAcaoController extends Thread{
 //            out.writeObject("nok");
 //          }
           
-          GravaLog("UPD", idUnico, "Alteração de pergunta - FIM");
+          gravaLog("UPD", idUnico, "Alteração de pergunta - FIM");
         } else if(wCom.equalsIgnoreCase("GRAVARJOGO")){
-          GravaLog("INS", idUnico, "Grava jogo - INI");
+          gravaLog("INS", idUnico, "Grava jogo - INI");
           
           out.writeObject("ok");
           
@@ -514,24 +514,24 @@ public class TrataAcaoController extends Thread{
 //            out.writeObject("nok");
 //            GravaLogErro("ERR", idUnico, "Erro ao gravar jogo\nStatus erro:"+status);
 //          }
-          GravaLog("INS", idUnico, "Grava jogo - FIM");
+          gravaLog("INS", idUnico, "Grava jogo - FIM");
         }
         
-        GravaLog("CLI", idUnico, "Esperando comando");
+        gravaLog("CLI", idUnico, "Esperando comando");
         wCom = (String) in.readObject();
       }
       
     } catch (IOException | ClassNotFoundException e) {
-      GravaLogErro("ERR", idUnico, e.toString());
+      gravaLogErro("ERR", idUnico, e.toString());
     }
     
-    GravaLog("CLI", idUnico, "Fechando Conexão");
+    gravaLog("CLI", idUnico, "Fechando Conexão");
     
     try {
       in.close();
       out.close();
     } catch (IOException e) {
-      GravaLogErro("ERR", idUnico, e.toString());
+      gravaLogErro("ERR", idUnico, e.toString());
     }
   }
   

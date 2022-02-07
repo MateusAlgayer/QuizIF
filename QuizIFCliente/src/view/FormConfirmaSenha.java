@@ -15,7 +15,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
     public FormConfirmaSenha(String sal, boolean trocasenha) {
       GSal = sal;
       initComponents();
-      Metodos.GeraConsistenciaCampos(rootPane);
+      Metodos.geraConsistenciaCampos(rootPane);
       lbAntigaSenha.setVisible(false);
       lbNova.setVisible(false);
       pfAntigaSenha.setVisible(false);
@@ -305,14 +305,14 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
   }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        if(!Metodos.Consistencia(true, pfSenha, pfConfirmaSenha)) return;
+        if(!Metodos.consistencia(true, pfSenha, pfConfirmaSenha)) return;
         
         if(consistSenha() == 6){
           String senhaCripto = CriptoHash.Cripto(String.valueOf(pfSenha.getPassword()), GSal, 0);
           InfoApp.setGSenhaCripto(senhaCripto);
           dispose();
         } else {
-          Metodos.Aviso(this.getTitle(), "Reveja a política de senha!");
+          Metodos.aviso(this.getTitle(), "Reveja a política de senha!");
         }
         
     }//GEN-LAST:event_btSalvarActionPerformed
@@ -330,7 +330,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
   }//GEN-LAST:event_formWindowClosing
 
     private void btConfirmaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmaSenhaActionPerformed
-        if(!Metodos.Consistencia(true, pfAntigaSenha, pfSenha, pfConfirmaSenha)) return;
+        if(!Metodos.consistencia(true, pfAntigaSenha, pfSenha, pfConfirmaSenha)) return;
         
         String antigaSenha = CriptoHash.Cripto(String.valueOf(pfAntigaSenha.getPassword()), InfoApp.getGUsuLogado().getSal(), 0);
         
@@ -340,10 +340,10 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
                 InfoApp.setGSenhaCripto(senhaCripto);
                 dispose();
             } else {
-                Metodos.Aviso(this.getTitle(), "Reveja a política de senha!");
+                Metodos.aviso(this.getTitle(), "Reveja a política de senha!");
             }
         } else {
-            Metodos.Aviso(this.getTitle(), "Senha antiga incorreta!");
+            Metodos.aviso(this.getTitle(), "Senha antiga incorreta!");
         }
     }//GEN-LAST:event_btConfirmaSenhaActionPerformed
 

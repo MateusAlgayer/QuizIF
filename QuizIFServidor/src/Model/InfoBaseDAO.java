@@ -4,8 +4,8 @@ package Model;
 import factory.Conector;
 import java.util.HashMap;
 import java.sql.*;
-import static util.Metodos.GravaLog;
-import static util.Metodos.GravaLogErro;
+import static util.Metodos.gravaLog;
+import static util.Metodos.gravaLogErro;
 
 public class InfoBaseDAO {
   
@@ -35,11 +35,11 @@ public class InfoBaseDAO {
         while(result.next())
           map.put(result.getString("CAMPO"), result.getInt("CHARACTER_MAXIMUM_LENGTH"));
 
-        GravaLog("SQL", 0, "Carregou info: Tamanho campos");
+        gravaLog("SQL", 0, "Carregou info: Tamanho campos");
         return map;
 
       } catch (SQLException e) {
-        GravaLogErro("ERR",0,"Erro ao carregar tamanho de campos"+e.toString());
+        gravaLogErro("ERR",0,"Erro ao carregar tamanho de campos"+e.toString());
       }
       return null;
     }finally{
@@ -48,7 +48,7 @@ public class InfoBaseDAO {
           stmt.close();
         con.close(); 
       } catch (SQLException e) {
-        GravaLogErro("ERR",0,e.toString());
+        gravaLogErro("ERR",0,e.toString());
       }
       
     }

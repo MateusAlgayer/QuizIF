@@ -8,8 +8,8 @@ import ModelDominio.Usuario;
 import controller.InfoApp;
 import java.util.ArrayList;
 import util.Metodos;
-import static util.Metodos.GravaLog;
 import view.tablemodel.ProvasTableModel;
+import static util.Metodos.gravaLog;
 
 public class FormPerfil extends javax.swing.JDialog {
 
@@ -195,33 +195,33 @@ public class FormPerfil extends javax.swing.JDialog {
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btExcluirContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirContaActionPerformed
-        GravaLog("DelUsu", 0, "Excluir Usuário - INI");
+        gravaLog("DelUsu", 0, "Excluir Usuário - INI");
         
         if(!Metodos.msgConfirma("Tem certeza que deseja excluir o usuário? ")){
             return;
         }
         String res = QuizIFCliente.ccont.EnviaDelUsu(tfEmailUsu.getText());
         
-        if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "", "Erro ao validar o código via e-mail")){
+        if(Metodos.processaMsgServidor(this.getTitle(), res, "", "Erro ao validar o código via e-mail")){
           Usuario usu = new Usuario(InfoApp.getGUsuLogado().getCodUsuario());
           
           res = QuizIFCliente.ccont.DeletaUsu(usu);
           
-          if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Usuário deletado!! \n A aplicação será encerrada!", "Erro ao deletar o usuário")){
-            GravaLog("DelUsu", 0, "Excluir Usuário - FIM");
+          if(Metodos.processaMsgServidor(this.getTitle(), res, "Usuário deletado!! \n A aplicação será encerrada!", "Erro ao deletar o usuário")){
+            gravaLog("DelUsu", 0, "Excluir Usuário - FIM");
             System.exit(0);
           }
         }
     }//GEN-LAST:event_btExcluirContaActionPerformed
 
     private void btAltSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAltSenhaActionPerformed
-       GravaLog("UPD", 0, "Alterar Usuario - INI");
+       gravaLog("UPD", 0, "Alterar Usuario - INI");
        String res = QuizIFCliente.ccont.AlteraSenhaUsu();
        
-       if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Sucesso ao alterar a senha!", "Erro ao alterar a senha!")){
+       if(Metodos.processaMsgServidor(this.getTitle(), res, "Sucesso ao alterar a senha!", "Erro ao alterar a senha!")){
           InfoApp.getGUsuLogado().setSenha(InfoApp.getGSenhaCripto());
        }
-       GravaLog("UPD", 0, "Alterar Usuario - FIM");
+       gravaLog("UPD", 0, "Alterar Usuario - FIM");
     }//GEN-LAST:event_btAltSenhaActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -19,10 +19,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import util.CriptoHash;
 import util.Metodos;
-import static util.Metodos.GravaLogErro;
-import static util.Metodos.GravaLog;
 import view.FormConfirmaCodigoEmail;
 import view.FormConfirmaSenha;
+import static util.Metodos.gravaLog;
+import static util.Metodos.gravaLogErro;
 
 public class ConexaoController {
     
@@ -41,7 +41,7 @@ public class ConexaoController {
     
     String msg = "";
     try {
-      GravaLog("LOG", 0, "Efetuar login - INI");
+      gravaLog("LOG", 0, "Efetuar login - INI");
       
       out.writeObject("EFETUARLOGIN");
       
@@ -59,10 +59,10 @@ public class ConexaoController {
       out.writeObject(pUsu);
       
       wUsu = (Usuario) in.readObject();
-      GravaLog("LOG", 0, "Efetuar login - FIM");
+      gravaLog("LOG", 0, "Efetuar login - FIM");
       
     } catch (IOException | ClassNotFoundException e) {
-      GravaLogErro("ERR", 0, "Erro ao enviar o form de login\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro ao enviar o form de login\n"+e.toString());
     }
     
     return wUsu;
@@ -70,7 +70,7 @@ public class ConexaoController {
   
   public ArrayList<Prova> getProvas(int usuEspec){
     
-    GravaLog("GET", 0, "Provas - INI");
+    gravaLog("GET", 0, "Provas - INI");
     String msg = "";
     try {
       out.writeObject("GETLISTAPROVAS");
@@ -81,11 +81,11 @@ public class ConexaoController {
       
       ArrayList<Prova> listaProvas = (ArrayList<Prova>) in.readObject();
       
-      GravaLog("GET", 0, "Provas - FIM");
+      gravaLog("GET", 0, "Provas - FIM");
       return listaProvas;
       
     } catch (IOException | ClassNotFoundException e) {
-      GravaLogErro("ERR", 0, "Erro ao enviar listaProvas\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro ao enviar listaProvas\n"+e.toString());
     }
     
     return null; 
@@ -93,12 +93,12 @@ public class ConexaoController {
   
   public boolean EnviaCodigoEmail(String pEmail){
     String msg = "";
-    GravaLog("VAL", 0, "Codigo email - INI");
+    gravaLog("VAL", 0, "Codigo email - INI");
     try {
       out.writeObject("VALIDACODIGOEMAIL");
       
       if (!((String)in.readObject()).equals("ok")){
-        Metodos.GravaLog("REQ", 0, "Ocorreu um erro ao requisitar codigo via email");
+        Metodos.gravaLog("REQ", 0, "Ocorreu um erro ao requisitar codigo via email");
         return false;
       }
       
@@ -107,10 +107,10 @@ public class ConexaoController {
       String sal = (String) in.readObject();
       
       if(sal.equals("")){
-        Metodos.GravaLog("REQ", 0, "Ocorreu um problema na criptografia");
+        Metodos.gravaLog("REQ", 0, "Ocorreu um problema na criptografia");
         return false;
       } else if(sal.equals("EmailExiste")){
-        Metodos.Erro("Cadastro", "O e-mail informado já está em uso");
+        Metodos.erro("Cadastro", "O e-mail informado já está em uso");
         return false;
       }
       
@@ -121,7 +121,7 @@ public class ConexaoController {
       InfoApp.setGCodConfirmacao("");
       //João Jorge - 04/01/2022 
       while(continua){
-        GravaLog("VAL", 0, "Codigo email rep:"+(cont++));
+        gravaLog("VAL", 0, "Codigo email rep:"+(cont++));
         
         FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(rep);
         frm.setModal(true);
@@ -142,12 +142,12 @@ public class ConexaoController {
         
         switch (msg) {
             case "ok" -> {
-              GravaLog("VAL", 0, "Codigo email - FIM");
+              gravaLog("VAL", 0, "Codigo email - FIM");
               return true;
             }
             case "Cancelei" -> {
-              Metodos.Aviso("Cadastro", "Cadastro cancelado com sucesso");
-              GravaLog("VAL", 0, "Codigo email - FIM");
+              Metodos.aviso("Cadastro", "Cadastro cancelado com sucesso");
+              gravaLog("VAL", 0, "Codigo email - FIM");
               return false;
             }
             default -> {
@@ -157,13 +157,13 @@ public class ConexaoController {
           }
       }
     } catch (IOException | ClassNotFoundException e) {
-       GravaLogErro("ERR", 0, "Erro ao enviar código via Email\n"+e.toString());
+       gravaLogErro("ERR", 0, "Erro ao enviar código via Email\n"+e.toString());
     }
     return false;
   }
   
   public String CadastraUsu(Usuario usu){
-    GravaLog("INS", 0, "Usuário - INI");
+    gravaLog("INS", 0, "Usuário - INI");
     
     String msg = "";
     try {
@@ -173,13 +173,13 @@ public class ConexaoController {
       
       out.writeObject(usu);
       
-      GravaLog("INS", 0, "Usuário - FIM");
+      gravaLog("INS", 0, "Usuário - FIM");
 
       msg = (String)in.readObject();
       
       return msg;
     } catch (IOException | ClassNotFoundException e) {
-      GravaLogErro("ERR", 0, "Erro ao cadastrar usuário\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro ao cadastrar usuário\n"+e.toString());
       return "Erro na comunicação com o servidor:\n"+e.toString(); 
     }
   }
@@ -187,7 +187,7 @@ public class ConexaoController {
   public String EnviaRedefSenha(String email){
     String msg;
     try {
-      GravaLog("UPD", 0, "Redefinir senha - INI");
+      gravaLog("UPD", 0, "Redefinir senha - INI");
       
       out.writeObject("REDEFINESENHA");
       
@@ -205,7 +205,7 @@ public class ConexaoController {
       boolean rep = false;
       
       while(continua){
-        GravaLog("VAL", 0, "Codigo email rep:"+(cont++));
+        gravaLog("VAL", 0, "Codigo email rep:"+(cont++));
         
         FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(rep);
         frm.setModal(true);
@@ -226,11 +226,11 @@ public class ConexaoController {
         
         switch (msg) {
             case "S^ok" -> {
-              GravaLog("UPD", 0, "Redefinir senha - email - FIM");
+              gravaLog("UPD", 0, "Redefinir senha - email - FIM");
               continua = false;
             }
             case "Cancelei" -> {
-              GravaLog("UPD", 0, "Redefinir senha - email - FIM");
+              gravaLog("UPD", 0, "Redefinir senha - email - FIM");
               return "A^Redefinição de senha cancelada!";
             }
             default -> {
@@ -243,10 +243,10 @@ public class ConexaoController {
       cont = 0;
       
       InfoApp.setGSenhaCripto("");
-      GravaLog("UPD", 0, "Redefinir senha - senha - INI");
+      gravaLog("UPD", 0, "Redefinir senha - senha - INI");
       
       while(continua){
-        GravaLog("UPD", 0, "Codigo email rep:"+(cont++));
+        gravaLog("UPD", 0, "Codigo email rep:"+(cont++));
         
         FormConfirmaSenha frm = new FormConfirmaSenha(sal, false);
         frm.setModal(true);
@@ -263,13 +263,13 @@ public class ConexaoController {
           
           out.writeObject(novoUsu);
           
-          GravaLog("CAD", 0, "Cadastro - FIM");
+          gravaLog("CAD", 0, "Cadastro - FIM");
           return (String)in.readObject();
         }
       }
       
     }catch(IOException | ClassNotFoundException e){
-      GravaLogErro("ERR", 0, "Erro ao redefinir a senha\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro ao redefinir a senha\n"+e.toString());
       return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
     return "E^Erro na comunicação entre cliente/servidor";
@@ -278,7 +278,7 @@ public class ConexaoController {
   public ArrayList<Area> getListaArea() {
     ArrayList<Area> lista = null;
     
-    GravaLog("GET", 0, "Areas - INI");
+    gravaLog("GET", 0, "Areas - INI");
     String msg = "";
     try {
       out.writeObject("GETLISTAAREA");
@@ -287,18 +287,18 @@ public class ConexaoController {
       
       lista = (ArrayList<Area>) in.readObject();
       
-      GravaLog("GET", 0, "Areas - FIM");
+      gravaLog("GET", 0, "Areas - FIM");
       return lista;
       
     } catch (IOException | ClassNotFoundException e) {
-      GravaLogErro("ERR", 0, "Erro na requisição de areas\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro na requisição de areas\n"+e.toString());
     }
     
     return lista; 
   }
 
   public void getPerguntasProva(ArrayList<Pergunta> listaSel, ArrayList<Pergunta> listaDis, int numProva) {
-    GravaLog("GET", 0,"Perguntas de uma prova - INI");
+    gravaLog("GET", 0,"Perguntas de uma prova - INI");
     String msg = "";
     try{
       out.writeObject("GETPERGUNTASPROVA");
@@ -314,10 +314,10 @@ public class ConexaoController {
       }
       
     } catch(IOException | ClassNotFoundException e){
-      GravaLogErro("ERR", 0, "Erro na requisição de perguntas de uma prova\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro na requisição de perguntas de uma prova\n"+e.toString());
     }
     
-    GravaLog("GET", 0,"Perguntas de uma prova - FIM");
+    gravaLog("GET", 0,"Perguntas de uma prova - FIM");
   }
 
   public String ExcluirProva(int codigoProva) {
@@ -335,7 +335,7 @@ public class ConexaoController {
 //      };
       return msg;
     } catch (IOException | ClassNotFoundException e) {
-        GravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
+        gravaLogErro("ERRO", 0, "Erro ao deletar prova \n" + e.toString());
         return "Erro ao deletar a prova:\n"+e.toString();
     }
   }
@@ -343,7 +343,7 @@ public class ConexaoController {
   public String EnviaDelUsu(String email){
     String msg;
     try {
-      GravaLog("DEL", 0, "Deletar Usuario - INI");
+      gravaLog("DEL", 0, "Deletar Usuario - INI");
       
       out.writeObject("VALIDACODIGOEMAILDELUSU");
       
@@ -361,7 +361,7 @@ public class ConexaoController {
       boolean rep = false;
       
       while(continua){
-        GravaLog("DEL", 0, "Codigo email rep:"+(cont++));
+        gravaLog("DEL", 0, "Codigo email rep:"+(cont++));
         
         FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(rep);
         frm.setModal(true);
@@ -382,11 +382,11 @@ public class ConexaoController {
         
         switch (msg) {
             case "ok" -> {
-              GravaLog("DEL", 0, "Excluir Usuario - email - FIM");
+              gravaLog("DEL", 0, "Excluir Usuario - email - FIM");
               continua = false;
             }
             case "Cancelei" -> {
-              GravaLog("DEL", 0, "Deletar Usuario - email - FIM");
+              gravaLog("DEL", 0, "Deletar Usuario - email - FIM");
               return "A^Processo de exclusão de usuário cancelado!";
             }
             default -> {
@@ -398,7 +398,7 @@ public class ConexaoController {
       return "S^ok";
       
     }catch(IOException | ClassNotFoundException e){
-      GravaLogErro("ERR", 0, "Erro ao deletar o usuário\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro ao deletar o usuário\n"+e.toString());
       return "E^Erro na comunicação cliente/servidor\n"+e.toString();
     }
   }
@@ -413,7 +413,7 @@ public class ConexaoController {
                      
             return msg;
         } catch (IOException | ClassNotFoundException e) {
-            GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
+            gravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
             return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
         }
   }
@@ -431,7 +431,7 @@ public class ConexaoController {
           
           return msg;
       } catch (IOException | ClassNotFoundException e) {
-        GravaLogErro("ERR", 0, "Erro ao alterar usuário \n" + e.toString());
+        gravaLogErro("ERR", 0, "Erro ao alterar usuário \n" + e.toString());
         return "Erro interno do servidor:\n"+e.toString();
       }
   }
@@ -460,13 +460,13 @@ public class ConexaoController {
           
           return msg;
       } catch (IOException | ClassNotFoundException e) {
-        GravaLogErro("ERRO", 0, "Erro ao alterar senha \n" + e.toString());
+        gravaLogErro("ERRO", 0, "Erro ao alterar senha \n" + e.toString());
         return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
       }
   }
 
   public String InserirProva(Prova p,ArrayList<Pergunta> perSel) {
-    GravaLog("CAD", 0,"Cadastro de prova - INI");
+    gravaLog("CAD", 0,"Cadastro de prova - INI");
     String msg = "";
     try{
       out.writeObject("INSERIRPROVA");
@@ -476,17 +476,17 @@ public class ConexaoController {
       out.writeObject(p);
       out.writeObject(perSel);
           
-      GravaLog("CAD", 0,"Cadastro de prova - FIM");
+      gravaLog("CAD", 0,"Cadastro de prova - FIM");
       return (String)in.readObject();
       
     } catch(IOException | ClassNotFoundException e){
-      GravaLogErro("ERR", 0, "Erro no cadastro de provas\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro no cadastro de provas\n"+e.toString());
       return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }
 
   public String ModificarProva(Prova p, ArrayList<Pergunta> cadPerSel) {
-    GravaLog("UPD", 0,"Alteração de prova - INI");
+    gravaLog("UPD", 0,"Alteração de prova - INI");
     String msg = "";
     try{
       out.writeObject("ALTERARPROVA");
@@ -496,17 +496,17 @@ public class ConexaoController {
       out.writeObject(p);
       out.writeObject(cadPerSel);
           
-      GravaLog("CAD", 0,"Alteração de prova - FIM");
+      gravaLog("CAD", 0,"Alteração de prova - FIM");
       return (String)in.readObject();
       
     } catch(IOException | ClassNotFoundException e){
-      GravaLogErro("ERR", 0, "Erro ao editar prova\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro ao editar prova\n"+e.toString());
       return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }
   
   public ArrayList<Jogo> getRanking(int filtro){
-    GravaLog("GET", 0, "Ranking - INI");
+    gravaLog("GET", 0, "Ranking - INI");
     String msg = "";
     
     try {
@@ -517,18 +517,18 @@ public class ConexaoController {
       
       ArrayList<Jogo> listaJogos = (ArrayList<Jogo>) in.readObject();
       
-      GravaLog("GET", 0, "Ranking - FIM");
+      gravaLog("GET", 0, "Ranking - FIM");
       return listaJogos;
       
     } catch (IOException | ClassNotFoundException e) {
-      GravaLogErro("ERR", 0, "Erro ao enviar Ranking\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro ao enviar Ranking\n"+e.toString());
     }
     
     return null;
   }
   
   public ArrayList<Usuario> getUsuarios(){
-      GravaLog("GET", 0, "Usuarios - INI");
+      gravaLog("GET", 0, "Usuarios - INI");
       String msg = "";
       
       try {
@@ -539,17 +539,17 @@ public class ConexaoController {
           
           ArrayList<Usuario> listaUsuarios = (ArrayList<Usuario>) in.readObject();
           
-          GravaLog("GET", 0, "Usuarios - FIM");
+          gravaLog("GET", 0, "Usuarios - FIM");
           return listaUsuarios;
           
       } catch (IOException | ClassNotFoundException e) {
-          GravaLogErro("ERR", 0, "Erro ao enviar Usuarios\n"+e.toString());
+          gravaLogErro("ERR", 0, "Erro ao enviar Usuarios\n"+e.toString());
       }
       return null;
   }
 
   public void getPerguntasJogo(ArrayList<Pergunta> listaPergunta, int codigoProva) {
-    GravaLog("GET", 0,"perguntas jogo - INI");
+    gravaLog("GET", 0,"perguntas jogo - INI");
     String msg = "";
     try{
       out.writeObject("GETPERGUNTASJOGO");
@@ -561,25 +561,25 @@ public class ConexaoController {
       listaPergunta.addAll((ArrayList<Pergunta>) in.readObject());
       
     } catch(IOException | ClassNotFoundException e){
-      GravaLogErro("ERR", 0, "Erro na requisição de perguntas jogo\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro na requisição de perguntas jogo\n"+e.toString());
     }
     
-    GravaLog("GET", 0,"perguntas jogo - FIM");
+    gravaLog("GET", 0,"perguntas jogo - FIM");
   }
 
   public ArrayList<Pergunta> getPerguntas() {
-    GravaLog("GET", 0,"perguntas - INI");
+    gravaLog("GET", 0,"perguntas - INI");
     String msg = "";
     try{
       out.writeObject("GETPERGUNTAS");
       
       msg = (String) in.readObject();
       
-      GravaLog("GET", 0,"perguntas - FIM");
+      gravaLog("GET", 0,"perguntas - FIM");
       return (ArrayList<Pergunta>) in.readObject();
       
     } catch(IOException | ClassNotFoundException e){
-      GravaLogErro("ERR", 0, "Erro na requisição de perguntas\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro na requisição de perguntas\n"+e.toString());
     }
     
     return null;
@@ -587,7 +587,7 @@ public class ConexaoController {
   
   public ArrayList<Prova> getProvasHist(int usuEspec){
     
-    GravaLog("GET", 0, "ProvasHist - INI");
+    gravaLog("GET", 0, "ProvasHist - INI");
     String msg = "";
     try {
       out.writeObject("GETLISTAPROVASHIST");
@@ -596,11 +596,11 @@ public class ConexaoController {
       
       ArrayList<Prova> listaProvas = (ArrayList<Prova>) in.readObject();
       
-      GravaLog("GET", 0, "ProvasHist - FIM");
+      gravaLog("GET", 0, "ProvasHist - FIM");
       return listaProvas;
       
     } catch (IOException | ClassNotFoundException e) {
-      GravaLogErro("ERR", 0, "Erro ao enviar ProvasHist\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro ao enviar ProvasHist\n"+e.toString());
     }
     
     return null; 
@@ -608,7 +608,7 @@ public class ConexaoController {
 
   public String ExcluirPergunta(int codigo) {
     String msg;
-    GravaLog("DEL", 0, "Deletar pergunta - INI");
+    gravaLog("DEL", 0, "Deletar pergunta - INI");
     
     try {
       
@@ -617,20 +617,20 @@ public class ConexaoController {
       out.writeObject(codigo);
       msg = (String) in.readObject();
 
-      GravaLog("DEL", 0, "Deletar pergunta - FIM");
+      gravaLog("DEL", 0, "Deletar pergunta - FIM");
       return msg;//switch (msg) {
         //case "ok" -> 0;
         //case "jautiliz" -> 1;
         //default -> 2;
       //};
     } catch (IOException | ClassNotFoundException e) {
-        GravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + e.toString());
+        gravaLogErro("ERRO", 0, "Erro ao deletar pergunta \n" + e.toString());
         return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }
 
   public String InserePergunta(Pergunta p) {
-    GravaLog("CAD", 0,"Cadastro de pergunta - INI");
+    gravaLog("CAD", 0,"Cadastro de pergunta - INI");
     String msg = "";
     try{
       out.writeObject("INSERIRPERGUNTA");
@@ -639,17 +639,17 @@ public class ConexaoController {
       
       out.writeObject(p);
           
-      GravaLog("CAD", 0,"Cadastro de pergunta - FIM");
+      gravaLog("CAD", 0,"Cadastro de pergunta - FIM");
       return (String)in.readObject();
       
     } catch(IOException | ClassNotFoundException e){
-      GravaLogErro("ERR", 0, "Erro no cadastro de pergunta\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro no cadastro de pergunta\n"+e.toString());
       return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }
 
   public String AlteraPergunta(Pergunta p) {
-    GravaLog("UPD", 0,"Alteração de pergunta - INI");
+    gravaLog("UPD", 0,"Alteração de pergunta - INI");
     String msg = "";
     try{
       out.writeObject("ALTERARPERGUNTA");
@@ -658,17 +658,17 @@ public class ConexaoController {
       
       out.writeObject(p);
           
-      GravaLog("CAD", 0,"Alteração de pergunta - FIM");
+      gravaLog("CAD", 0,"Alteração de pergunta - FIM");
       return (String)in.readObject();
       
     } catch(IOException | ClassNotFoundException e){
-      GravaLogErro("ERR", 0, "Erro ao alterar pergunta\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro ao alterar pergunta\n"+e.toString());
       return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }
 
   public String GravaResultJogo(Jogo resultJogo) {
-    GravaLog("INS", 0,"Grava jogo - INI");
+    gravaLog("INS", 0,"Grava jogo - INI");
     String msg = "";
     try{
       out.writeObject("GRAVARJOGO");
@@ -677,11 +677,11 @@ public class ConexaoController {
       
       out.writeObject(resultJogo);
           
-      GravaLog("INS", 0,"Grava jogo - FIM");
+      gravaLog("INS", 0,"Grava jogo - FIM");
       return (String)in.readObject();
       
     } catch(IOException | ClassNotFoundException e){
-      GravaLogErro("ERR", 0, "Erro ao gravar jogo\n"+e.toString());
+      gravaLogErro("ERR", 0, "Erro ao gravar jogo\n"+e.toString());
       return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
   }

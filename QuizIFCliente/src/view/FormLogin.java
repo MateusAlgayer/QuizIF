@@ -8,21 +8,21 @@ package view;
 import ModelDominio.Usuario;
 import controller.InfoApp;
 import util.Metodos;
-import static util.Metodos.Consistencia;
-import static util.Metodos.Pedaco;
+import static util.Metodos.consistencia;
+import static util.Metodos.pedaco;
 
 public class FormLogin extends javax.swing.JFrame{
 
   public FormLogin() {
     initComponents();
-    Metodos.GeraConsistenciaCampos(this.rootPane);
+    Metodos.geraConsistenciaCampos(this.rootPane);
     lbAviso.setVisible(false);
     
-    String usu = Metodos.LeConf("lembraUsu");
+    String usu = Metodos.leConf("lembraUsu");
     
-    if(Pedaco(usu, "Ɵ", 1).equals("1")){
+    if(pedaco(usu, "Ɵ", 1).equals("1")){
       chbLembraUsu.setSelected(true);
-      tfUsu.setText(Pedaco(usu,"Ɵ",2));
+      tfUsu.setText(pedaco(usu,"Ɵ",2));
     } else {
       chbLembraUsu.setSelected(false);
     }
@@ -161,7 +161,7 @@ public class FormLogin extends javax.swing.JFrame{
   }//GEN-LAST:event_btCadastroActionPerformed
 
   private void btLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogarActionPerformed
-    if (!Consistencia(true, tfUsu, pfSenha)) return;    
+    if (!consistencia(true, tfUsu, pfSenha)) return;    
    
     Usuario wLogin = new Usuario(tfUsu.getText(), String.valueOf(pfSenha.getPassword()));
    
@@ -171,9 +171,9 @@ public class FormLogin extends javax.swing.JFrame{
       InfoApp.setGUsuLogado(wUsu);
       
       if(chbLembraUsu.isSelected()){
-      Metodos.CriaConf("lembraUsu","1Ɵ"+tfUsu.getText());
+      Metodos.criaConf("lembraUsu","1Ɵ"+tfUsu.getText());
       } else {
-        Metodos.CriaConf("lembraUsu","0");
+        Metodos.criaConf("lembraUsu","0");
       }
       
       FormPrincipal fp = new FormPrincipal();
@@ -187,22 +187,22 @@ public class FormLogin extends javax.swing.JFrame{
 
   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
     if(chbLembraUsu.isSelected()){
-      Metodos.CriaConf("lembraUsu","1Ɵ"+tfUsu.getText());
+      Metodos.criaConf("lembraUsu","1Ɵ"+tfUsu.getText());
     } else {
-      Metodos.CriaConf("lembraUsu","0");
+      Metodos.criaConf("lembraUsu","0");
     }
   }//GEN-LAST:event_formWindowClosing
 
   private void btRedefSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRedefSenhaActionPerformed
-    if (!Consistencia(true, tfUsu)) return;
+    if (!consistencia(true, tfUsu)) return;
     
-    Metodos.GravaLog("UPD", 0, "Redefinição de senha - INI");
+    Metodos.gravaLog("UPD", 0, "Redefinição de senha - INI");
     
     String res = QuizIFCliente.ccont.EnviaRedefSenha(tfUsu.getText());
     
-    Metodos.ProcessaMsgServidor(this.getTitle(), res, "Senha redefinida com sucesso!", "Erro ao redefinir a senha!"); 
+    Metodos.processaMsgServidor(this.getTitle(), res, "Senha redefinida com sucesso!", "Erro ao redefinir a senha!"); 
     
-    Metodos.GravaLog("UPD", 0, "Redefinição de senha - FIM");
+    Metodos.gravaLog("UPD", 0, "Redefinição de senha - FIM");
   }//GEN-LAST:event_btRedefSenhaActionPerformed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

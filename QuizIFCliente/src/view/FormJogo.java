@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 import util.Metodos;
-import static util.Metodos.Pedaco;
 import static util.Metodos.ajustaColunas;
+import static util.Metodos.pedaco;
 
 public class FormJogo extends javax.swing.JDialog {
   
@@ -38,7 +38,7 @@ public class FormJogo extends javax.swing.JDialog {
     QuizIFCliente.ccont.getPerguntasJogo(GListaPergunta,  jogo.getCodigoProva());
     
     if(GListaPergunta == null){
-      Metodos.Erro(this.getTitle(), "Ocorreu um erro ao carregar a prova.");
+      Metodos.erro(this.getTitle(), "Ocorreu um erro ao carregar a prova.");
       dispose();
     }
     
@@ -408,7 +408,7 @@ public class FormJogo extends javax.swing.JDialog {
     
     String res = QuizIFCliente.ccont.GravaResultJogo(GResultJogo);
     
-    if(Metodos.ProcessaMsgServidor(this.getTitle(), res, "Resultado gravado com sucesso!", "Erro ao gravar o resultado!")){
+    if(Metodos.processaMsgServidor(this.getTitle(), res, "Resultado gravado com sucesso!", "Erro ao gravar o resultado!")){
       dispose();
     }
     
@@ -468,10 +468,10 @@ public class FormJogo extends javax.swing.JDialog {
     taPergunta.setText(GPerAtual.getPergunta());
     
     //o html e o br são adições para formatar as linhas com quebra de linha.
-    btAlt1.setText("<html>"+Pedaco(GPerAtual.getAlternativas(),"Ѫ", 1)+"<br>");
-    btAlt2.setText("<html>"+Pedaco(GPerAtual.getAlternativas(),"Ѫ", 2)+"<br>");
-    btAlt3.setText("<html>"+Pedaco(GPerAtual.getAlternativas(),"Ѫ", 3)+"<br>");
-    btAlt4.setText("<html>"+Pedaco(GPerAtual.getAlternativas(),"Ѫ", 4)+"<br>");
+    btAlt1.setText("<html>"+pedaco(GPerAtual.getAlternativas(),"Ѫ", 1)+"<br>");
+    btAlt2.setText("<html>"+pedaco(GPerAtual.getAlternativas(),"Ѫ", 2)+"<br>");
+    btAlt3.setText("<html>"+pedaco(GPerAtual.getAlternativas(),"Ѫ", 3)+"<br>");
+    btAlt4.setText("<html>"+pedaco(GPerAtual.getAlternativas(),"Ѫ", 4)+"<br>");
   }
 
   private void RespondePergunta(int resposta) {

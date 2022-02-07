@@ -16,11 +16,11 @@ public class Conector {
             String senha = "";
             
             con = DriverManager.getConnection(url+banco, usuario, senha);
-            Metodos.GravaLog("CON", 0, "Iniciada a conexão com o banco de dados");
+            Metodos.gravaLog("CON", 0, "Iniciada a conexão com o banco de dados");
             return con;
                     
         } catch (SQLException e) {
-            Metodos.GravaLogErro("ERR", 0, e.toString());
+            Metodos.gravaLogErro("ERR", 0, e.toString());
             return null;
         }
     }

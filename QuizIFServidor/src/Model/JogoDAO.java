@@ -10,8 +10,8 @@ import ModelDominio.Usuario;
 import factory.Conector;
 import java.sql.*;
 import java.util.ArrayList;
-import static util.Metodos.GravaLog;
-import static util.Metodos.GravaLogErro;
+import static util.Metodos.gravaLog;
+import static util.Metodos.gravaLogErro;
 
 public class JogoDAO {
     
@@ -61,11 +61,11 @@ public class JogoDAO {
       stmt.close();
       con.close();
       
-      GravaLog("SQL", Id, "Recuperou um objeto do banco: ListaRanking");
+      gravaLog("SQL", Id, "Recuperou um objeto do banco: ListaRanking");
       return listaRanking;
       
     } catch (SQLException e) {
-      GravaLogErro("ERR",Id, e.toString());
+      gravaLogErro("ERR",Id, e.toString());
     }
     return null;
   }  
@@ -101,10 +101,10 @@ public class JogoDAO {
                                      result.getString("SIT").charAt(0)));
         }
 
-        GravaLog("SQL", idUnico, "Recuperou um objeto do banco: PerguntasJogo");
+        gravaLog("SQL", idUnico, "Recuperou um objeto do banco: PerguntasJogo");
         return listaSel;
       } catch (SQLException e) {
-        GravaLogErro("ERR",idUnico, e.toString());
+        gravaLogErro("ERR",idUnico, e.toString());
         return null;
       }
     } finally {
@@ -113,7 +113,7 @@ public class JogoDAO {
           stmt.close();
         con.close(); 
       } catch (SQLException e) {
-        GravaLogErro("ERR",idUnico, e.toString());
+        gravaLogErro("ERR",idUnico, e.toString());
         return null;
       }
       
@@ -182,9 +182,9 @@ public class JogoDAO {
         } catch (SQLException e) {
           try {
             con.rollback();
-            GravaLogErro("ERR", idUnico, "Erro ao gravar jogo\n"+e.toString());
+            gravaLogErro("ERR", idUnico, "Erro ao gravar jogo\n"+e.toString());
           } catch (SQLException ex) {
-            GravaLogErro("ERR", idUnico, "Erro ao gravar jogo\n"+ex.toString());
+            gravaLogErro("ERR", idUnico, "Erro ao gravar jogo\n"+ex.toString());
           }
           return "E^"+e.getErrorCode()+" - "+e.toString();
         }
@@ -201,7 +201,7 @@ public class JogoDAO {
           con.setAutoCommit(true);
           con.close();
         } catch (SQLException ex) {
-          GravaLogErro("ERR", idUnico, "Erro ao gravar jogo\n"+ex.toString());
+          gravaLogErro("ERR", idUnico, "Erro ao gravar jogo\n"+ex.toString());
         }
       }
   }

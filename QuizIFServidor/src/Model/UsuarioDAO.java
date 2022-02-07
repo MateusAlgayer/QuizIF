@@ -15,8 +15,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import static util.Metodos.GravaLog;
-import static util.Metodos.GravaLogErro;
+import static util.Metodos.gravaLog;
+import static util.Metodos.gravaLogErro;
 
 public class UsuarioDAO {
   
@@ -62,19 +62,19 @@ public class UsuarioDAO {
                                              result.getString("SAL"));
         }
 
-        GravaLog("SQL", Id, "Recuperou um objeto do banco");
+        gravaLog("SQL", Id, "Recuperou um objeto do banco");
       }
       
       stmt.close();
       con.close();
     } catch (SQLException e) {
-      GravaLogErro("ERR",Id, e.toString());
+      gravaLogErro("ERR",Id, e.toString());
     }
     return wUsu;
   }
   
   public boolean ExisteEmail(String pEmail, int id){
-    GravaLog("CAD", id, "Testa email único - INI");
+    gravaLog("CAD", id, "Testa email único - INI");
     
     try {
       String sql = "SELECT * FROM TABUSU "+
@@ -87,11 +87,11 @@ public class UsuarioDAO {
 
         return result.next();
       } finally {
-        GravaLog("CAD", id, "Testa email único - FIM");
+        gravaLog("CAD", id, "Testa email único - FIM");
         con.close();
       }
     } catch (SQLException e) {
-      GravaLogErro("ERR",id, "Erro ao testar email único\n"+e.toString());
+      gravaLogErro("ERR",id, "Erro ao testar email único\n"+e.toString());
       return true;
     }
   }
@@ -120,9 +120,9 @@ public class UsuarioDAO {
         } catch (SQLException e) {
           try {
             con.rollback();
-            GravaLogErro("ERR", id, "Erro ao cadastrar usuário\n"+e.toString());
+            gravaLogErro("ERR", id, "Erro ao cadastrar usuário\n"+e.toString());
           } catch (SQLException ex) {
-            GravaLogErro("ERR", id, "Erro ao cadastrar usuário\n"+ex.toString());
+            gravaLogErro("ERR", id, "Erro ao cadastrar usuário\n"+ex.toString());
           }
           return "E^"+e.getErrorCode()+" - "+e.toString();
         }
@@ -136,13 +136,13 @@ public class UsuarioDAO {
           con.setAutoCommit(true);
           con.close();
         } catch (SQLException ex) {
-          GravaLogErro("ERR", id, "Erro ao cadastrar usuário\n"+ex.toString());
+          gravaLogErro("ERR", id, "Erro ao cadastrar usuário\n"+ex.toString());
         }
       }
   }  
   
   public String getUsuSal(String email, int id){
-    GravaLog("SAL", id, "Pega sal usuário - INI");
+    gravaLog("SAL", id, "Pega sal usuário - INI");
     
     try {
       String sql = "SELECT SAL FROM TABUSU "+
@@ -153,7 +153,7 @@ public class UsuarioDAO {
 
         ResultSet result = stmt.executeQuery();
         
-        GravaLog("SAL", id, "Pega sal usuário - FIM");
+        gravaLog("SAL", id, "Pega sal usuário - FIM");
         
         if(result.next()){
           return result.getString("SAL");
@@ -164,7 +164,7 @@ public class UsuarioDAO {
         con.close();
       }
     } catch (SQLException e) {
-      GravaLogErro("ERR",id, "Erro ao recuperar o sal do usuário\n"+e.toString());
+      gravaLogErro("ERR",id, "Erro ao recuperar o sal do usuário\n"+e.toString());
       return "";
     }
   }
@@ -190,9 +190,9 @@ public class UsuarioDAO {
         } catch (SQLException e) {
           try {
             con.rollback();
-            GravaLogErro("ERR", id, "Erro redefinir senha\n"+e.toString());
+            gravaLogErro("ERR", id, "Erro redefinir senha\n"+e.toString());
           } catch (SQLException ex) {
-            GravaLogErro("ERR", id, "Erro redefinir senha\n"+ex.toString());
+            gravaLogErro("ERR", id, "Erro redefinir senha\n"+ex.toString());
           }
           return "E^"+e.getErrorCode()+" - "+e.toString();
         }
@@ -206,7 +206,7 @@ public class UsuarioDAO {
           con.setAutoCommit(true);
           con.close();
         } catch (SQLException ex) {
-          GravaLogErro("ERR", id, "Erro redefinir senha\n"+ex.toString());
+          gravaLogErro("ERR", id, "Erro redefinir senha\n"+ex.toString());
         }
       }
   }
@@ -237,11 +237,11 @@ public class UsuarioDAO {
                 return "S^ok"; //Deu tudo certo!
             } catch (SQLException e) {
                 try {
-                    GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
+                    gravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
                     con.rollback(); // <- cancela a transação se deu erro
                     return "E^"+e.getErrorCode()+" - "+e.toString();
                 } catch (SQLException ex) {
-                    GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + ex.toString());
+                    gravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + ex.toString());
                     return "E^"+ex.getErrorCode()+" - "+ex.toString();
                 }
             }
@@ -253,7 +253,7 @@ public class UsuarioDAO {
                 con.setAutoCommit(true);
                 con.close();
             } catch (SQLException e) {
-                GravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
+                gravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
                 return "E^"+e.getErrorCode()+" - "+e.toString();
             }
         }
@@ -279,9 +279,9 @@ public class UsuarioDAO {
         } catch (SQLException e) {
           try {
             con.rollback();
-            GravaLogErro("ERR", id, "Erro ao alterar senha\n"+e.toString());
+            gravaLogErro("ERR", id, "Erro ao alterar senha\n"+e.toString());
           } catch (SQLException ex) {
-            GravaLogErro("ERR", id, "Erro ao alterar senha\n"+ex.toString());
+            gravaLogErro("ERR", id, "Erro ao alterar senha\n"+ex.toString());
           }
           return "E^"+e.getErrorCode()+" - "+e.toString();
         }
@@ -294,7 +294,7 @@ public class UsuarioDAO {
           con.setAutoCommit(true);
           con.close();
         } catch (SQLException ex) {
-          GravaLogErro("ERR", id, "Erro ao alterar senha\n"+ex.toString());
+          gravaLogErro("ERR", id, "Erro ao alterar senha\n"+ex.toString());
         }
       }
   }
@@ -336,11 +336,11 @@ public class UsuarioDAO {
             stmt.close();
             con.close();
             
-            GravaLog("SQL", id, "Recuperou um objeto do banco: ListaUsuarios");
+            gravaLog("SQL", id, "Recuperou um objeto do banco: ListaUsuarios");
             return listaUsuarios;
 
         } catch (SQLException e) {
-            GravaLogErro("ERR", id, e.toString());
+            gravaLogErro("ERR", id, e.toString());
         }
         return null;
     }
@@ -365,9 +365,9 @@ public class UsuarioDAO {
             } catch (SQLException e) {
                 try {
                     con.rollback();
-                    GravaLogErro("ERR", idUnico, "Erro ao alterar permissão de usuário\n" + e.toString());
+                    gravaLogErro("ERR", idUnico, "Erro ao alterar permissão de usuário\n" + e.toString());
                 } catch (SQLException ex) {
-                    GravaLogErro("ERR", idUnico, "Erro ao alterar permissão de usuário\n" + ex.toString());
+                    gravaLogErro("ERR", idUnico, "Erro ao alterar permissão de usuário\n" + ex.toString());
                 }
                 return "E^"+e.getErrorCode()+" - "+e.toString();
             }
@@ -381,7 +381,7 @@ public class UsuarioDAO {
                 con.setAutoCommit(true);
                 con.close();
             } catch (SQLException ex) {
-                GravaLogErro("ERR", idUnico, "Erro ao alterar permissão de usuário\n" + ex.toString());
+                gravaLogErro("ERR", idUnico, "Erro ao alterar permissão de usuário\n" + ex.toString());
             }
         }
     }

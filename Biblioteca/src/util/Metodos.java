@@ -66,7 +66,7 @@ public class Metodos{
    * @param wComps - variavel que representa um número n de componentes a serem verificados na consistencia
    * @return true se o campo é válido, false se o campo é inválido
    */
-  public static Boolean Consistencia(Boolean pGeraAviso,JComponent ...wComps){
+  public static Boolean consistencia(Boolean pGeraAviso,JComponent ...wComps){
     
     for(JComponent wComp : wComps){
       
@@ -76,7 +76,7 @@ public class Metodos{
         //testa se vazio
         if(wCompTexto.getText().trim().equals("")){
           
-          if(pGeraAviso) Aviso(wComp.getTopLevelAncestor().getName(), "campo '"+wComp.getToolTipText()+"' inválido\nO campo está vazio.");
+          if(pGeraAviso) aviso(wComp.getTopLevelAncestor().getName(), "campo '"+wComp.getToolTipText()+"' inválido\nO campo está vazio.");
           
           wComp.setBackground(Color.YELLOW);
           wComp.requestFocus();
@@ -93,7 +93,7 @@ public class Metodos{
         //testa o tamanho do campo
         if(wCompTexto.getText().length() > GTamanhoCampos.get(wComp.getName())){
           
-          if(pGeraAviso) Aviso(wComp.getTopLevelAncestor().getName(), "campo '"+wComp.getToolTipText()+"' inválido\nmáximo de caracteres suportados:\n"+
+          if(pGeraAviso) aviso(wComp.getTopLevelAncestor().getName(), "campo '"+wComp.getToolTipText()+"' inválido\nmáximo de caracteres suportados:\n"+
                                                                       GTamanhoCampos.get(wComp.getName())+"\nNúmero de caracteres atual:\n"+wCompTexto.getText().length());
           
           wComp.setBackground(Color.YELLOW);
@@ -114,7 +114,7 @@ public class Metodos{
    * @param pNumString - o numero da string que se quer Ex: Ciclano-Fulano, 1 seria Ciclano, 2 - seria Fulano
    * @return A string dentro dos delimitadores ou vazio caso não encontre
    */
-  public static String Pedaco(String pLinha, String pDelimita, int pNumString){
+  public static String pedaco(String pLinha, String pDelimita, int pNumString){
     
     Boolean wContinua = true;
     String wParte = "";
@@ -155,10 +155,10 @@ public class Metodos{
    * Este metodo pega e adiciona o método de consistencia para todos os componentes de texto de uma tela
    * @param pComps - representa o rootpane de uma tela, a raiz que possui todos os outros componentes
    */
-  public static void GeraConsistenciaCampos(JRootPane pComps){
+  public static void geraConsistenciaCampos(JRootPane pComps){
     ArrayList<Component> wListaComps = new ArrayList<>();
     
-    wListaComps.addAll(PegaTodosComponentes(pComps));
+    wListaComps.addAll(pegaTodosComponentes(pComps));
     
     //Pega todos os componentes na lista e abre uma stream
     //então ele filtra pelos componentes que são instancias de JTextComponent 
@@ -169,7 +169,7 @@ public class Metodos{
         
         @Override
         public void keyReleased(java.awt.event.KeyEvent evt) {
-          Consistencia(Boolean.FALSE, ((JTextComponent)wComp));
+          consistencia(Boolean.FALSE, ((JTextComponent)wComp));
         }
         
       }); 
@@ -182,7 +182,7 @@ public class Metodos{
    * @param pComp o componente pai, que será utilizado para pComp.getComponents()
    * @return um ArrayList com todos os componentes de uma tela
    */
-  public static ArrayList<Component> PegaTodosComponentes(final Container pComp){
+  public static ArrayList<Component> pegaTodosComponentes(final Container pComp){
     ArrayList<Component> wListaComps = new ArrayList<>();
     
     Component[] wComps = pComp.getComponents();
@@ -191,7 +191,7 @@ public class Metodos{
       wListaComps.add(wComp);
       
       //se wComp é um container, chama PegaTodosComponentes recursivamente
-      if(wComp instanceof Container container) wListaComps.addAll(PegaTodosComponentes(container));
+      if(wComp instanceof Container container) wListaComps.addAll(pegaTodosComponentes(container));
     }
     
     return wListaComps;
@@ -203,7 +203,7 @@ public class Metodos{
    * @param pTitulo titulo da mensagem
    * @param pMsg mensagem
    */
-  public static void Erro(String pTitulo, String pMsg){
+  public static void erro(String pTitulo, String pMsg){
     JOptionPane.showMessageDialog(null, pMsg, pTitulo, JOptionPane.ERROR_MESSAGE);
   }
   
@@ -213,7 +213,7 @@ public class Metodos{
    * @param pTitulo titulo da mensagem
    * @param pMsg mensagem
    */
-  public static void Aviso(String pTitulo, String pMsg){
+  public static void aviso(String pTitulo, String pMsg){
     JOptionPane.showMessageDialog(null, pMsg, pTitulo, JOptionPane.WARNING_MESSAGE);
   }
   
@@ -223,7 +223,7 @@ public class Metodos{
    * @param pTitulo titulo da mensagem
    * @param pMsg mensagem
    */
-  public static void Sucesso(String pTitulo, String pMsg){
+  public static void sucesso(String pTitulo, String pMsg){
     JOptionPane.showMessageDialog(null, pMsg, pTitulo, JOptionPane.INFORMATION_MESSAGE);
   }
   
@@ -234,7 +234,7 @@ public class Metodos{
    * @param id Usado para criar um arquivo com essa id, é usado principalmente no servidor para diferenciar logs de diferentes threads
    * @param operacao uma string com informações adicionais para aquele log 
    */
-  public static void GravaLog(String acao, int id, String operacao){
+  public static void gravaLog(String acao, int id, String operacao){
       
     try {
 
@@ -259,7 +259,7 @@ public class Metodos{
             System.out.println(acao+" - "+id+" - "+Instant.now()+" - "+operacao);
         }
     } catch (IOException e) {
-        GravaLogErro("ERR", id, e.toString());
+        gravaLogErro("ERR", id, e.toString());
     }
   }
   
@@ -270,7 +270,7 @@ public class Metodos{
    * @param id Usado para criar um arquivo com essa id, é usado principalmente no servidor para diferenciar logs de diferentes threads
    * @param operacao uma string com informações adicionais para aquele log e informações do erro
    */
-  public static void GravaLogErro(String acao, int id, String operacao){
+  public static void gravaLogErro(String acao, int id, String operacao){
       
     try {
 
@@ -303,7 +303,7 @@ public class Metodos{
    * Gera um código aleatório para a verificação via email
    * @return um inteiro que será usado como código de verificação
    */
-  public static String GerarCodigo(){
+  public static String gerarCodigo(){
       Random random = new Random();
       int codEmail;
           codEmail = 100000+random.nextInt(999999);
@@ -335,7 +335,7 @@ public class Metodos{
    * @param pNomeConf o nome do arquivo
    * @param pConteudoConf o conteudo/configuração do arquivo
    */
-  public static void CriaConf(String pNomeConf, String pConteudoConf){
+  public static void criaConf(String pNomeConf, String pConteudoConf){
     try {
       String path = "Cfg/";
 
@@ -359,7 +359,7 @@ public class Metodos{
             }
         }
     } catch (IOException e) {
-      GravaLogErro("CFG", 0, "Erro ao criar o arquivo de configuração\n"+e.toString());
+      gravaLogErro("CFG", 0, "Erro ao criar o arquivo de configuração\n"+e.toString());
     }
   }
   
@@ -369,7 +369,7 @@ public class Metodos{
    * @param pNomeConf nome da configuração a ser lida
    * @return o conteudo da configuração especificada ou vazio caso não exista configuração
    */
-  public static String LeConf(String pNomeConf){
+  public static String leConf(String pNomeConf){
     try {
       String path = "Cfg/";
       
@@ -387,7 +387,7 @@ public class Metodos{
         return conteudo;
       }
     } catch (Exception e) {
-      GravaLogErro("CFG", 0, "Erro ao ler o arquivo de configuração\n"+e.toString());
+      gravaLogErro("CFG", 0, "Erro ao ler o arquivo de configuração\n"+e.toString());
       return "";
     }
   }
@@ -420,21 +420,23 @@ public class Metodos{
    * @param erro resposta complementar a ser demonstrada em casos de erro
    * @return true caso dê sucesso false em outros casos
    */
-  public static boolean ProcessaMsgServidor(String titulo, String res, String sucesso, String erro){
-    switch(Pedaco(res,"^",1)){
+  public static boolean processaMsgServidor(String titulo, String res, String sucesso, String erro){
+    switch(pedaco(res,"^",1)){
         case "A" -> {
-          Metodos.Aviso(titulo, Pedaco(res,"^",2));
+          Metodos.aviso(titulo, pedaco(res,"^",2));
           break;
         }
         case "S" -> {
           if(!sucesso.isEmpty())
-            Metodos.Sucesso(titulo, sucesso);
+            Metodos.sucesso(titulo, sucesso);
           return true;
         }
         default -> {
-          Metodos.Erro(titulo, erro+"\n"+Pedaco(res,"^",2));
+          Metodos.erro(titulo, erro+"\n"+pedaco(res,"^",2));
           break;
         }
+
+
     } 
     return false;
   }
