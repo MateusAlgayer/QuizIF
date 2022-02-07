@@ -1,8 +1,16 @@
 package com.example.quizifmobile.util;
 
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
+
+import androidx.preference.PreferenceManager;
+
+import com.example.quizifmobile.R;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -106,5 +114,40 @@ public class Metodos {
      */
     public static void GravaLogErro(String acao, int id, String operacao){
         Log.d("DEBUG-ERR", "\n"+acao+" - "+id+" - "+Calendar.getInstance().getTime()+" - "+operacao);
+    }
+
+    /**
+     * Esse metodo cria um arquivo para ser usado como arquivo de configuração local
+     * @param pNomeConf o nome do arquivo
+     * @param pConteudoConf o conteudo/configuração do arquivo
+     */
+    public static void CriaConf(Context context, String pNomeConf, String pConteudoConf){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putString(pNomeConf, pConteudoConf);
+        editor.apply();
+    }
+
+    /**
+     * Esse metodo le o conteudo de um arquivo de configuração
+     * @param pNomeConf nome da configuração a ser lida
+     * @return o conteudo da configuração especificada ou vazio caso não exista configuração
+     */
+    public static String LeConf(Context context, String pNomeConf) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+
+        String conteudo = sharedPref.getString(pNomeConf, "");
+
+        return conteudo;
+    }
+
+    /**
+     * Metodo para mostrar uma mensagem
+     * @param pMsg mensagem
+     */
+    public static void Mensagem(Context context, String pMsg){
+        Toast.makeText(context, pMsg, Toast.LENGTH_SHORT).show();
     }
 }

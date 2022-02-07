@@ -7,9 +7,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class InfoApp extends Application {
-    Socket socket;
-    ObjectOutputStream out;
-    ObjectInputStream in;
+    public Socket socket;
+    public ObjectOutputStream out;
+    public ObjectInputStream in;
 
     @Override
     public void onCreate() {

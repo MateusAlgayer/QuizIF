@@ -13,8 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".view.LoginActivity"
+            android:label="QuizIFMobile - Login"
+            android:parentActivityName=".view.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.quizifmobile.view.MainActivity" />
+        </activity>
+        <activity
             android:name=".view.MainActivity"
-            android:label="@string/title_activity_main"
+            android:label="QuizIFMobile"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

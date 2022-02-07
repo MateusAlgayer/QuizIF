@@ -26,14 +26,25 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:hint="IP do servidor"/>
+            android:hint="IP do servidor"
+            android:id="@+id/etIPServ"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GRAVAR"
             android:layout_gravity="right"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:id="@+id/btGravarIPServ"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Tentando se conectar ao servidor..."
+            android:textSize="15pt"
+            android:textAlignment="center"
+            android:visibility="invisible"
+            android:id="@+id/tvTentandoConectar"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
