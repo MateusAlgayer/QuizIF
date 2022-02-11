@@ -3,7 +3,7 @@
     package="com.example.quizifmobile">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    
     <application
         android:name=".controller.InfoApp"
         android:allowBackup="true"
