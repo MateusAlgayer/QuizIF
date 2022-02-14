@@ -13,7 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Principal"
+            android:name=".view.Ranking"
+            android:label="@string/title_activity_ranking"
+            android:parentActivityName=".view.PrincipalActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.quizifmobile.view.PrincipalActivity" />
+        </activity>
+        <activity
+            android:name=".view.PrincipalActivity"
             android:label="@string/title_activity_principal"
             android:parentActivityName=".view.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">

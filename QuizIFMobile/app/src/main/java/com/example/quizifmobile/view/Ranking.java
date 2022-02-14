@@ -1,7 +1,8 @@
-package com.example.quizifmobile;
+package com.example.quizifmobile.view;
 
 import android.os.Bundle;
 
+import com.example.quizifmobile.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -10,12 +11,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
-public class Principal extends AppCompatActivity {
+public class Ranking extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.principal);
+        setContentView(R.layout.ranking);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
