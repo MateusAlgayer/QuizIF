@@ -1,4 +1,4 @@
-package com.example.quizifmobile.modelDominio;
+package ModelDominio;
 
 import java.io.Serializable;
 

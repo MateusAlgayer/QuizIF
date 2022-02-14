@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 import com.example.quizifmobile.controller.InfoApp;
 import com.example.quizifmobile.util.Metodos;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,7 +20,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         infoApp = (InfoApp) getApplicationContext();
 
-        etIPServ.setText(Metodos.LeConf(this, "IPServer"));
+        etIPServ.setText(Metodos.leConf(this, "IPServer"));
 
         if(!etIPServ.getText().toString().isEmpty())
             ConectaServidor();
@@ -66,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Metodos.CriaConf(this, "IPServer", ip);
+        Metodos.criaConf(this, "IPServer", ip);
 
         ConectaServidor();
     }
 
     private void ConectaServidor(){
-        final String ip = Metodos.LeConf(this, "IPServer");
+        final String ip = Metodos.leConf(this, "IPServer");
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -85,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Metodos.Mensagem(infoApp,"Tentando efetuar a conexão...");
+                            Metodos.mensagem(infoApp,"Tentando efetuar a conexão...");
                         }
                     });
 
@@ -97,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Metodos.Mensagem(infoApp,"Conexão estabelecida com sucesso");
+                            Metodos.mensagem(infoApp,"Conexão estabelecida com sucesso");
 
                             tvTentandoConectar.setVisibility(View.INVISIBLE);
 
@@ -109,12 +106,12 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Metodos.Mensagem(infoApp,"Erro na conexão:\n"+e.toString());
+                            Metodos.mensagem(infoApp,"Erro na conexão:\n"+e.toString());
                             tvTentandoConectar.setVisibility(View.INVISIBLE);
                         }
                     });
 
-                    Metodos.GravaLogErro("ERR", 0, "Erro na conexão:\n"+e.toString());
+                    Metodos.gravaLogErro("ERR", 0, "Erro na conexão:\n"+e.toString());
                 }
             }
         });

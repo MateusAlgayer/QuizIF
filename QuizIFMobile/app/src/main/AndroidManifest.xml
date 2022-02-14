@@ -13,6 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".view.JogoActivity"
+            android:label="QuizIFMobile - Jogo"
+            android:parentActivityName=".view.PrincipalActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.quizifmobile.view.PrincipalActivity" />
+        </activity>
+        <activity
             android:name=".view.SobreNosActivity"
             android:label="@string/title_activity_sobre_nos"
             android:parentActivityName=".view.PerfilActivity"

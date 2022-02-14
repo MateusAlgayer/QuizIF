@@ -77,6 +77,8 @@ public class ConexaoController {
       
       msg = (String) in.readObject();
       out.writeObject(InfoApp.getGUsuLogado());
+      
+      msg = (String) in.readObject();
       out.writeObject(usuEspec);
       
       ArrayList<Prova> listaProvas = (ArrayList<Prova>) in.readObject();

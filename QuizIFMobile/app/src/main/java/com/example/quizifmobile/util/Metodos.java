@@ -62,7 +62,7 @@ public class Metodos {
      * @param pNumString - o numero da string que se quer Ex: Ciclano-Fulano, 1 seria Ciclano, 2 - seria Fulano
      * @return A string dentro dos delimitadores ou vazio caso não encontre
      */
-    public static String Pedaco(String pLinha, String pDelimita, int pNumString) {
+    public static String pedaco(String pLinha, String pDelimita, int pNumString) {
 
         Boolean wContinua = true;
         String wParte = "";
@@ -102,7 +102,7 @@ public class Metodos {
      * @param id Usado para criar um arquivo com essa id, é usado principalmente no servidor para diferenciar logs de diferentes threads
      * @param operacao uma string com informações adicionais para aquele log
      */
-    public static void GravaLog(String acao, int id, String operacao){
+    public static void gravaLog(String acao, int id, String operacao){
         Log.d("DEBUG", "\n"+acao+" - "+id+" - "+Calendar.getInstance().getTime()+" - "+operacao);
     }
 
@@ -112,7 +112,7 @@ public class Metodos {
      * @param id Usado para criar um arquivo com essa id, é usado principalmente no servidor para diferenciar logs de diferentes threads
      * @param operacao uma string com informações adicionais para aquele log e informações do erro
      */
-    public static void GravaLogErro(String acao, int id, String operacao){
+    public static void gravaLogErro(String acao, int id, String operacao){
         Log.d("DEBUG-ERR", "\n"+acao+" - "+id+" - "+Calendar.getInstance().getTime()+" - "+operacao);
     }
 
@@ -121,7 +121,7 @@ public class Metodos {
      * @param pNomeConf o nome do arquivo
      * @param pConteudoConf o conteudo/configuração do arquivo
      */
-    public static void CriaConf(Context context, String pNomeConf, String pConteudoConf){
+    public static void criaConf(Context context, String pNomeConf, String pConteudoConf){
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -135,7 +135,7 @@ public class Metodos {
      * @param pNomeConf nome da configuração a ser lida
      * @return o conteudo da configuração especificada ou vazio caso não exista configuração
      */
-    public static String LeConf(Context context, String pNomeConf) {
+    public static String leConf(Context context, String pNomeConf) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
         String conteudo = sharedPref.getString(pNomeConf, "");
@@ -147,7 +147,7 @@ public class Metodos {
      * Metodo para mostrar uma mensagem
      * @param pMsg mensagem
      */
-    public static void Mensagem(Context context, String pMsg){
+    public static void mensagem(Context context, String pMsg){
         Toast.makeText(context, pMsg, Toast.LENGTH_SHORT).show();
     }
 }

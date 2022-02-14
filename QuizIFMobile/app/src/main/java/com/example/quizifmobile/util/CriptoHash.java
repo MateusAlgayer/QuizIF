@@ -22,7 +22,7 @@ public class CriptoHash {
             return getPassDigest(wSenhaToHash, wSal);
 
         } catch (Exception e) {
-            Metodos.GravaLogErro("ERR", id, "Erro ao criptografar a senha");
+            Metodos.gravaLogErro("ERR", id, "Erro ao criptografar a senha");
             return "";
         }
     }
@@ -41,7 +41,7 @@ public class CriptoHash {
             return toHexString(salt);
 
         } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-            Metodos.GravaLogErro("ERR", id, "Erro no Sal");
+            Metodos.gravaLogErro("ERR", id, "Erro no Sal");
             return "";
         }
 
@@ -65,7 +65,7 @@ public class CriptoHash {
             return toHexString(bytes);
 
         } catch (NoSuchAlgorithmException e) {
-            Metodos.GravaLogErro("ERR", 0, e.toString());
+            Metodos.gravaLogErro("ERR", 0, e.toString());
             return "";
         }
     }

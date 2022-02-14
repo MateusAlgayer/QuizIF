@@ -89,6 +89,8 @@ public class TrataAcaoController extends Thread{
           
           Usuario usu = (Usuario)in.readObject();
           
+          out.writeObject("ok");
+          
           int usuEspec = (int) in.readObject();
           
           ArrayList<Prova> listaProvas = ((new ProvaDAO()).getListaProva(usu.getCodUsuario(), idUnico, usuEspec));
