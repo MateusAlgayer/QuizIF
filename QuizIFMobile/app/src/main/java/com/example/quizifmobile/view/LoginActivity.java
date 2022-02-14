@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         btRecuperarSenha = findViewById(R.id.btRecuperarSenha);
         btLogUsu = findViewById(R.id.btLogUsu);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
         btLogUsu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

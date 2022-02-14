@@ -19,6 +19,8 @@ public class RankingActivity extends AppCompatActivity {
         setContentView(R.layout.ranking);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }

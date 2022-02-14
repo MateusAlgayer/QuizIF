@@ -41,6 +41,7 @@
         </activity>
         <activity
             android:name=".view.MainActivity"
+            android:launchMode="singleTop"
             android:label="QuizIFMobile"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                         public void run() {
                             Metodos.Mensagem(infoApp,"Conexão estabelecida com sucesso");
 
+                            tvTentandoConectar.setVisibility(View.INVISIBLE);
+
                             Intent it = new Intent(MainActivity.this, LoginActivity.class);
                             startActivity(it);
                         }
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Metodos.Mensagem(infoApp,"Erro na conexão:\n"+e.toString());
+                            tvTentandoConectar.setVisibility(View.INVISIBLE);
                         }
                     });
 
