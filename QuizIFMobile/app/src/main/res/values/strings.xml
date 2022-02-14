@@ -19,4 +19,6 @@
     <string name="title_activity_main">Informações da conexão</string>
     <string name="title_activity_principal">QuizIFMobile - Principal</string>
     <string name="title_activity_ranking">QuizIF Mobile - Ranking</string>
+    <string name="title_activity_perfil">QuizIF Mobile - Perfil</string>
+    <string name="title_activity_sobre_nos">QuizIF Mobile - Sobre Nós</string>
 </resources>

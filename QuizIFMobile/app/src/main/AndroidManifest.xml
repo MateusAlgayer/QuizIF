@@ -13,6 +13,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".view.SobreNosActivity"
+            android:label="@string/title_activity_sobre_nos"
+            android:parentActivityName=".view.PerfilActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.quizifmobile.view.PerfilActivity" />
+        </activity>
+        <activity
+            android:name=".view.PerfilActivity"
+            android:label="@string/title_activity_perfil"
+            android:parentActivityName=".view.PrincipalActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.quizifmobile.view.PrincipalActivity" />
+        </activity>
+        <activity
             android:name=".view.RankingActivity"
             android:label="@string/title_activity_ranking"
             android:parentActivityName=".view.PrincipalActivity"
@@ -41,8 +59,8 @@
         </activity>
         <activity
             android:name=".view.MainActivity"
-            android:launchMode="singleTop"
             android:label="QuizIFMobile"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
