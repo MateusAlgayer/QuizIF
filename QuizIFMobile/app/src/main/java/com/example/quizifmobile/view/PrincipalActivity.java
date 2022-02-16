@@ -64,7 +64,7 @@ public class PrincipalActivity extends AppCompatActivity {
             public void run() {
                 ConexaoController ccont = new ConexaoController(infoApp.in, infoApp.out);
 
-                List<Prova> listaProvas = ccont.getListaProvas(new Usuario(2)/*infoApp.getGUsuLogado()*/);
+                List<Prova> listaProvas = ccont.getListaProvas(infoApp.getGUsuLogado());
 
                 provaAdapter = new ProvaAdapter(listaProvas, provaClick);
 

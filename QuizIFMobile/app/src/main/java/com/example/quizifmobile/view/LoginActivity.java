@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.quizifmobile.controller.ConexaoController;
 import com.example.quizifmobile.controller.InfoApp;
+import com.example.quizifmobile.util.Metodos;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -60,9 +61,23 @@ public class LoginActivity extends AppCompatActivity {
                         if (wUsu != null) {
                             infoApp.setGUsuLogado(wUsu);
 
-                            Intent it = new Intent(LoginActivity.this, PrincipalActivity.class);
-                            startActivity(it);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent it = new Intent(LoginActivity.this, PrincipalActivity.class);
+                                    startActivity(it);
+                                }
+                            });
+                        } else {
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Metodos.mensagem(infoApp, "Usuário ou senha incorretos!");
+                                }
+                            });
                         }
+
                     }
                 }).start();
 
