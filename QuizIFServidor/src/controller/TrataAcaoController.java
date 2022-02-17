@@ -292,7 +292,7 @@ public class TrataAcaoController extends Thread{
         } else if(wCom.equalsIgnoreCase("GETLISTAAREA")){
           gravaLog("REQ", idUnico, "Lista areas - INI");
           
-          out.writeObject("ok");
+          //out.writeObject("ok");
           
           out.writeObject((new AreaDAO()).getListaArea(idUnico));
           
@@ -312,7 +312,9 @@ public class TrataAcaoController extends Thread{
           out.writeObject(listaDis);
           
           if (numProva != 0){
-          out.writeObject(listaSel);
+            String msg = (String)in.readObject();
+            
+            out.writeObject(listaSel);
           }
           
           gravaLog("REQ", idUnico, "Lista perguntas prova - FIM");

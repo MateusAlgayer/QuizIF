@@ -200,12 +200,12 @@ public class FormPerfil extends javax.swing.JDialog {
         if(!Metodos.msgConfirma("Tem certeza que deseja excluir o usuário? ")){
             return;
         }
-        String res = QuizIFCliente.ccont.EnviaDelUsu(tfEmailUsu.getText());
+        String res = QuizIFCliente.ccont.enviaDelUsu(tfEmailUsu.getText());
         
         if(Metodos.processaMsgServidor(this.getTitle(), res, "", "Erro ao validar o código via e-mail")){
           Usuario usu = new Usuario(InfoApp.getGUsuLogado().getCodUsuario());
           
-          res = QuizIFCliente.ccont.DeletaUsu(usu);
+          res = QuizIFCliente.ccont.deletaUsu(usu);
           
           if(Metodos.processaMsgServidor(this.getTitle(), res, "Usuário deletado!! \n A aplicação será encerrada!", "Erro ao deletar o usuário")){
             gravaLog("DelUsu", 0, "Excluir Usuário - FIM");
@@ -216,7 +216,7 @@ public class FormPerfil extends javax.swing.JDialog {
 
     private void btAltSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAltSenhaActionPerformed
        gravaLog("UPD", 0, "Alterar Usuario - INI");
-       String res = QuizIFCliente.ccont.AlteraSenhaUsu();
+       String res = QuizIFCliente.ccont.alteraSenhaUsu();
        
        if(Metodos.processaMsgServidor(this.getTitle(), res, "Sucesso ao alterar a senha!", "Erro ao alterar a senha!")){
           InfoApp.getGUsuLogado().setSenha(InfoApp.getGSenhaCripto());

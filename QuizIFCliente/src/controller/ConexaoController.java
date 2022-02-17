@@ -36,16 +36,20 @@ public class ConexaoController {
     this.in = pIn;
   }
   
-  public Usuario Login(Usuario pUsu){
+  public Usuario login(Usuario pUsu){
     Usuario wUsu = null;
     
-    String msg = "";
+    String msg;
     try {
       gravaLog("LOG", 0, "Efetuar login - INI");
       
       out.writeObject("EFETUARLOGIN");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
+      
       out.writeObject(pUsu.getEmail());
       
       String sal = (String)in.readObject();
@@ -71,14 +75,18 @@ public class ConexaoController {
   public ArrayList<Prova> getProvas(int usuEspec){
     
     gravaLog("GET", 0, "Provas - INI");
-    String msg = "";
+    String msg;
     try {
       out.writeObject("GETLISTAPROVAS");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
+      
       out.writeObject(InfoApp.getGUsuLogado());
       
-      msg = (String) in.readObject();
+      msg = (String) in.readObject();      
       out.writeObject(usuEspec);
       
       ArrayList<Prova> listaProvas = (ArrayList<Prova>) in.readObject();
@@ -93,7 +101,7 @@ public class ConexaoController {
     return null; 
   }
   
-  public boolean EnviaCodigoEmail(String pEmail){
+  public boolean enviaCodigoEmail(String pEmail){
     String msg = "";
     gravaLog("VAL", 0, "Codigo email - INI");
     try {
@@ -164,14 +172,17 @@ public class ConexaoController {
     return false;
   }
   
-  public String CadastraUsu(Usuario usu){
+  public String cadastraUsu(Usuario usu){
     gravaLog("INS", 0, "Usuário - INI");
     
-    String msg = "";
+    String msg;
     try {
       out.writeObject("CADASTROUSU");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
       
       out.writeObject(usu);
       
@@ -186,7 +197,7 @@ public class ConexaoController {
     }
   }
   
-  public String EnviaRedefSenha(String email){
+  public String enviaRedefSenha(String email){
     String msg;
     try {
       gravaLog("UPD", 0, "Redefinir senha - INI");
@@ -194,6 +205,10 @@ public class ConexaoController {
       out.writeObject("REDEFINESENHA");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
+      
       out.writeObject(email);
       
       String sal = (String)in.readObject();
@@ -281,11 +296,8 @@ public class ConexaoController {
     ArrayList<Area> lista = null;
     
     gravaLog("GET", 0, "Areas - INI");
-    String msg = "";
     try {
-      out.writeObject("GETLISTAAREA");
-      
-      msg = (String) in.readObject();
+      out.writeObject("GETLISTAAREA");     
       
       lista = (ArrayList<Area>) in.readObject();
       
@@ -301,17 +313,21 @@ public class ConexaoController {
 
   public void getPerguntasProva(ArrayList<Pergunta> listaSel, ArrayList<Pergunta> listaDis, int numProva) {
     gravaLog("GET", 0,"Perguntas de uma prova - INI");
-    String msg = "";
+    String msg;
     try{
       out.writeObject("GETPERGUNTASPROVA");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
       
       out.writeObject(numProva);
       
       listaDis.addAll((ArrayList<Pergunta>) in.readObject());
       
       if(numProva != 0){
+        out.writeObject("ok");
         listaSel.addAll((ArrayList<Pergunta>) in.readObject());
       }
       
@@ -322,11 +338,15 @@ public class ConexaoController {
     gravaLog("GET", 0,"Perguntas de uma prova - FIM");
   }
 
-  public String ExcluirProva(int codigoProva) {
+  public String excluirProva(int codigoProva) {
     String msg;
     try {
       out.writeObject("DELETAPROVA");
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
+      
       out.writeObject(codigoProva);
       msg = (String) in.readObject();
 
@@ -342,7 +362,7 @@ public class ConexaoController {
     }
   }
   
-  public String EnviaDelUsu(String email){
+  public String enviaDelUsu(String email){
     String msg;
     try {
       gravaLog("DEL", 0, "Deletar Usuario - INI");
@@ -350,6 +370,10 @@ public class ConexaoController {
       out.writeObject("VALIDACODIGOEMAILDELUSU");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
+      
       out.writeObject(email);
       
       String sal = (String)in.readObject();
@@ -405,11 +429,15 @@ public class ConexaoController {
     }
   }
   
-  public String DeletaUsu (Usuario usu){
+  public String deletaUsu (Usuario usu){
       String msg;
         try {
             out.writeObject("Deletar Usuário");
             msg = (String) in.readObject();
+            
+            if(!msg.equals("ok"))
+              throw new IOException("Servidor não pode processar a requisição");
+            
             out.writeObject(usu);
             msg = (String) in.readObject();
                      
@@ -420,13 +448,17 @@ public class ConexaoController {
         }
   }
   
-  public String AlteraTipoUsu(Usuario usu, String tipo){
+  public String alteraTipoUsu(Usuario usu, String tipo){
       String msg;
       
       try {
           
           out.writeObject("AlteraTipoUsu");
           msg = (String) in.readObject();
+          
+          if(!msg.equals("ok"))
+            throw new IOException("Servidor não pode processar a requisição");
+          
           out.writeObject(usu);
           out.writeObject(tipo);
           msg = (String) in.readObject();
@@ -438,7 +470,7 @@ public class ConexaoController {
       }
   }
   
-  public String AlteraSenhaUsu (){
+  public String alteraSenhaUsu (){
       String msg;
       try {
           
@@ -455,6 +487,9 @@ public class ConexaoController {
           out.writeObject("Alterar Senha Usuário");
           msg = (String) in.readObject();
           
+          if(!msg.equals("ok"))
+            throw new IOException("Servidor não pode processar a requisição");
+
           Usuario usu = new Usuario(InfoApp.getGUsuLogado().getEmail(), InfoApp.getGSenhaCripto());
           out.writeObject(usu);
           
@@ -467,13 +502,16 @@ public class ConexaoController {
       }
   }
 
-  public String InserirProva(Prova p,ArrayList<Pergunta> perSel) {
+  public String inserirProva(Prova p,ArrayList<Pergunta> perSel) {
     gravaLog("CAD", 0,"Cadastro de prova - INI");
-    String msg = "";
+    String msg;
     try{
       out.writeObject("INSERIRPROVA");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
       
       out.writeObject(p);
       out.writeObject(perSel);
@@ -487,13 +525,16 @@ public class ConexaoController {
     }
   }
 
-  public String ModificarProva(Prova p, ArrayList<Pergunta> cadPerSel) {
+  public String modificarProva(Prova p, ArrayList<Pergunta> cadPerSel) {
     gravaLog("UPD", 0,"Alteração de prova - INI");
-    String msg = "";
+    String msg;
     try{
       out.writeObject("ALTERARPROVA");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
       
       out.writeObject(p);
       out.writeObject(cadPerSel);
@@ -509,12 +550,16 @@ public class ConexaoController {
   
   public ArrayList<Jogo> getRanking(int filtro){
     gravaLog("GET", 0, "Ranking - INI");
-    String msg = "";
+    String msg;
     
     try {
       out.writeObject("GETRANKING");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
+      
       out.writeObject(filtro);
       
       ArrayList<Jogo> listaJogos = (ArrayList<Jogo>) in.readObject();
@@ -531,12 +576,16 @@ public class ConexaoController {
   
   public ArrayList<Usuario> getUsuarios(){
       gravaLog("GET", 0, "Usuarios - INI");
-      String msg = "";
+      String msg;
       
       try {
           out.writeObject("GETUSU");
           
           msg = (String) in.readObject();
+          
+          if(!msg.equals("ok"))
+            throw new IOException("Servidor não pode processar a requisição");
+          
           out.writeObject("ok");
           
           ArrayList<Usuario> listaUsuarios = (ArrayList<Usuario>) in.readObject();
@@ -552,11 +601,14 @@ public class ConexaoController {
 
   public void getPerguntasJogo(ArrayList<Pergunta> listaPergunta, int codigoProva) {
     gravaLog("GET", 0,"perguntas jogo - INI");
-    String msg = "";
+    String msg;
     try{
       out.writeObject("GETPERGUNTASJOGO");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
       
       out.writeObject(codigoProva);
 
@@ -571,11 +623,14 @@ public class ConexaoController {
 
   public ArrayList<Pergunta> getPerguntas() {
     gravaLog("GET", 0,"perguntas - INI");
-    String msg = "";
+    String msg;
     try{
       out.writeObject("GETPERGUNTAS");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
       
       gravaLog("GET", 0,"perguntas - FIM");
       return (ArrayList<Pergunta>) in.readObject();
@@ -590,11 +645,14 @@ public class ConexaoController {
   public ArrayList<Prova> getProvasHist(int usuEspec){
     
     gravaLog("GET", 0, "ProvasHist - INI");
-    String msg = "";
+    String msg;
     try {
       out.writeObject("GETLISTAPROVASHIST");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
       
       ArrayList<Prova> listaProvas = (ArrayList<Prova>) in.readObject();
       
@@ -608,7 +666,7 @@ public class ConexaoController {
     return null; 
   }
 
-  public String ExcluirPergunta(int codigo) {
+  public String excluirPergunta(int codigo) {
     String msg;
     gravaLog("DEL", 0, "Deletar pergunta - INI");
     
@@ -616,6 +674,10 @@ public class ConexaoController {
       
       out.writeObject("DELETAPERGUNTA");
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
+      
       out.writeObject(codigo);
       msg = (String) in.readObject();
 
@@ -631,13 +693,16 @@ public class ConexaoController {
     }
   }
 
-  public String InserePergunta(Pergunta p) {
+  public String inserePergunta(Pergunta p) {
     gravaLog("CAD", 0,"Cadastro de pergunta - INI");
-    String msg = "";
+    String msg;
     try{
       out.writeObject("INSERIRPERGUNTA");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
       
       out.writeObject(p);
           
@@ -650,13 +715,16 @@ public class ConexaoController {
     }
   }
 
-  public String AlteraPergunta(Pergunta p) {
+  public String alteraPergunta(Pergunta p) {
     gravaLog("UPD", 0,"Alteração de pergunta - INI");
-    String msg = "";
+    String msg;
     try{
       out.writeObject("ALTERARPERGUNTA");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
       
       out.writeObject(p);
           
@@ -669,13 +737,16 @@ public class ConexaoController {
     }
   }
 
-  public String GravaResultJogo(Jogo resultJogo) {
+  public String gravaResultJogo(Jogo resultJogo) {
     gravaLog("INS", 0,"Grava jogo - INI");
-    String msg = "";
+    String msg;
     try{
       out.writeObject("GRAVARJOGO");
       
       msg = (String) in.readObject();
+      
+      if(!msg.equals("ok"))
+        throw new IOException("Servidor não pode processar a requisição");
       
       out.writeObject(resultJogo);
           

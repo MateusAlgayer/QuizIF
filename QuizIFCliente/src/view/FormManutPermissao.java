@@ -199,7 +199,7 @@ public class FormManutPermissao extends javax.swing.JFrame {
         if(Metodos.msgConfirma(adicional+"Tem certeza que deseja alterar a permissão \n"+ 
                                "do usuário '"+ usu.getNomeUsuario() +"' para '" + tipoLiteral + "'?")){
             //sim
-            String res = QuizIFCliente.ccont.AlteraTipoUsu(usu, tipo);
+            String res = QuizIFCliente.ccont.alteraTipoUsu(usu, tipo);
             
             if(Metodos.processaMsgServidor(this.getTitle(), res, "Tipo alterado com sucesso!", "Erro ao alterar o tipo!")){     
               atualizaTabela();

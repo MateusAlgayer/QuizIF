@@ -406,7 +406,7 @@ public class FormJogo extends javax.swing.JDialog {
     if(!Metodos.msgConfirma("Após salvar a tela será fechada.\nDeseja continuar?"))
       return;
     
-    String res = QuizIFCliente.ccont.GravaResultJogo(GResultJogo);
+    String res = QuizIFCliente.ccont.gravaResultJogo(GResultJogo);
     
     if(Metodos.processaMsgServidor(this.getTitle(), res, "Resultado gravado com sucesso!", "Erro ao gravar o resultado!")){
       dispose();

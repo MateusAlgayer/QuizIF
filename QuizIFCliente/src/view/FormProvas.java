@@ -11,7 +11,6 @@ import view.util.ComboBoxArea;
 import ModelDominio.Pergunta;
 import java.awt.Color;
 import view.tablemodel.PerguntasTableModel;
-import static util.Metodos.pedaco;
 
 public class FormProvas extends javax.swing.JFrame {
 
@@ -332,7 +331,7 @@ public class FormProvas extends javax.swing.JFrame {
 //          dispose();
 //        }
 //      }  
-      String res = QuizIFCliente.ccont.ExcluirProva(GProva.getCodigoProva());
+      String res = QuizIFCliente.ccont.excluirProva(GProva.getCodigoProva());
       
       if(Metodos.processaMsgServidor(this.getTitle(), res, "Prova deletada com sucesso!", "Erro ao deletar a prova!")){     
         dispose();
@@ -383,7 +382,7 @@ public class FormProvas extends javax.swing.JFrame {
       //seta o codigo do objeto de alteração pra o código da prova a ser editada.
       //cuidado, se entrar aqui sem uma prova explode
       p.setCodigoProva(GProva.getCodigoProva());
-      res = QuizIFCliente.ccont.ModificarProva(p, cadPerSel);
+      res = QuizIFCliente.ccont.modificarProva(p, cadPerSel);
       
       if(Metodos.processaMsgServidor(this.getTitle(), res, "Prova alterada com sucesso!", "Erro ao alterar a prova!")){     
         dispose();
@@ -404,20 +403,20 @@ public class FormProvas extends javax.swing.JFrame {
 //        Metodos.Erro(this.getTitle(),"Erro ao editar a prova!");
 //      }
     } else {
-      res = QuizIFCliente.ccont.InserirProva(p, cadPerSel);
+      res = QuizIFCliente.ccont.inserirProva(p, cadPerSel);
       
       if(Metodos.processaMsgServidor(this.getTitle(), res, "Prova gravada com sucesso!", "Erro ao gravar a prova!")){     
         dispose();
       }
       
-      switch(pedaco(res,"^",1)){
-        case "A" -> Metodos.aviso(this.getTitle(), pedaco(res,"^",2));
-        case "E" -> Metodos.erro(this.getTitle(), "Erro ao gravar a prova!\n"+pedaco(res,"^",2));
-        default -> {
-          Metodos.sucesso(this.getTitle(), "prova gravada com sucesso!");
-          dispose();
-        }
-      } 
+//      switch(pedaco(res,"^",1)){;
+//        case "A" -> Metodos.aviso(this.getTitle(), pedaco(res,"^",2));
+//        case "E" -> Metodos.erro(this.getTitle(), "Erro ao gravar a prova!\n"+pedaco(res,"^",2));
+//        default -> {
+//          Metodos.sucesso(this.getTitle(), "prova gravada com sucesso!");
+//          dispose();
+//        }
+//      } 
 //      if(QuizIFCliente.ccont.InserirProva(p, cadPerSel)){
 //        Metodos.Sucesso(this.getTitle(), "Prova gravada com sucesso!");
 //        dispose();

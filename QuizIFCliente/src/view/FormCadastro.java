@@ -115,7 +115,7 @@ public class FormCadastro extends javax.swing.JDialog {
        
       gravaLog("CAD", 0, "Cadastro - INI");
       
-      if(!QuizIFCliente.ccont.EnviaCodigoEmail(tfEmail.getText())){
+      if(!QuizIFCliente.ccont.enviaCodigoEmail(tfEmail.getText())){
         return;
       } 
       
@@ -140,7 +140,7 @@ public class FormCadastro extends javax.swing.JDialog {
           //inclusão
           Comum novoUsu = new Comum(tfNome.getText(), tfApelido.getText(), tfEmail.getText(), InfoApp.getGSenhaCripto(), sal);
           
-          String res = QuizIFCliente.ccont.CadastraUsu(novoUsu);
+          String res = QuizIFCliente.ccont.cadastraUsu(novoUsu);
           
           if(Metodos.processaMsgServidor(this.getTitle(), res, "Usuário cadastrado com sucesso!!", "Erro ao cadastrar o usuário!")){
             InfoApp.setGEmailUsu(tfEmail.getText());

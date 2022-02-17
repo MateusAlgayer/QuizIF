@@ -352,7 +352,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
       return;
     
     if(Metodos.msgConfirma("Tem certeza que deseja excluir a pergunta de código '"+tfCodigo.getText()+"'?")){
-      String res = QuizIFCliente.ccont.ExcluirPergunta(Integer.parseInt(tfCodigo.getText()));
+      String res = QuizIFCliente.ccont.excluirPergunta(Integer.parseInt(tfCodigo.getText()));
       
       if(Metodos.processaMsgServidor(this.getTitle(), res, "Pergunta deletada com sucesso!", "Erro ao deletar a pergunta!")){     
         LimpaCampos();
@@ -426,7 +426,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     if(GModoEdicao){
       p.setCodPergunta(Integer.parseInt(tfCodigo.getText()));
       
-      res = QuizIFCliente.ccont.AlteraPergunta(p);
+      res = QuizIFCliente.ccont.alteraPergunta(p);
       
       if(Metodos.processaMsgServidor(this.getTitle(), res, "Pergunta alterada com sucesso!", "Erro ao alterar a pergunta!")){     
         AtualizaTabela();
@@ -448,7 +448,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
 //      }
     } else {
       
-      res = QuizIFCliente.ccont.InserePergunta(p);
+      res = QuizIFCliente.ccont.inserePergunta(p);
      
       if(Metodos.processaMsgServidor(this.getTitle(), res, "Pergunta gravada com sucesso!", "Erro ao inserir a pergunta!")){     
         AtualizaTabela();

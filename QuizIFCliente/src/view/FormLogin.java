@@ -165,7 +165,7 @@ public class FormLogin extends javax.swing.JFrame{
    
     Usuario wLogin = new Usuario(tfUsu.getText(), String.valueOf(pfSenha.getPassword()));
    
-    Usuario wUsu = QuizIFCliente.ccont.Login(wLogin);
+    Usuario wUsu = QuizIFCliente.ccont.login(wLogin);
    
     if(wUsu != null){
       InfoApp.setGUsuLogado(wUsu);
@@ -198,7 +198,7 @@ public class FormLogin extends javax.swing.JFrame{
     
     Metodos.gravaLog("UPD", 0, "Redefinição de senha - INI");
     
-    String res = QuizIFCliente.ccont.EnviaRedefSenha(tfUsu.getText());
+    String res = QuizIFCliente.ccont.enviaRedefSenha(tfUsu.getText());
     
     Metodos.processaMsgServidor(this.getTitle(), res, "Senha redefinida com sucesso!", "Erro ao redefinir a senha!"); 
     
