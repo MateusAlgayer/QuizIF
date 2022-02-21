@@ -1,8 +1,13 @@
 package com.example.quizifmobile.view;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -14,6 +19,7 @@ import com.example.quizifmobile.adapters.ProvaAdapter;
 import com.example.quizifmobile.controller.ConexaoController;
 import com.example.quizifmobile.controller.InfoApp;
 import com.example.quizifmobile.util.Metodos;
+import com.example.quizifmobile.view.imagens.ConfirmaCodigoEmailActivity;
 
 import java.util.List;
 
@@ -22,6 +28,7 @@ import ModelDominio.Prova;
 public class PerfilActivity extends AppCompatActivity {
 
     TextView tvNomePerfil, tvApelidoPerfil, tvEmailPerfil;
+    Button btAltSenhaUsu, btDeletaUsu;
     RecyclerView rvHistorico;
 
     ProvaAdapter.ProvaOnClickListener provaClick;
@@ -37,6 +44,8 @@ public class PerfilActivity extends AppCompatActivity {
         tvNomePerfil = findViewById(R.id.tvNomePerfil);
         tvApelidoPerfil = findViewById(R.id.tvApelidoPerfil);
         tvEmailPerfil = findViewById(R.id.tvEmailPerfil);
+        btAltSenhaUsu = findViewById(R.id.btAltSenhaUsu);
+        btDeletaUsu = findViewById(R.id.btDeletaUsu);
         rvHistorico = findViewById(R.id.rvHistorico);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,6 +55,24 @@ public class PerfilActivity extends AppCompatActivity {
         tvNomePerfil.setText(infoApp.getGUsuLogado().getNomeUsuario());
         tvApelidoPerfil.setText(infoApp.getGUsuLogado().getApelido());
         tvEmailPerfil.setText(infoApp.getGUsuLogado().getEmail());
+
+        //final AlertDialog.Builder confirmarDelUsu = new AlertDialog.Builder(context);
+        //confirmarDelUsu.setMessage("Deseja realmente excluir o usuário?");
+        //confirmarDelUsu.setCancelable(true);
+
+        //confirmarDelUsu.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            //@Override
+            //public void onClick(DialogInterface dialogInterface, int i) {
+                //dialogInterface.cancel();
+            //}
+        //});
+
+        //confirmarDelUsu.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            //@Override
+            //public void onClick(DialogInterface dialogInterface, int i) {
+                //dialogInterface.cancel();
+            //}
+        //});
 
         new Thread(new Runnable() {
             @Override
@@ -75,6 +102,27 @@ public class PerfilActivity extends AppCompatActivity {
                 }
             }
         }).start();
+
+        //btAltSenhaUsu.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View view) {
+                //Intent alterarSenha = new Intent(PerfilActivity.this, ConfirmaSenhaActivity.class);
+
+                //startActivity(alterarSenha);
+            //}
+        //});
+
+        //btDeletaUsu.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            //public void onClick(View view) {
+                //AlertDialog confDelUsu = confirmarDelUsu.create();
+                //confDelUsu.show();
+
+                //Intent deletarUsu = new Intent(PerfilActivity.this, ConfirmaCodigoEmailActivity.class);
+
+
+            //}
+        //});
     }
 
 }

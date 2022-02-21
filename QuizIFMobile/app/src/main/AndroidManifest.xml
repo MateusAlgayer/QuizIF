@@ -13,10 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".view.imagens.ConfirmaCodigoEmailActivity"
+            android:label="@string/title_activity_confirma_codigo_email"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".view.JogoActivity"
             android:label="QuizIFMobile - Jogo"
-            android:screenOrientation="landscape"
             android:parentActivityName=".view.PrincipalActivity"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -52,8 +56,8 @@
         <activity
             android:name=".view.PrincipalActivity"
             android:label="@string/title_activity_principal"
-            android:screenOrientation="portrait"
             android:parentActivityName=".view.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

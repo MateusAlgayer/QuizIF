@@ -150,4 +150,6 @@ public class Metodos {
     public static void mensagem(Context context, String pMsg){
         Toast.makeText(context, pMsg, Toast.LENGTH_SHORT).show();
     }
+
+
 }
