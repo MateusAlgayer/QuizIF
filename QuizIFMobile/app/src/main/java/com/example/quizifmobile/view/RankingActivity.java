@@ -1,22 +1,16 @@
 package com.example.quizifmobile.view;
 
 import android.os.Bundle;
-
-import com.example.quizifmobile.R;
-import com.example.quizifmobile.adapters.RankingAdapter;
-import com.example.quizifmobile.controller.InfoApp;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import com.example.quizifmobile.R;
+import com.example.quizifmobile.controller.InfoApp;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ModelDominio.Jogo;
@@ -25,7 +19,7 @@ public class RankingActivity extends AppCompatActivity {
 
     Spinner spFiltro ;
     RecyclerView rvListaRanking;
-    RankingAdapter rankingAdapter;
+    //RankingAdapter rankingAdapter;
 
 
     List<Jogo> listaJogos;

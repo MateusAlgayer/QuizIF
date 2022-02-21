@@ -65,6 +65,9 @@ public class ConexaoController {
                 return null;
             }
 
+            if(!msg.equals("ok"))
+                throw new IOException("Servidor não pode processar a requisição");
+
             pUsu.setSenha(CriptoHash.Cripto(pUsu.getSenha(), sal, 0));
 
             out.writeObject(pUsu);
@@ -77,5 +80,29 @@ public class ConexaoController {
         }
 
         return wUsu;
+    }
+
+    public List<Prova> getProvasHist(int usuEspec){
+
+        gravaLog("GET", 0, "ProvasHist - INI");
+        String msg;
+        try {
+            out.writeObject("GETLISTAPROVASHIST");
+
+            msg = (String) in.readObject();
+
+            if(!msg.equals("ok"))
+                throw new IOException("Servidor não pode processar a requisição");
+
+            List<Prova> listaProvas = (List<Prova>) in.readObject();
+
+            gravaLog("GET", 0, "ProvasHist - FIM");
+            return listaProvas;
+
+        } catch (IOException | ClassNotFoundException e) {
+            gravaLogErro("ERR", 0, "Erro ao enviar ProvasHist\n"+e.toString());
+        }
+
+        return null;
     }
 }

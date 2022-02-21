@@ -28,7 +28,6 @@ public class PrincipalActivity extends AppCompatActivity {
     RecyclerView rvProvas;
 
     ProvaAdapter.ProvaOnClickListener provaClick;
-    List<Prova> listaProvas;
     ProvaAdapter provaAdapter;
     InfoApp infoApp;
 
