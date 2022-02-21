@@ -102,7 +102,7 @@ public class ConexaoController {
   }
   
   public boolean enviaCodigoEmail(String pEmail){
-    String msg = "";
+    String msg;
     gravaLog("VAL", 0, "Codigo email - INI");
     try {
       out.writeObject("VALIDACODIGOEMAIL");
@@ -642,7 +642,7 @@ public class ConexaoController {
     return null;
   }
   
-  public ArrayList<Prova> getProvasHist(int usuEspec){
+  public ArrayList<Prova> getProvasHist(){
     
     gravaLog("GET", 0, "ProvasHist - INI");
     String msg;

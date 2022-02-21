@@ -241,7 +241,7 @@ public class FormPerfil extends javax.swing.JDialog {
   // End of variables declaration//GEN-END:variables
 
   private void atualizaTabela() {
-    ArrayList<Prova> listaHistProva = QuizIFCliente.ccont.getProvasHist(InfoApp.getGUsuLogado().getCodUsuario());
+    ArrayList<Prova> listaHistProva = QuizIFCliente.ccont.getProvasHist();
     
     if(listaHistProva != null){
       ProvasTableModel hist = new ProvasTableModel(listaHistProva, true);

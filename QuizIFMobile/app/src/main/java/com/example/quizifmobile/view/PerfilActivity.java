@@ -52,9 +52,9 @@ public class PerfilActivity extends AppCompatActivity {
             public void run() {
                 ConexaoController ccont = new ConexaoController(infoApp.in, infoApp.out);
 
-                List<Prova> listaProvas = ccont.getProvasHist(infoApp.getGUsuLogado().getCodUsuario());
+                List<Prova> listaProvas = ccont.getProvasHist();
 
-                provaAdapter = new ProvaAdapter(listaProvas, provaClick);
+                provaAdapter = new ProvaAdapter(listaProvas, null);
 
                 if(listaProvas != null){
                     runOnUiThread(new Runnable() {

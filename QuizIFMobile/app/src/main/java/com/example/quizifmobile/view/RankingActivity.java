@@ -15,6 +15,8 @@ import java.util.List;
 
 import ModelDominio.Jogo;
 
+//import com.example.quizifmobile.adapters.RankingAdapter;
+
 public class RankingActivity extends AppCompatActivity {
 
     Spinner spFiltro ;

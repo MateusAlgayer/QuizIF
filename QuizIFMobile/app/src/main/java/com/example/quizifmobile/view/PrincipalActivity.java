@@ -2,14 +2,8 @@ package com.example.quizifmobile.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.example.quizifmobile.R;
-import com.example.quizifmobile.adapters.ProvaAdapter;
-import com.example.quizifmobile.controller.ConexaoController;
-import com.example.quizifmobile.controller.InfoApp;
-import ModelDominio.Prova;
-import ModelDominio.Usuario;
-import com.example.quizifmobile.util.Metodos;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,10 +11,15 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
-import android.widget.Button;
+import com.example.quizifmobile.R;
+import com.example.quizifmobile.adapters.ProvaAdapter;
+import com.example.quizifmobile.controller.ConexaoController;
+import com.example.quizifmobile.controller.InfoApp;
+import com.example.quizifmobile.util.Metodos;
 
 import java.util.List;
+
+import ModelDominio.Prova;
 
 public class PrincipalActivity extends AppCompatActivity {
 

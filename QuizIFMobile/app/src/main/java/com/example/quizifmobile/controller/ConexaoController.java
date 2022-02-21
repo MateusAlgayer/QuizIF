@@ -2,6 +2,7 @@ package com.example.quizifmobile.controller;
 
 import com.example.quizifmobile.util.CriptoHash;
 
+import ModelDominio.Pergunta;
 import ModelDominio.Prova;
 import ModelDominio.Usuario;
 
@@ -82,7 +83,28 @@ public class ConexaoController {
         return wUsu;
     }
 
-    public List<Prova> getProvasHist(int usuEspec){
+    public List<Pergunta> getPerguntasProva(int codProva){
+        String msg;
+        try{
+            out.writeObject("GETPERGUNTASJOGO");
+
+            msg = (String) in.readObject();
+
+            if(!msg.equals("ok"))
+                throw new IOException("Servidor não pode processar a requisição");
+
+            out.writeObject(codProva);
+
+            List<Pergunta> listaSai = (List<Pergunta>) in.readObject();
+
+            return listaSai;
+        } catch(IOException | ClassNotFoundException e){
+            gravaLogErro("ERR", 0, "Erro na requisição de perguntas jogo\n"+e.toString());
+            return null;
+        }
+    }
+
+    public List<Prova> getProvasHist() {
 
         gravaLog("GET", 0, "ProvasHist - INI");
         String msg;
@@ -100,7 +122,7 @@ public class ConexaoController {
             return listaProvas;
 
         } catch (IOException | ClassNotFoundException e) {
-            gravaLogErro("ERR", 0, "Erro ao enviar ProvasHist\n"+e.toString());
+            gravaLogErro("ERR", 0, "Erro ao enviar ProvasHist\n" + e.toString());
         }
 
         return null;

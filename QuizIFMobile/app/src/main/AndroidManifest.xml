@@ -15,6 +15,7 @@
         <activity
             android:name=".view.JogoActivity"
             android:label="QuizIFMobile - Jogo"
+            android:screenOrientation="landscape"
             android:parentActivityName=".view.PrincipalActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -51,6 +52,7 @@
         <activity
             android:name=".view.PrincipalActivity"
             android:label="@string/title_activity_principal"
+            android:screenOrientation="portrait"
             android:parentActivityName=".view.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -69,7 +71,6 @@
         <activity
             android:name=".view.MainActivity"
             android:label="QuizIFMobile"
-            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
