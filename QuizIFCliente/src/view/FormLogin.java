@@ -14,7 +14,7 @@ import static util.Metodos.pedaco;
 public class FormLogin extends javax.swing.JFrame{
 
   public FormLogin() {
-    initComponents();
+    initComponents();  
     Metodos.geraConsistenciaCampos(this.rootPane);
     lbAviso.setVisible(false);
     

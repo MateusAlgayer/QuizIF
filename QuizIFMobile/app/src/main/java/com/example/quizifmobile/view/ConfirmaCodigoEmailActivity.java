@@ -1,5 +1,6 @@
-package com.example.quizifmobile.view.imagens;
+package com.example.quizifmobile.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,7 +13,10 @@ import android.view.View;
 
 import com.example.quizifmobile.R;
 
+
 public class ConfirmaCodigoEmailActivity extends AppCompatActivity {
+
+    final int TELAPERFIL = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,9 @@ public class ConfirmaCodigoEmailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirma_codigo_email);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        Intent it = getIntent();
 
 
     }

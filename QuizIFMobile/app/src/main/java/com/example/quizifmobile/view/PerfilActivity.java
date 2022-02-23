@@ -19,7 +19,6 @@ import com.example.quizifmobile.adapters.ProvaAdapter;
 import com.example.quizifmobile.controller.ConexaoController;
 import com.example.quizifmobile.controller.InfoApp;
 import com.example.quizifmobile.util.Metodos;
-import com.example.quizifmobile.view.imagens.ConfirmaCodigoEmailActivity;
 
 import java.util.List;
 
@@ -31,9 +30,10 @@ public class PerfilActivity extends AppCompatActivity {
     Button btAltSenhaUsu, btDeletaUsu;
     RecyclerView rvHistorico;
 
-    ProvaAdapter.ProvaOnClickListener provaClick;
     ProvaAdapter provaAdapter;
     InfoApp infoApp;
+
+    final int TELAPERFIL = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,24 +55,6 @@ public class PerfilActivity extends AppCompatActivity {
         tvNomePerfil.setText(infoApp.getGUsuLogado().getNomeUsuario());
         tvApelidoPerfil.setText(infoApp.getGUsuLogado().getApelido());
         tvEmailPerfil.setText(infoApp.getGUsuLogado().getEmail());
-
-        //final AlertDialog.Builder confirmarDelUsu = new AlertDialog.Builder(context);
-        //confirmarDelUsu.setMessage("Deseja realmente excluir o usuário?");
-        //confirmarDelUsu.setCancelable(true);
-
-        //confirmarDelUsu.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-            //@Override
-            //public void onClick(DialogInterface dialogInterface, int i) {
-                //dialogInterface.cancel();
-            //}
-        //});
-
-        //confirmarDelUsu.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-            //@Override
-            //public void onClick(DialogInterface dialogInterface, int i) {
-                //dialogInterface.cancel();
-            //}
-        //});
 
         new Thread(new Runnable() {
             @Override
@@ -112,17 +94,37 @@ public class PerfilActivity extends AppCompatActivity {
             //}
         //});
 
-        //btDeletaUsu.setOnClickListener(new View.OnClickListener() {
-            //@Override
-            //public void onClick(View view) {
-                //AlertDialog confDelUsu = confirmarDelUsu.create();
-                //confDelUsu.show();
+        btDeletaUsu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder confirmarDelUsu = new AlertDialog.Builder(PerfilActivity.this);
+                confirmarDelUsu.setMessage("Deseja realmente excluir o usuário?");
+                confirmarDelUsu.setCancelable(true);
 
-                //Intent deletarUsu = new Intent(PerfilActivity.this, ConfirmaCodigoEmailActivity.class);
+                confirmarDelUsu.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent it = new Intent(PerfilActivity.this, ConfirmaCodigoEmailActivity.class);
+                        Bundle parametro = new Bundle();
+                        parametro.putInt("DeletaUsu", 1);
+                        it.putExtra(parametro);
+                        dialogInterface.dismiss();
 
+                        startActivityForResult(it);
+                    }
+                });
 
-            //}
-        //});
+                confirmarDelUsu.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog confDelUsu = confirmarDelUsu.create();
+                confDelUsu.show();
+
+            }
+        });
     }
 
 }

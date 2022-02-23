@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.imagens.ConfirmaCodigoEmailActivity"
+            android:name=".view.ConfirmaCodigoEmailActivity"
             android:label="@string/title_activity_confirma_codigo_email"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
