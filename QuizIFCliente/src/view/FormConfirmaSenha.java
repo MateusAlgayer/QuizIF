@@ -15,7 +15,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
     public FormConfirmaSenha(String sal, boolean trocasenha) {
       GSal = sal;
       initComponents();
-      Metodos.geraConsistenciaCampos(rootPane);
+      Metodos.configuraForms(this);
       lbAntigaSenha.setVisible(false);
       lbNova.setVisible(false);
       pfAntigaSenha.setVisible(false);

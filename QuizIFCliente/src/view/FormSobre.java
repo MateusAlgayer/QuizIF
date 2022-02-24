@@ -5,6 +5,8 @@
  */
 package view;
 
+import util.Metodos;
+
 /**
  *
  * @author mateus
@@ -16,6 +18,7 @@ public class FormSobre extends javax.swing.JFrame {
    */
   public FormSobre() {
     initComponents();
+    Metodos.configuraForms(this);
   }
 
   /**

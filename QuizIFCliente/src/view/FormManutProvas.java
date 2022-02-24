@@ -6,6 +6,7 @@ package view;
 import ModelDominio.Prova;
 import controller.InfoApp;
 import java.util.ArrayList;
+import util.Metodos;
 import view.tablemodel.ProvasTableModel;
 
 public class FormManutProvas extends javax.swing.JFrame {
@@ -14,6 +15,8 @@ public class FormManutProvas extends javax.swing.JFrame {
   
   public FormManutProvas() {
     initComponents();
+    Metodos.configuraForms(this);
+    
     AtualizaTabela();
   }
 

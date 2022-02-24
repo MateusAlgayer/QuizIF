@@ -27,7 +27,9 @@ public class FormJogo extends javax.swing.JDialog {
   
   public FormJogo(Prova jogo) {
     initComponents();
-      
+   
+    Metodos.configuraForms(this);
+    
     lbNomeProva.setText(jogo.getNomeProva());
     lbDif.setText(jogo.getDificuldadeLiteral());
     

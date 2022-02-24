@@ -4,12 +4,13 @@
 package view;
 
 import controller.InfoApp;
+import util.Metodos;
 
 public class FormConfirmaCodigoEmail extends javax.swing.JDialog {
 
   public FormConfirmaCodigoEmail(boolean Rep) {
     initComponents();
-    
+    Metodos.configuraForms(this);
     lbAviso.setVisible(Rep);
   }
 

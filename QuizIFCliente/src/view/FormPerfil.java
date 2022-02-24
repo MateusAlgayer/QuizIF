@@ -15,6 +15,7 @@ public class FormPerfil extends javax.swing.JDialog {
 
   public FormPerfil() {
     initComponents();
+    Metodos.configuraForms(this);
     
     tfNomeUsu.setText(InfoApp.getGUsuLogado().getNomeUsuario());
     tfApelidoUsu.setText(InfoApp.getGUsuLogado().getApelido());

@@ -14,7 +14,7 @@ public class FormCadastro extends javax.swing.JDialog {
 
     public FormCadastro() {
         initComponents();
-        Metodos.geraConsistenciaCampos(this.rootPane);
+        Metodos.configuraForms(this);
     }
 
     @SuppressWarnings("unchecked")

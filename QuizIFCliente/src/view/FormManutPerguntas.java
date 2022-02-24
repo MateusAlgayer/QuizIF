@@ -27,7 +27,7 @@ public class FormManutPerguntas extends javax.swing.JFrame {
     tamanhoAlt = (Metodos.getTamanhoCampo("TABPER.ALTERNATIVAS")/4)-1;
     Metodos.putTamanhoCampoPerso("ALTERNATIVA.PERSONALIZADO", tamanhoAlt);
     
-    Metodos.geraConsistenciaCampos(rootPane);    
+    Metodos.configuraForms(this);    
     
     attComboBoxArea(-1);
     

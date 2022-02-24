@@ -23,7 +23,7 @@ public class FormProvas extends javax.swing.JFrame {
   
   public FormProvas(Prova prova) {
     initComponents();
-    Metodos.geraConsistenciaCampos(rootPane);
+    Metodos.configuraForms(this);
     
     if(prova != null){
       AtualizaTabelas(prova.getCodigoProva());

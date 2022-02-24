@@ -25,6 +25,8 @@ public class FormManutPermissao extends javax.swing.JFrame {
     
   public FormManutPermissao() {
     initComponents();
+    Metodos.configuraForms(this);
+    
     atualizaTabela();
   }
 

@@ -8,6 +8,7 @@ import ModelDominio.Criador;
 import ModelDominio.Prova;
 import controller.InfoApp;
 import java.util.ArrayList;
+import util.Metodos;
 
 import view.tablemodel.ProvasTableModel;
 
@@ -17,6 +18,7 @@ public class FormPrincipal extends javax.swing.JFrame{
   
   public FormPrincipal() {
     initComponents();
+    Metodos.configuraForms(this);
     
     btAdmin.setVisible(InfoApp.getGUsuLogado() instanceof Administrador);
     btCriador.setVisible(InfoApp.getGUsuLogado() instanceof Criador);

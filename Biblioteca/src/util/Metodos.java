@@ -8,6 +8,9 @@ package util;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -19,6 +22,8 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.JTable;
@@ -152,13 +157,29 @@ public class Metodos{
   
   //Mateus Roberto Algayer - 23/11/2021
   /**
-   * Este metodo pega e adiciona o método de consistencia para todos os componentes de texto de uma tela
-   * @param pComps - representa o rootpane de uma tela, a raiz que possui todos os outros componentes
+   * Este metodo configura o formulário com alguns tratamentos que devem ser utilizados
+   * @param pForm - representa uma tela, a raiz que possui todos os outros componentes
    */
-  public static void geraConsistenciaCampos(JRootPane pComps){
+  public static void configuraForms(Window pForm){
+    
+    java.net.URL url = ClassLoader.getSystemResource("view/imagens/QuizIFLogo.png");
+    Toolkit kit = Toolkit.getDefaultToolkit();
+    Image img = kit.createImage(url);
+    pForm.setIconImage(img);
+    
     ArrayList<Component> wListaComps = new ArrayList<>();
     
-    wListaComps.addAll(pegaTodosComponentes(pComps));
+    JRootPane jrp;
+    
+    if( pForm instanceof JFrame jFrame){
+      jrp = jFrame.getRootPane();
+    } else if(pForm instanceof JDialog jDialog){
+      jrp = jDialog.getRootPane();
+    } else {
+      return;
+    }
+    
+    wListaComps.addAll(pegaTodosComponentes(jrp));
     
     //Pega todos os componentes na lista e abre uma stream
     //então ele filtra pelos componentes que são instancias de JTextComponent 

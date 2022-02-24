@@ -14,8 +14,9 @@ import static util.Metodos.pedaco;
 public class FormLogin extends javax.swing.JFrame{
 
   public FormLogin() {
-    initComponents();  
-    Metodos.geraConsistenciaCampos(this.rootPane);
+    initComponents();
+    
+    Metodos.configuraForms(this);
     lbAviso.setVisible(false);
     
     String usu = Metodos.leConf("lembraUsu");

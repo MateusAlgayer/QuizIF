@@ -4,6 +4,7 @@
 
 package view;
 
+import util.Metodos;
 import view.tablemodel.RankingTableModel;
 
 public class FormRanking extends javax.swing.JDialog {
@@ -11,10 +12,9 @@ public class FormRanking extends javax.swing.JDialog {
     private RankingTableModel rankingModel;
     
   public FormRanking() {
-      
     initComponents();
+    Metodos.configuraForms(this);
     AtualizaTabela();
-    
   }
 
   @SuppressWarnings("unchecked")

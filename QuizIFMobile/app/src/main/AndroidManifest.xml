@@ -7,15 +7,25 @@
     <application
         android:name=".controller.InfoApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/quizif_logo_32"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher_background"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.ConfirmaCodigoEmailActivity"
             android:label="@string/title_activity_confirma_codigo_email"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.ResultJogoActivity"
+            android:label="@string/title_activity_result_jogo"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".view.PrincipalActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.quizifmobile.view.PrincipalActivity" />
+        </activity>
         <activity
             android:name=".view.JogoActivity"
             android:label="QuizIFMobile - Jogo"
@@ -30,6 +40,7 @@
             android:name=".view.SobreNosActivity"
             android:label="@string/title_activity_sobre_nos"
             android:parentActivityName=".view.PerfilActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -39,6 +50,7 @@
             android:name=".view.PerfilActivity"
             android:label="@string/title_activity_perfil"
             android:parentActivityName=".view.PrincipalActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -48,6 +60,7 @@
             android:name=".view.RankingActivity"
             android:label="@string/title_activity_ranking"
             android:parentActivityName=".view.PrincipalActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -67,6 +80,7 @@
             android:name=".view.LoginActivity"
             android:label="QuizIFMobile - Login"
             android:parentActivityName=".view.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -75,7 +89,8 @@
         <activity
             android:name=".view.MainActivity"
             android:label="QuizIFMobile"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -13,7 +13,7 @@ public class ProvasTableModel extends AbstractTableModel{
 
   private final ArrayList<Prova> listaProvas;
   private final int numCols;
-  private final int arrayTamanhos[] = {0, 50, 25, 25};
+  private final int arrayTamanhos[] = {0, 50, 25, 90};
   
   public ProvasTableModel(ArrayList<Prova> listaProvas, boolean principal) {
     this.listaProvas = listaProvas;
@@ -53,7 +53,7 @@ public class ProvasTableModel extends AbstractTableModel{
       case 0 -> "Prova";
       case 1 -> "Área";
       case 2 -> "Dificuldade";
-      case 3 -> "Pontuação";
+      case 3 -> "Pontuação(%)";
       default -> "Noname";
     };
   }
