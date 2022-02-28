@@ -453,11 +453,14 @@ public class Metodos{
           return true;
         }
         default -> {
-          Metodos.erro(titulo, erro+"\n"+pedaco(res,"^",2));
+          String msgErro = pedaco(res,"^",2);
+          
+          if(msgErro.equals(""))
+            msgErro = erro;
+          
+          Metodos.erro(titulo, erro+"\n"+msgErro);
           break;
         }
-
-
     } 
     return false;
   }

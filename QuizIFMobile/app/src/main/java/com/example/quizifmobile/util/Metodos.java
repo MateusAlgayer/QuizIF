@@ -151,5 +151,35 @@ public class Metodos {
         Toast.makeText(context, pMsg, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Método usado para padronizar as mensagens de resposta do servidor
+     * @param context contexto onde a mensagem deve ocorrer
+     * @param res resposta do servidor
+     * @param sucesso resposta exibida em caso de sucesso
+     * @param erro resposta complementar a ser demonstrada em casos de erro
+     * @return true caso dê sucesso false em outros casos
+     */
+    public static boolean processaMsgServidor(Context context, String res, String sucesso, String erro){
+        switch(pedaco(res,"^",1)){
+            case "A":{
+                mensagem(context,pedaco(res,"^",2));
+                break;
+            }
+            case "S":{
+                if(!sucesso.isEmpty())
+                    mensagem(context, sucesso);
+                return true;
+            }
+            default:{
+                String msgErro = pedaco(res,"^",2);
 
+                if(msgErro.equals(""))
+                    msgErro = erro;
+
+                mensagem(context, erro+msgErro);
+                break;
+            }
+        }
+        return false;
+    }
 }

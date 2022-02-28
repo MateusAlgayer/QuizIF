@@ -3,10 +3,12 @@ package com.example.quizifmobile.view;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -175,8 +177,48 @@ public class JogoActivity extends AppCompatActivity {
                 dialogInterface.dismiss();
             }
         });
-        AlertDialog confDelUsu = dialogResposta.create();
-        confDelUsu.show();
+        AlertDialog alertPergunta = dialogResposta.create();
+        alertPergunta.show();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            onBackPressed();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder dialogSair = new AlertDialog.Builder(JogoActivity.this);
+        dialogSair.setMessage("Tem certeza que deseja sair?\n o progresso será perdido");
+        dialogSair.setCancelable(true);
+
+        dialogSair.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent it = new Intent(JogoActivity.this, PrincipalActivity.class);
+
+                startActivity(it);
+                finish();
+            }
+        });
+
+        dialogSair.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertSair = dialogSair.create();
+        alertSair.show();
     }
 }

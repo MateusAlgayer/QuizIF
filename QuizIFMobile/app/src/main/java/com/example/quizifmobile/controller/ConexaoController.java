@@ -2,6 +2,7 @@ package com.example.quizifmobile.controller;
 
 import com.example.quizifmobile.util.CriptoHash;
 
+import ModelDominio.Jogo;
 import ModelDominio.Pergunta;
 import ModelDominio.Prova;
 import ModelDominio.Usuario;
@@ -126,5 +127,28 @@ public class ConexaoController {
         }
 
         return null;
+    }
+
+    public String postSalvarResult(Jogo result){
+
+        gravaLog("INS", 0,"Grava jogo - INI");
+        String msg;
+        try{
+            out.writeObject("GRAVARJOGO");
+
+            msg = (String) in.readObject();
+
+            if(!msg.equals("ok"))
+                throw new IOException("Servidor não pode processar a requisição");
+
+            out.writeObject(result);
+
+            gravaLog("INS", 0,"Grava jogo - FIM");
+            return (String)in.readObject();
+
+        } catch(IOException | ClassNotFoundException e){
+            gravaLogErro("ERR", 0, "Erro ao gravar jogo\n"+e.toString());
+            return "Erro na comunicação entre cliente/servidor\n"+e.toString();
+        }
     }
 }

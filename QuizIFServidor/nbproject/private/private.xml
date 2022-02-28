@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/TrabalhoFinal/QuizIF/QuizIFServidor/src/controller/TrataAcaoController.java</file>
             <file>file:/C:/TrabalhoFinal/QuizIF/QuizIFServidor/src/Model/InfoBaseDAO.java</file>
+            <file>file:/C:/TrabalhoFinal/QuizIF/QuizIFServidor/src/Model/UsuarioDAO.java</file>
             <file>file:/C:/TrabalhoFinal/QuizIF/QuizIFServidor/src/Model/AreaDAO.java</file>
             <file>file:/C:/TrabalhoFinal/QuizIF/QuizIFServidor/src/Model/ProvaDAO.java</file>
             <file>file:/C:/TrabalhoFinal/QuizIF/QuizIFServidor/src/Model/JogoDAO.java</file>
