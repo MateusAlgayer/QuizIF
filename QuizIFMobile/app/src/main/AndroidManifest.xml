@@ -13,14 +13,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".view.ConfirmaSenhaActivity"
+            android:label="@string/title_activity_confirma_senha"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.CadastroActivity"
+            android:label="@string/title_activity_cadastro"
+            android:parentActivityName=".view.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.quizifmobile.view.LoginActivity" />
+        </activity>
+        <activity
             android:name=".view.ConfirmaCodigoEmailActivity"
             android:label="@string/title_activity_confirma_codigo_email"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.ResultJogoActivity"
             android:label="@string/title_activity_result_jogo"
-            android:screenOrientation="portrait"
             android:parentActivityName=".view.PrincipalActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -89,8 +102,8 @@
         <activity
             android:name=".view.MainActivity"
             android:label="QuizIFMobile"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

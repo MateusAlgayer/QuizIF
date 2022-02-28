@@ -64,8 +64,8 @@ public class LoginActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Intent it = new Intent(LoginActivity.this, PrincipalActivity.class);
-                                    startActivity(it);
+                                    Intent login = new Intent(LoginActivity.this, PrincipalActivity.class);
+                                    startActivity(login);
                                 }
                             });
                         } else {
@@ -81,6 +81,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }).start();
 
+            }
+        });
+
+        btCadUsu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cadastroUsu = new Intent(LoginActivity.this, CadastroActivity.class);
+                startActivity(cadastroUsu);
             }
         });
     }

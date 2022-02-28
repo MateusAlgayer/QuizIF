@@ -24,4 +24,6 @@
     <string name="title_activity_jogo">QuizIFMobile - Jogo</string>
     <string name="title_activity_result_jogo">Resultados</string>
     <string name="title_activity_confirma_codigo_email">Confirmação de código via email</string>
+    <string name="title_activity_cadastro">CadastroActivity</string>
+    <string name="title_activity_confirma_senha">ConfirmaSenhaActivity</string>
 </resources>
