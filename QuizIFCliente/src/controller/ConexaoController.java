@@ -89,7 +89,9 @@ public class ConexaoController {
       msg = (String) in.readObject();      
       out.writeObject(usuEspec);
       
-      ArrayList<Prova> listaProvas = (ArrayList<Prova>) in.readObject();
+      ArrayList<Prova> listaProvas = new ArrayList<>();
+              
+      listaProvas.addAll((ArrayList<Prova>) in.readObject());
       
       gravaLog("GET", 0, "Provas - FIM");
       return listaProvas;
@@ -124,16 +126,16 @@ public class ConexaoController {
         return false;
       }
       
-      boolean continua = true;
-      boolean rep = false;
+      //boolean continua = true;
+      //boolean rep = false;
       int cont = 0;
       
       InfoApp.setGCodConfirmacao("");
       //João Jorge - 04/01/2022 
-      while(continua){
+      
         gravaLog("VAL", 0, "Codigo email rep:"+(cont++));
         
-        FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(rep);
+        FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(false);
         frm.setModal(true);
         frm.setVisible(true);
 
@@ -141,8 +143,6 @@ public class ConexaoController {
           case "Fechou" -> {
             if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? \n O Cadastro será perdido.")){
               out.writeObject("Cancelar");
-            } else {
-              out.writeObject("");
             }
           }
           default -> out.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
@@ -161,11 +161,10 @@ public class ConexaoController {
               return false;
             }
             default -> {
-              //Continua no próximo episodio
-              rep = true;
+              Metodos.erro("Cadastro", "Código invalido, Cadastro cancelado!");
             }
           }
-      }
+      
     } catch (IOException | ClassNotFoundException e) {
        gravaLogErro("ERR", 0, "Erro ao enviar código via Email\n"+e.toString());
     }
@@ -217,14 +216,14 @@ public class ConexaoController {
         return "E^O E-mail especificado não pode ser encontrado!";
       }
       
-      boolean continua = true; 
+      //boolean continua = true; 
       int cont = 0;
-      boolean rep = false;
+      //boolean rep = false;
       
-      while(continua){
+      //while(continua){
         gravaLog("VAL", 0, "Codigo email rep:"+(cont++));
         
-        FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(rep);
+        FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(false);
         frm.setModal(true);
         frm.setVisible(true);
 
@@ -244,30 +243,31 @@ public class ConexaoController {
         switch (msg) {
             case "S^ok" -> {
               gravaLog("UPD", 0, "Redefinir senha - email - FIM");
-              continua = false;
+              //continua = false;
             }
             case "Cancelei" -> {
               gravaLog("UPD", 0, "Redefinir senha - email - FIM");
               return "A^Redefinição de senha cancelada!";
             }
             default -> {
-              rep = true;
+              //rep = true;
+              return "E^Erro ao redefinir senha, O processo sera cancelado";
             }
           }
-      }
+      //}
       
-      continua = true;
+      //continua = true;
       cont = 0;
       
       InfoApp.setGSenhaCripto("");
       gravaLog("UPD", 0, "Redefinir senha - senha - INI");
       
-      while(continua){
+      //while(continua){
         gravaLog("UPD", 0, "Codigo email rep:"+(cont++));
         
-        FormConfirmaSenha frm = new FormConfirmaSenha(sal, false);
-        frm.setModal(true);
-        frm.setVisible(true);
+        FormConfirmaSenha form = new FormConfirmaSenha(sal, false);
+        form.setModal(true);
+        form.setVisible(true);
 
         if(InfoApp.getGSenhaCripto().equals("Fechou")) {
           if(Metodos.msgConfirma("Deseja interromper o processo de redefinição de senha?")){
@@ -283,7 +283,7 @@ public class ConexaoController {
           gravaLog("CAD", 0, "Cadastro - FIM");
           return (String)in.readObject();
         }
-      }
+      //}
       
     }catch(IOException | ClassNotFoundException e){
       gravaLogErro("ERR", 0, "Erro ao redefinir a senha\n"+e.toString());
@@ -386,7 +386,7 @@ public class ConexaoController {
       int cont = 0;
       boolean rep = false;
       
-      while(continua){
+      
         gravaLog("DEL", 0, "Codigo email rep:"+(cont++));
         
         FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(rep);
@@ -397,8 +397,6 @@ public class ConexaoController {
           case "Fechou" -> {
             if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? ")){
               out.writeObject("Cancelar");
-            } else {
-              out.writeObject("");
             }
           }
           default -> out.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
@@ -416,11 +414,10 @@ public class ConexaoController {
               return "A^Processo de exclusão de usuário cancelado!";
             }
             default -> {
-              rep = true;
+              return "E^Código Inválido, Processo cancelado";
             }
           }
-      }
-      
+          
       return "S^ok";
       
     }catch(IOException | ClassNotFoundException e){

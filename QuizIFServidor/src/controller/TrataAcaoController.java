@@ -119,23 +119,23 @@ public class TrataAcaoController extends Thread{
 
               String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
 
-              boolean continua = true;
+              //boolean continua = true;
 
-              while(continua){
+              //while(continua){
 
                 String cod = (String)in.readObject();
 
                 if(cod.equals("Cancelar")){
-                  continua = false;
+                  //continua = false;
                   out.writeObject("Cancelei");
                 } else if (criptocodigo.equals(cod)){
-                  continua = false;
+                  //continua = false;
                   out.writeObject("ok");
                 } else {
                   out.writeObject("nok");
                 }
 
-              }
+              //}
             }
 
             gravaLog("REQ", idUnico, "Validação de email por código - FIM");
@@ -161,23 +161,23 @@ public class TrataAcaoController extends Thread{
 
           String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
 
-          boolean continua = true;
+          //boolean continua = true;
 
-          while(continua){
+          //while(continua){
 
             String cod = (String)in.readObject();
 
             if(cod.equals("Cancelar")){
-              continua = false;
+              //continua = false;
               out.writeObject("Cancelei");
             } else if (criptocodigo.equals(cod)){
-              continua = false;
+              //continua = false;
               out.writeObject("ok");
             } else {
               out.writeObject("");
             }
 
-          }
+          //}
 
           gravaLog("REQ", idUnico, "Validação de email por código - FIM");
         } else if(wCom.equalsIgnoreCase("Deletar Usuário")){
