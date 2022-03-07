@@ -2,6 +2,7 @@ package com.example.quizifmobile.controller;
 
 import android.app.Application;
 
+import ModelDominio.Jogo;
 import ModelDominio.Pergunta;
 import ModelDominio.Prova;
 import ModelDominio.Usuario;
@@ -21,6 +22,7 @@ public class InfoApp extends Application {
     private List<Pergunta> ListaPerguntas;
     private HashMap<Integer, Boolean> Respostas;
     private Prova provaAtual;
+    private List<Jogo> ListaJogo;
 
     public HashMap<Integer, Boolean> getRespostas() {
         return Respostas;
@@ -63,5 +65,13 @@ public class InfoApp extends Application {
         this.setProvaAtual(p);
         this.setListaPerguntas(listaPerguntas);
         this.setRespostas(respostas);
+    }
+
+    public List<Jogo> getListaJogo() {
+        return ListaJogo;
+    }
+
+    public void setListaJogo(List<Jogo> listaJogo) {
+        ListaJogo = listaJogo;
     }
 }

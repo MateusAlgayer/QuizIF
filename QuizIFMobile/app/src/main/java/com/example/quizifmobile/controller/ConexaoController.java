@@ -151,4 +151,30 @@ public class ConexaoController {
             return "Erro na comunicação entre cliente/servidor\n"+e.toString();
         }
     }
+
+    public List<Jogo> getRanking(int filtro){
+        gravaLog("GET", 0, "Ranking - INI");
+        String msg;
+
+        try {
+            out.writeObject("GETRANKING");
+
+            msg = (String) in.readObject();
+
+            if(!msg.equals("ok"))
+                throw new IOException("Servidor não pode processar a requisição");
+
+            out.writeObject(filtro);
+
+            List<Jogo> listaJogos = (List<Jogo>) in.readObject();
+
+            gravaLog("GET", 0, "Ranking - FIM");
+            return listaJogos;
+
+        } catch (IOException | ClassNotFoundException e) {
+            gravaLogErro("ERR", 0, "Erro ao enviar Ranking\n"+e.toString());
+        }
+
+        return null;
+    }
 }
