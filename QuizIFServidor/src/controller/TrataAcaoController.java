@@ -114,6 +114,8 @@ public class TrataAcaoController extends Thread{
             
             if(!sal.isEmpty()){
               String codigo = Metodos.gerarCodigo();
+              
+                System.out.println(codigo);
 
               QuizIFMail.enviaEmail(email, codigo, idUnico);
 
@@ -130,7 +132,7 @@ public class TrataAcaoController extends Thread{
                   out.writeObject("Cancelei");
                 } else if (criptocodigo.equals(cod)){
                   //continua = false;
-                  out.writeObject("ok");
+                  out.writeObject("S^ok");
                 } else {
                   out.writeObject("nok");
                 }
@@ -156,6 +158,8 @@ public class TrataAcaoController extends Thread{
           out.writeObject(sal);
 
           String codigo = Metodos.gerarCodigo();
+          
+          System.out.println(codigo);
 
           QuizIFMail.enviaEmail(email, codigo, idUnico);
 
@@ -172,7 +176,7 @@ public class TrataAcaoController extends Thread{
               out.writeObject("Cancelei");
             } else if (criptocodigo.equals(cod)){
               //continua = false;
-              out.writeObject("ok");
+              out.writeObject("S^ok");
             } else {
               out.writeObject("");
             }
@@ -223,30 +227,33 @@ public class TrataAcaoController extends Thread{
           
           if (!sal.isEmpty()){
             String codigo = Metodos.gerarCodigo();
+            
+            System.out.println(codigo);
 
             QuizIFMail.enviaEmail(email, codigo, idUnico);
 
             String criptocodigo = CriptoHash.Cripto(codigo, sal, idUnico);
 
-            boolean continua = true;
+            //boolean continua = true;
             boolean cancelado = false;
             
-            while(continua){
+            //while(continua){
 
               String cod = (String)in.readObject();
 
               if(cod.equals("Cancelar")){
                 out.writeObject("Cancelei");
                 cancelado = true;
-                continua = false;
+                //continua = false;
               } else if (criptocodigo.equals(cod)){
-                continua = false;
+                //continua = false;
                 out.writeObject("S^ok");
               } else {
                 out.writeObject("");
+                cancelado = true;
               }
 
-            }
+            //}
             
             if(!cancelado){
               gravaLog("UPD", idUnico, "Redefinir senha - email - FIM");

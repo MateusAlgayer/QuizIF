@@ -103,7 +103,7 @@ public class ConexaoController {
     return null; 
   }
   
-  public boolean enviaCodigoEmail(String pEmail){
+  public String enviaCodigoEmail(String pEmail){
     String msg;
     gravaLog("VAL", 0, "Codigo email - INI");
     try {
@@ -111,7 +111,7 @@ public class ConexaoController {
       
       if (!((String)in.readObject()).equals("ok")){
         Metodos.gravaLog("REQ", 0, "Ocorreu um erro ao requisitar codigo via email");
-        return false;
+        return "E^Erro ao requesitar email!";
       }
       
       out.writeObject(pEmail);
@@ -120,10 +120,9 @@ public class ConexaoController {
       
       if(sal.equals("")){
         Metodos.gravaLog("REQ", 0, "Ocorreu um problema na criptografia");
-        return false;
+        return "E^Ocorreu um problema na criptografia!";
       } else if(sal.equals("EmailExiste")){
-        Metodos.erro("Cadastro", "O e-mail informado já está em uso");
-        return false;
+        return "A^Email informado ja está em uso!";
       }
       
       //boolean continua = true;
@@ -151,24 +150,23 @@ public class ConexaoController {
         msg = (String) in.readObject();
         
         switch (msg) {
-            case "ok" -> {
+            case "S^ok" -> {
               gravaLog("VAL", 0, "Codigo email - FIM");
-              return true;
+              return "S^Ok";
             }
             case "Cancelei" -> {
-              Metodos.aviso("Cadastro", "Cadastro cancelado com sucesso");
               gravaLog("VAL", 0, "Codigo email - FIM");
-              return false;
+              return "A^Cadastro cancelado!";
             }
             default -> {
-              Metodos.erro("Cadastro", "Código invalido, Cadastro cancelado!");
+              return "E^Código inválido! Cadastro cancelado!";
             }
           }
       
     } catch (IOException | ClassNotFoundException e) {
        gravaLogErro("ERR", 0, "Erro ao enviar código via Email\n"+e.toString());
     }
-    return false;
+    return "E^Erro ao enviar o código via Email!";
   }
   
   public String cadastraUsu(Usuario usu){
@@ -251,7 +249,7 @@ public class ConexaoController {
             }
             default -> {
               //rep = true;
-              return "E^Erro ao redefinir senha, O processo sera cancelado";
+              return "E^O processo sera cancelado";
             }
           }
       //}
@@ -405,9 +403,10 @@ public class ConexaoController {
         msg = (String) in.readObject();
         
         switch (msg) {
-            case "ok" -> {
+            case "S^ok" -> {
               gravaLog("DEL", 0, "Excluir Usuario - email - FIM");
-              continua = false;
+              //continua = false;
+              return "S^ok";
             }
             case "Cancelei" -> {
               gravaLog("DEL", 0, "Deletar Usuario - email - FIM");
@@ -417,9 +416,7 @@ public class ConexaoController {
               return "E^Código Inválido, Processo cancelado";
             }
           }
-          
-      return "S^ok";
-      
+               
     }catch(IOException | ClassNotFoundException e){
       gravaLogErro("ERR", 0, "Erro ao deletar o usuário\n"+e.toString());
       return "E^Erro na comunicação cliente/servidor\n"+e.toString();

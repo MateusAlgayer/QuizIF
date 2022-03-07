@@ -151,11 +151,11 @@ public class ProvaDAO {
         String sqlAdicional = "";
         
         for (int x = 0; x < cadPerSel.size();x++)
-          sqlAdicional += (sqlAdicional.equals("") ? "" : ",")+"(@ULT_ID_PRO, ?)";
+          sqlAdicional += (sqlAdicional.equals("") ? "" : ",")+"(@ULT_ID_PRO_"+ idUnico + ", ?)";
 
         String sql = "INSERT INTO TABPRO (DONO, NOME, AREAGERAL, DIFICULDADE, SITUACAO) VALUES (?,?,?,?,?);";
                     
-        String sql2 = "SET @ULT_ID_PRO = LAST_INSERT_ID(); ";
+        String sql2 = "SET @ULT_ID_PRO_"+ idUnico + " = LAST_INSERT_ID(); ";
                      
         String sql3 = "INSERT INTO TABPROPER (PROVA, PERGUNTA) VALUES "+sqlAdicional;
         

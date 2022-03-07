@@ -34,13 +34,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:id="@+id/etSenhaUsu"
+            android:id="@+id/etCodigoEmail"
             android:layout_margin="10dp"
             ></EditText>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/btConfirmaCod"
             android:text="Confirmar"
             ></Button>
     </LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.quizifmobile.controller;
 
 import com.example.quizifmobile.util.CriptoHash;
+import com.example.quizifmobile.util.Metodos;
 
 import ModelDominio.Jogo;
 import ModelDominio.Pergunta;
@@ -152,7 +153,7 @@ public class ConexaoController {
         }
     }
 
-    public List<Jogo> getRanking(int filtro){
+    public List<Jogo> getRanking(int filtro) {
         gravaLog("GET", 0, "Ranking - INI");
         String msg;
 
@@ -161,7 +162,7 @@ public class ConexaoController {
 
             msg = (String) in.readObject();
 
-            if(!msg.equals("ok"))
+            if (!msg.equals("ok"))
                 throw new IOException("Servidor não pode processar a requisição");
 
             out.writeObject(filtro);
@@ -172,9 +173,70 @@ public class ConexaoController {
             return listaJogos;
 
         } catch (IOException | ClassNotFoundException e) {
-            gravaLogErro("ERR", 0, "Erro ao enviar Ranking\n"+e.toString());
+            gravaLogErro("ERR", 0, "Erro ao enviar Ranking\n" + e.toString());
         }
 
         return null;
+    }
+
+    public String enviaDelUsu(String email){
+        String msg;
+        try {
+            gravaLog("DEL", 0, "Deletar Usuario - INI");
+
+            out.writeObject("VALIDACODIGOEMAILDELUSU");
+
+            msg = (String) in.readObject();
+
+            if (!msg.equals("ok"))
+                throw new IOException("Servidor não pode processar a requisição");
+
+            out.writeObject(email);
+
+            String sal = (String)in.readObject();
+
+            if(sal.isEmpty()){
+                return "E^Erro na comunicação entre cliente/servidor";
+            }
+
+            gravaLog("DEL", 0, "Codigo email rep:");
+
+            return sal;
+
+        }catch(IOException | ClassNotFoundException e){
+            gravaLogErro("ERR", 0, "Erro ao deletar o usuário\n"+e.toString());
+            return "E^Erro na comunicação cliente/servidor\n"+e.toString();
+        }
+    }
+
+    public String respondeDelUsu(String codigo, String sal){
+
+        try {
+
+            if (sal.isEmpty()){
+                out.writeObject(codigo);
+            } else {
+                out.writeObject(CriptoHash.Cripto(codigo, sal, 0));
+            }
+
+            String msg = (String) in.readObject();
+
+            switch (msg) {
+                case "S^ok": {
+                    gravaLog("DEL", 0, "Excluir Usuario - email - FIM");
+                    //continua = false;
+                    return "S^ok";
+                }
+                case "Cancelei":{
+                    gravaLog("DEL", 0, "Deletar Usuario - email - FIM");
+                    return "A^Processo de exclusão de usuário cancelado!";
+                }
+                default:{
+                    return "E^Código Inválido, Processo cancelado";
+                }
+            }
+        } catch (IOException | ClassNotFoundException e){
+            return "E^Erro ao deletar o usuário! \n" + e.toString();
+        }
     }
 }

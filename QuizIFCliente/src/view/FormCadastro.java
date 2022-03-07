@@ -115,7 +115,9 @@ public class FormCadastro extends javax.swing.JDialog {
        
       gravaLog("CAD", 0, "Cadastro - INI");
       
-      if(!QuizIFCliente.ccont.enviaCodigoEmail(tfEmail.getText())){
+      String status = QuizIFCliente.ccont.enviaCodigoEmail(tfEmail.getText());
+      
+      if(!Metodos.processaMsgServidor(this.getTitle(), status, "", "Erro no cadastro! \n")){
         return;
       } 
       
