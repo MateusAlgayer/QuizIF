@@ -23,7 +23,7 @@ import ModelDominio.Prova;
 
 public class PrincipalActivity extends AppCompatActivity {
 
-    Button btAcessoPerfil, btAcessoRanking;
+    Button btAcessoPerfil, btAcessoRanking, btACessoSobreNos;
     RecyclerView rvProvas;
 
     ProvaAdapter.ProvaOnClickListener provaClick;
@@ -36,6 +36,7 @@ public class PrincipalActivity extends AppCompatActivity {
         setContentView(R.layout.principal);
         btAcessoPerfil = findViewById(R.id.btAcessoPerfil);
         btAcessoRanking = findViewById(R.id.btAcessoRanking);
+        btACessoSobreNos = findViewById(R.id.btAcessoSobreNos);
         rvProvas = findViewById(R.id.rvProvas);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -101,6 +102,15 @@ public class PrincipalActivity extends AppCompatActivity {
                 Intent acessoPerfil = new Intent(PrincipalActivity.this, PerfilActivity.class);
 
                 startActivity(acessoPerfil);
+            }
+        });
+
+        btACessoSobreNos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent acessoSobreNos = new Intent(PrincipalActivity.this, SobreNosActivity.class);
+
+                startActivity(acessoSobreNos);
             }
         });
     }

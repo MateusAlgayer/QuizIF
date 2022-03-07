@@ -30,6 +30,13 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:text="Sobre Nós"
+                android:id="@+id/btAcessoSobreNos"/>
+
+            <Button
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:text="Ranking"
                 android:id="@+id/btAcessoRanking"/>
 
