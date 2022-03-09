@@ -50,14 +50,10 @@ public class ConfirmaCodigoEmailActivity extends AppCompatActivity {
         Intent it = getIntent();
 
         telaPai = it.getIntExtra("TelaPai", TELALOGIN);
-        final String acao = it.getStringExtra("Acao");
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-
-
 
                 switch (telaPai){
                     case TELAPERFIL: {
@@ -76,23 +72,59 @@ public class ConfirmaCodigoEmailActivity extends AppCompatActivity {
                     //}
                 }
 
-                btConfirmaCod.setOnClickListener(new View.OnClickListener() {
+            }
+        }).start();
+
+        btConfirmaCod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(new Runnable() {
                     @Override
-                    public void onClick(View view) {
+                    public void run() {
                         switch (telaPai){
                             case TELAPERFIL: {
-                                ccont.respondeDelUsu(etCodigoEmail.getText().toString(), sal);
-                                Metodos.mensagem(infoApp,"Código confirmado! O usuário será deletado!");
+                                final String status = ccont.respondeDelUsu(etCodigoEmail.getText().toString(), sal);
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (Metodos.processaMsgServidor(ConfirmaCodigoEmailActivity.this, status, "", "Erro ao deletar:")){
+                                            DeletaUsu();
+                                        } else {
+                                            Intent it = new Intent(ConfirmaCodigoEmailActivity.this, PerfilActivity.class);
+                                            startActivity(it);
+                                        }
+                                    }
+                                });
                             }
+                        }
+                    }
+                }).start();
+            }
+        });
+    }
+
+    private void DeletaUsu() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final String status = ccont.deletaUsu(infoApp.getGUsuLogado());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Metodos.processaMsgServidor(ConfirmaCodigoEmailActivity.this, status, "Usuário deletado com sucesso!", "Erro ao deletar:")){
+                            Intent it = new Intent(ConfirmaCodigoEmailActivity.this, MainActivity.class);
+                            startActivity(it);
+                            finish();
+                        } else {
+                            Intent it = new Intent(ConfirmaCodigoEmailActivity.this, PerfilActivity.class);
+                            startActivity(it);
                         }
                     }
                 });
             }
-        });
-
-
+        }).start();
     }
-
 
 
     @Override
@@ -118,14 +150,38 @@ public class ConfirmaCodigoEmailActivity extends AppCompatActivity {
         dialogSair.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent it = retIntentPai();
+                final Intent it = retIntentPai();
 
-                switch (telaPai){
-                    case TELAPERFIL: ccont.respondeDelUsu("Cancelar", "");
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final String status;
 
-                startActivity(it);
-                finish();
+                        switch (telaPai) {
+                            case TELAPERFIL: {
+                                status = ccont.respondeDelUsu("Cancelar", "");
+                                break;
+                            }
+                            case TELALOGIN: {
+                                status = ccont.respondeRedefSenhaUsu("Cancelar", "");
+                                break;
+                            }
+                            case TELACADASTRO: {
+                                status = ccont.respondeCadUsu("Cancelar", "");
+                                break;
+                            }
+                            default: status = "E^Não foi possível encontrar a tela pai, reinicie a aplicação!";
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(Metodos.processaMsgServidor(ConfirmaCodigoEmailActivity.this, status, "", "Erro ao cancelar a validação de código!")){
+                                    startActivity(it);
+                                }
+                            }
+                        });
+                    }
+                }).start();
             }
         });
 

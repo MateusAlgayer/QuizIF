@@ -424,22 +424,22 @@ public class ConexaoController {
   }
   
   public String deletaUsu (Usuario usu){
-      String msg;
-        try {
-            out.writeObject("Deletar Usuário");
-            msg = (String) in.readObject();
-            
-            if(!msg.equals("ok"))
-              throw new IOException("Servidor não pode processar a requisição");
-            
-            out.writeObject(usu);
-            msg = (String) in.readObject();
-                     
-            return msg;
-        } catch (IOException | ClassNotFoundException e) {
-            gravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
-            return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
-        }
+      String msg; 
+      try {
+          out.writeObject("Deletar Usuário");
+          msg = (String) in.readObject();
+
+          if(!msg.equals("ok"))
+            throw new IOException("Servidor não pode processar a requisição");
+
+          out.writeObject(usu);
+          msg = (String) in.readObject();
+
+          return msg;
+      } catch (IOException | ClassNotFoundException e) {
+          gravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
+          return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
+      }
   }
   
   public String alteraTipoUsu(Usuario usu, String tipo){

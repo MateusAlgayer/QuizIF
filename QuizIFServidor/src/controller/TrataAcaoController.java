@@ -169,17 +169,17 @@ public class TrataAcaoController extends Thread{
 
           //while(continua){
 
-            String cod = (String)in.readObject();
+          String cod = (String)in.readObject();
 
-            if(cod.equals("Cancelar")){
-              //continua = false;
-              out.writeObject("Cancelei");
-            } else if (criptocodigo.equals(cod)){
-              //continua = false;
-              out.writeObject("S^ok");
-            } else {
-              out.writeObject("");
-            }
+          if(cod.equals("Cancelar")){
+            //continua = false;
+            out.writeObject("Cancelei");
+          } else if (criptocodigo.equals(cod)){
+            //continua = false;
+            out.writeObject("S^ok");
+          } else {
+            out.writeObject("A^Código Inválido!");
+          }
 
           //}
 

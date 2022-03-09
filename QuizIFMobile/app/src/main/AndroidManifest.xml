@@ -52,12 +52,12 @@
         <activity
             android:name=".view.SobreNosActivity"
             android:label="@string/title_activity_sobre_nos"
-            android:parentActivityName=".view.PerfilActivity"
+            android:parentActivityName=".view.PrincipalActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.quizifmobile.view.PerfilActivity" />
+                android:value="com.example.quizifmobile.view.PrincipalActivity" />
         </activity>
         <activity
             android:name=".view.PerfilActivity"

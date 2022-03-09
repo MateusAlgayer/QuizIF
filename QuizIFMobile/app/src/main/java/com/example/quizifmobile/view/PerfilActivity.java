@@ -1,9 +1,13 @@
 package com.example.quizifmobile.view;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -90,37 +94,36 @@ public class PerfilActivity extends AppCompatActivity {
             //}
         //});
 
-//        btDeletaUsu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                final AlertDialog.Builder confirmarDelUsu = new AlertDialog.Builder(PerfilActivity.this);
-//                confirmarDelUsu.setMessage("Deseja realmente excluir o usuário?");
-//                confirmarDelUsu.setCancelable(true);
-//
-//                confirmarDelUsu.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        Intent it = new Intent(PerfilActivity.this, ConfirmaCodigoEmailActivity.class);
-//                        Bundle parametro = new Bundle();
-//                        parametro.putInt("DeletaUsu", 1);
-//                        it.putExtra(parametro);
-//                        dialogInterface.dismiss();
-//
-//                        startActivityForResult(it);
-//                    }
-//                });
-//
-//                confirmarDelUsu.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.dismiss();
-//                    }
-//                });
-//                AlertDialog confDelUsu = confirmarDelUsu.create();
-//                confDelUsu.show();
-//
-//            }
-//        });
+        btDeletaUsu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder confirmarDelUsu = new AlertDialog.Builder(PerfilActivity.this);
+                confirmarDelUsu.setMessage("Deseja realmente excluir o usuário?");
+                confirmarDelUsu.setCancelable(true);
+
+                confirmarDelUsu.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent it = new Intent(PerfilActivity.this, ConfirmaCodigoEmailActivity.class);
+
+                        it.putExtra("TelaPai", TELAPERFIL);
+                        dialogInterface.dismiss();
+
+                        startActivity(it);
+                    }
+                });
+
+                confirmarDelUsu.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog confDelUsu = confirmarDelUsu.create();
+                confDelUsu.show();
+
+            }
+        });
     }
 
 }

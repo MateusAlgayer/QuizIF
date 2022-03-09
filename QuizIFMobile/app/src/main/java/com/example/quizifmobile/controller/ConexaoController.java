@@ -239,4 +239,85 @@ public class ConexaoController {
             return "E^Erro ao deletar o usuário! \n" + e.toString();
         }
     }
+
+    public String deletaUsu (Usuario usu){
+        String msg;
+        try {
+            out.writeObject("Deletar Usuário");
+            msg = (String) in.readObject();
+
+            if(!msg.equals("ok"))
+                throw new IOException("Servidor não pode processar a requisição");
+
+            out.writeObject(usu);
+            msg = (String) in.readObject();
+
+            return msg;
+        } catch (IOException | ClassNotFoundException e) {
+            gravaLogErro("ERRO", 0, "Erro ao deletar Usuário \n" + e.toString());
+            return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
+        }
+    }
+
+    public String respondeRedefSenhaUsu(String codigo, String sal){
+
+        try {
+
+            if (sal.isEmpty()){
+                out.writeObject(codigo);
+            } else {
+                out.writeObject(CriptoHash.Cripto(codigo, sal, 0));
+            }
+
+            String msg = (String) in.readObject();
+
+            switch (msg) {
+                case "S^ok": {
+                    gravaLog("RED", 0, "Redefinir senha - email - FIM");
+                    //continua = false;
+                    return "S^ok";
+                }
+                case "Cancelei":{
+                    gravaLog("RED", 0, "Redefinir senha - email - FIM");
+                    return "A^Processo de redefinição de senha cancelado!";
+                }
+                default:{
+                    return "E^Código Inválido, Processo cancelado";
+                }
+            }
+        } catch (IOException | ClassNotFoundException e){
+            return "E^Erro ao redefinir a senha! \n" + e.toString();
+        }
+    }
+
+    public String respondeCadUsu(String codigo, String sal){
+
+        try {
+
+            if (sal.isEmpty()){
+                out.writeObject(codigo);
+            } else {
+                out.writeObject(CriptoHash.Cripto(codigo, sal, 0));
+            }
+
+            String msg = (String) in.readObject();
+
+            switch (msg) {
+                case "S^ok": {
+                    gravaLog("CAD", 0, "Cadastro usuario - email - FIM");
+                    //continua = false;
+                    return "S^ok";
+                }
+                case "Cancelei":{
+                    gravaLog("CAD", 0, "Cadastro usuario - email - FIM");
+                    return "A^Processo de cadastro de usuário cancelado!";
+                }
+                default:{
+                    return "E^Código Inválido, Processo cancelado";
+                }
+            }
+        } catch (IOException | ClassNotFoundException e){
+            return "E^Erro ao cadastrar o usuário! \n" + e.toString();
+        }
+    }
 }

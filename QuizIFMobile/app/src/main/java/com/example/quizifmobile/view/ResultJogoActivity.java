@@ -106,7 +106,7 @@ public class ResultJogoActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        if(Metodos.processaMsgServidor(ResultJogoActivity.this,status, "Sucesso ao Gravar resultado!", "Erro ao gravar resultado!\n")){
+                                        if(Metodos.processaMsgServidor(ResultJogoActivity.this,status, "Sucesso ao gravar resultado!", "Erro ao gravar resultado!\n")){
                                             Intent it = new Intent(ResultJogoActivity.this, PrincipalActivity.class);
 
                                             startActivity(it);
