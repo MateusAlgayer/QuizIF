@@ -23,6 +23,15 @@ public class InfoApp extends Application {
     private HashMap<Integer, Boolean> Respostas;
     private Prova provaAtual;
     private List<Jogo> ListaJogo;
+    private Usuario usuCad;
+
+    public Usuario getUsuCad() {
+        return usuCad;
+    }
+
+    public void setUsuCad(Usuario usuCad) {
+        this.usuCad = usuCad;
+    }
 
     public HashMap<Integer, Boolean> getRespostas() {
         return Respostas;

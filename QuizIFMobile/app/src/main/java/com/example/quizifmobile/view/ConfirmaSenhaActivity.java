@@ -37,6 +37,8 @@ public class ConfirmaSenhaActivity extends AppCompatActivity {
 
     InfoApp infoApp;
     int telaPai;
+    String sal;
+    String email;
     ConexaoController ccont;
 
     //constantes
@@ -52,6 +54,7 @@ public class ConfirmaSenhaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         tvSenhaAntigaUsu  = findViewById(R.id.tvSenhaAntigaUsu);
         tvLabelSenha      = findViewById(R.id.tvLabelSenha);
@@ -76,6 +79,15 @@ public class ConfirmaSenhaActivity extends AppCompatActivity {
         if(it != null){
 
             telaPai = it.getIntExtra("TelaPai", 0);
+
+            if(telaPai == REDEFSENHA) {
+                email = it.getStringExtra("Email");
+                sal = it.getStringExtra("sal");
+            }
+            else {
+                email = "";
+                sal = "";
+            }
 
             if(telaPai == ALTSENHA){
                 tvSenhaAntigaUsu.setVisibility(View.VISIBLE);
@@ -144,7 +156,7 @@ public class ConfirmaSenhaActivity extends AppCompatActivity {
                             public void run() {
                                 final String senhaCripto = CriptoHash.Cripto(etSenhaUsu.getText().toString(), infoApp.getGUsuLogado().getSal(), 0);
 
-                                final String status = ccont.alteraSenhaUsu(infoApp, senhaCripto);
+                                final String status = ccont.alteraSenhaUsu(infoApp.getGUsuLogado().getEmail(), senhaCripto);
 
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -168,6 +180,64 @@ public class ConfirmaSenhaActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btCadastrarUsu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(consistSenha()){
+                    if(telaPai == CADSENHA){
+                        cadUsu();
+                    } else {
+                        redefSenha();
+                    }
+                } else {
+                    Metodos.mensagem(infoApp, "Reveja a política de senha!");
+                }
+            }
+        });
+    }
+
+    private void cadUsu() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String senhaCripto = CriptoHash.Cripto(etSenhaUsu.getText().toString(), infoApp.getUsuCad().getSal(), 0);
+                infoApp.getUsuCad().setSenha(senhaCripto);
+
+                final String status = ccont.cadastraUsu(infoApp.getUsuCad());
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(Metodos.processaMsgServidor(ConfirmaSenhaActivity.this, status, "Sucesso ao cadastrar usuário!", "Erro ao cadastrar usuário:")){
+                            Intent it = new Intent(ConfirmaSenhaActivity.this, LoginActivity.class);
+                            startActivity(it);
+                        }
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void redefSenha(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String senhaCripto = CriptoHash.Cripto(etSenhaUsu.getText().toString(), sal, 0);
+
+                final String status = ccont.alteraSenhaUsu(email, senhaCripto);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(Metodos.processaMsgServidor(ConfirmaSenhaActivity.this, status, "Sucesso ao alterar a senha!", "Erro ao alterar a senha!")){
+                            Intent it = new Intent(ConfirmaSenhaActivity.this, LoginActivity.class);
+                            startActivity(it);
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 
     public boolean consistSenha() {
@@ -264,15 +334,15 @@ public class ConfirmaSenhaActivity extends AppCompatActivity {
 
                         switch (telaPai) {
                             case REDEFSENHA: {
-                                status = "OK";//ccont.respondeDelUsu("Cancelar", "");
+                                status = "S^redefOk";//ccont.respondeDelUsu("Cancelar", "");
                                 break;
                             }
                             case CADSENHA: {
-                                status = "OK2";//ccont.respondeRedefSenhaUsu("Cancelar", "");
+                                status = "S^cadOk";//ccont.respondeRedefSenhaUsu("Cancelar", "");
                                 break;
                             }
                             case ALTSENHA: {
-                                status = "S^ok";
+                                status = "S^altOk";
                                 break;
                             }
                             default: status = "E^Não foi possível encontrar a tela pai, reinicie a aplicação!";

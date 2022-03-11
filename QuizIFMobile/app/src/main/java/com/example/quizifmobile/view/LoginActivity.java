@@ -29,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
 
     InfoApp infoApp;
 
+    final int TELALOGIN = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +91,22 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent cadastroUsu = new Intent(LoginActivity.this, CadastroActivity.class);
                 startActivity(cadastroUsu);
+            }
+        });
+
+        btRecuperarSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(etEmailUsu.getText().toString().equals("")){
+                    Metodos.mensagem(LoginActivity.this, "Email não informado, não é possível recuperar senha!");
+                }
+
+                Intent it = new Intent(LoginActivity.this, ConfirmaCodigoEmailActivity.class);
+
+                it.putExtra("TelaPai", TELALOGIN);
+                it.putExtra("Email", etEmailUsu.getText().toString());
+
+                startActivity(it);
             }
         });
     }

@@ -27,12 +27,15 @@ public class ConfirmaCodigoEmailActivity extends AppCompatActivity {
     InfoApp infoApp;
 
     //constantes
-    final int TELAPERFIL = 1;
+    final int TELAPERFIL   = 1;
     final int TELACADASTRO = 2;
-    final int TELALOGIN = 3;
+    final int TELALOGIN    = 3;
+    final int REDEFSENHA   = 1;
+    final int CADSENHA     = 2;
 
     int telaPai;
     String sal;
+    String email;
     ConexaoController ccont;
 
     @Override
@@ -41,15 +44,17 @@ public class ConfirmaCodigoEmailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirma_codigo_email);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        infoApp = (InfoApp) getApplicationContext();
+
+        infoApp       = (InfoApp) getApplicationContext();
         etCodigoEmail = findViewById(R.id.etCodigoEmail);
         btConfirmaCod = findViewById(R.id.btConfirmaCod);
 
         ccont = new ConexaoController(infoApp.in, infoApp.out);
 
-        Intent it = getIntent();
+        final Intent it = getIntent();
 
         telaPai = it.getIntExtra("TelaPai", TELALOGIN);
+        email = "";
 
         new Thread(new Runnable() {
             @Override
@@ -61,15 +66,44 @@ public class ConfirmaCodigoEmailActivity extends AppCompatActivity {
                         break;
                     }
 
-                    //case TELACADASTRO: {
-                    //cadUsu();
-                    //break;
-                    //}
+                    case TELACADASTRO: {
+                        sal = ccont.enviaCodigoEmail(infoApp.getUsuCad().getEmail());
 
-                    //case TELALOGIN: {
-                    //redefSenhaUsu();
-                    //break;
-                    //}
+                        //nesse caso "dhasieuqwehqhduirwuqiqhirfhquedq" continua e E^erro ou A^aviso caem no else
+                        if(Metodos.pedaco(sal, "^", 1).isEmpty()){
+                            //continua
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Metodos.mensagem(ConfirmaCodigoEmailActivity.this, Metodos.pedaco(sal, "^",2));
+                                    finish();
+                                }
+                            });
+                        }
+
+                        break;
+                    }
+
+                    case TELALOGIN: {
+                        email = it.getStringExtra("Email");
+                        sal = ccont.redefSenhaUsu(email);
+
+                        //nesse caso "dhasieuqwehqhduirwuqiqhirfhquedq" continua e E^erro ou A^aviso saem dessa função
+                        if(Metodos.pedaco(sal, "^", 1).isEmpty()){
+                            //continua
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Metodos.mensagem(ConfirmaCodigoEmailActivity.this, Metodos.pedaco(sal, "^",2));
+                                    finish();
+                                }
+                            });
+                        }
+
+                        break;
+                    }
                 }
 
             }
@@ -97,11 +131,56 @@ public class ConfirmaCodigoEmailActivity extends AppCompatActivity {
                                     }
                                 });
                             }
+                            case TELALOGIN: {
+                                final String status = ccont.respondeRedefSenhaUsu(etCodigoEmail.getText().toString(), sal);
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (Metodos.processaMsgServidor(ConfirmaCodigoEmailActivity.this, status, "", "Erro ao redefinir:")){
+                                            redefineSenha();
+                                        } else {
+                                            Intent it = new Intent(ConfirmaCodigoEmailActivity.this, LoginActivity.class);
+                                            startActivity(it);
+                                        }
+                                    }
+                                });
+                            }
+                            case TELACADASTRO: {
+                                final String status = ccont.respondeCadUsu(etCodigoEmail.getText().toString(), sal);
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (Metodos.processaMsgServidor(ConfirmaCodigoEmailActivity.this, status, "", "Erro ao cadastrar:")){
+                                            cadastraUsu();
+                                        } else {
+                                            Intent it = new Intent(ConfirmaCodigoEmailActivity.this, CadastroActivity.class);
+                                            startActivity(it);
+                                        }
+                                    }
+                                });
+                            }
                         }
                     }
                 }).start();
             }
         });
+    }
+
+    private void cadastraUsu() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Intent it = new Intent(ConfirmaCodigoEmailActivity.this, ConfirmaSenhaActivity.class);
+
+                infoApp.getUsuCad().setSal(sal);
+
+                it.putExtra("TelaPai", CADSENHA);
+
+                startActivity(it);
+            }
+        }).start();
     }
 
     private void DeletaUsu() {
@@ -126,6 +205,20 @@ public class ConfirmaCodigoEmailActivity extends AppCompatActivity {
         }).start();
     }
 
+    private void redefineSenha(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Intent it = new Intent(ConfirmaCodigoEmailActivity.this, ConfirmaSenhaActivity.class);
+
+                it.putExtra("TelaPai", REDEFSENHA);
+                it.putExtra("Email", email);
+                it.putExtra("sal", sal);
+
+                startActivity(it);
+            }
+        }).start();
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

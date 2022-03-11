@@ -111,7 +111,7 @@ public class ConexaoController {
       
       if (!((String)in.readObject()).equals("ok")){
         Metodos.gravaLog("REQ", 0, "Ocorreu um erro ao requisitar codigo via email");
-        return "E^Erro ao requesitar email!";
+        return "E^Erro ao requisitar email!";
       }
       
       out.writeObject(pEmail);

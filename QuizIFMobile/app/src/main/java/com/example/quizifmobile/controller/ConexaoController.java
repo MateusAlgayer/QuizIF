@@ -323,7 +323,7 @@ public class ConexaoController {
         }
     }
 
-    public String alteraSenhaUsu(InfoApp app, String criptoSenha){
+    public String alteraSenhaUsu(String email, String criptoSenha){
         String msg;
         try {
             out.writeObject("Alterar Senha Usuário");
@@ -332,7 +332,7 @@ public class ConexaoController {
             if(!msg.equals("ok"))
                 throw new IOException("Servidor não pode processar a requisição");
 
-            Usuario usu = new Usuario(app.getGUsuLogado().getEmail(), criptoSenha);
+            Usuario usu = new Usuario(email, criptoSenha);
             out.writeObject(usu);
 
             msg = (String) in.readObject();
@@ -341,6 +341,89 @@ public class ConexaoController {
         } catch (IOException | ClassNotFoundException e) {
             gravaLogErro("ERRO", 0, "Erro ao alterar senha \n" + e.toString());
             return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
+        }
+    }
+
+    public String redefSenhaUsu(String email){
+        String msg;
+        try {
+            gravaLog("UPD", 0, "Redefinir senha - INI");
+
+            out.writeObject("REDEFINESENHA");
+
+            msg = (String) in.readObject();
+
+            if(!msg.equals("ok"))
+                throw new IOException("Servidor não pode processar a requisição");
+
+            out.writeObject(email);
+
+            String sal = (String)in.readObject();
+
+            if(sal.isEmpty()){
+                return "A^O E-mail especificado não pode ser encontrado!";
+            }
+
+            return sal;
+
+        }catch(IOException | ClassNotFoundException e){
+            gravaLogErro("ERR", 0, "Erro ao redefinir a senha\n"+e.toString());
+            return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
+        }
+    }
+
+    public String enviaCodigoEmail(String pEmail){
+        String msg;
+        gravaLog("VAL", 0, "Codigo email - INI");
+        try {
+            out.writeObject("VALIDACODIGOEMAIL");
+
+            if (!(in.readObject()).equals("ok")){
+                Metodos.gravaLog("REQ", 0, "Ocorreu um erro ao requisitar codigo via email");
+                return "E^Erro ao requisitar email!";
+            }
+
+            out.writeObject(pEmail);
+
+            String sal = (String) in.readObject();
+
+            if(sal.equals("")){
+                Metodos.gravaLog("REQ", 0, "Ocorreu um problema na criptografia");
+                return "E^Ocorreu um problema na criptografia!";
+            } else if(sal.equals("EmailExiste")){
+                return "A^Email informado ja está em uso!";
+            }
+
+            return sal;
+
+        } catch (IOException | ClassNotFoundException e) {
+            gravaLogErro("ERR", 0, "Erro ao enviar código via Email\n"+e.toString());
+        }
+        return "E^Erro ao enviar o código via Email!";
+    }
+
+    public String cadastraUsu(Usuario usu){
+        gravaLog("INS", 0, "Usuário - INI");
+
+        String msg;
+        try {
+            out.writeObject("CADASTROUSU");
+
+            msg = (String) in.readObject();
+
+            if(!msg.equals("ok"))
+                throw new IOException("Servidor não pode processar a requisição");
+
+            out.writeObject(usu);
+
+            gravaLog("INS", 0, "Usuário - FIM");
+
+            msg = (String)in.readObject();
+
+            return msg;
+        } catch (IOException | ClassNotFoundException e) {
+            gravaLogErro("ERR", 0, "Erro ao cadastrar usuário\n"+e.toString());
+            return "Erro na comunicação com o servidor:\n"+e.toString();
         }
     }
 }
