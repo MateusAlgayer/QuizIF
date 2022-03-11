@@ -1,5 +1,7 @@
 package com.example.quizifmobile.controller;
 
+import android.content.Context;
+
 import com.example.quizifmobile.util.CriptoHash;
 import com.example.quizifmobile.util.Metodos;
 
@@ -318,6 +320,27 @@ public class ConexaoController {
             }
         } catch (IOException | ClassNotFoundException e){
             return "E^Erro ao cadastrar o usuário! \n" + e.toString();
+        }
+    }
+
+    public String alteraSenhaUsu(InfoApp app, String criptoSenha){
+        String msg;
+        try {
+            out.writeObject("Alterar Senha Usuário");
+            msg = (String) in.readObject();
+
+            if(!msg.equals("ok"))
+                throw new IOException("Servidor não pode processar a requisição");
+
+            Usuario usu = new Usuario(app.getGUsuLogado().getEmail(), criptoSenha);
+            out.writeObject(usu);
+
+            msg = (String) in.readObject();
+
+            return msg;
+        } catch (IOException | ClassNotFoundException e) {
+            gravaLogErro("ERRO", 0, "Erro ao alterar senha \n" + e.toString());
+            return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
         }
     }
 }

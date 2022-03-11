@@ -14,6 +14,8 @@ public class InfoApp {
   private static String GSenhaCripto = "";
   
   private static String GEmailUsu = "";
+  
+  private static String GSalRedef = "";
 
   public static String getGEmailUsu() {
     return GEmailUsu;
@@ -45,5 +47,13 @@ public class InfoApp {
 
   public static void setGCodConfirmacao(String GCodConfirmacao) {
     InfoApp.GCodConfirmacao = GCodConfirmacao;
+  }
+
+  static String getGSalRedef() {
+    return GSalRedef;
+  }
+
+  static void setSalRedef(String sal) {
+    GSalRedef = sal;
   }
 }

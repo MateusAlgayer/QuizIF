@@ -15,10 +15,12 @@
         <activity
             android:name=".view.ConfirmaSenhaActivity"
             android:label="@string/title_activity_confirma_senha"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".view.CadastroActivity"
             android:label="@string/title_activity_cadastro"
+            android:screenOrientation="portrait"
             android:parentActivityName=".view.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -28,6 +30,7 @@
         <activity
             android:name=".view.ConfirmaCodigoEmailActivity"
             android:label="@string/title_activity_confirma_codigo_email"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.ResultJogoActivity"

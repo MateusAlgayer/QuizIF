@@ -24,8 +24,6 @@ public class FormPerfil extends javax.swing.JDialog {
     atualizaTabela();
   }
   
-    
-
   @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {

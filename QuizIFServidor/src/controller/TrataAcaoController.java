@@ -255,27 +255,27 @@ public class TrataAcaoController extends Thread{
 
             //}
             
-            if(!cancelado){
-              gravaLog("UPD", idUnico, "Redefinir senha - email - FIM");
-          
-              gravaLog("UPD", idUnico, "Redefinir senha - senha - INI");
-
-              Usuario usu = (Usuario)in.readObject();
-
-              if (usu != null){
-                String status = (new UsuarioDAO()).RedefSenha(usu, idUnico);
-                                
-                out.writeObject(status);
-//                if((new UsuarioDAO()).RedefSenha(usu, idUnico) == -1){
-//                  out.writeObject("ok");
-//                } else {
-//                  out.writeObject("nok");
-//                }
-                
-              }
-
-              gravaLog("UPD", idUnico, "Redefinir senha - senha - FIM");
-            }
+//            if(!cancelado){
+//              gravaLog("UPD", idUnico, "Redefinir senha - email - FIM");
+//          
+//              gravaLog("UPD", idUnico, "Redefinir senha - senha - INI");
+//
+//              Usuario usu = (Usuario)in.readObject();
+//
+//              if (usu != null){
+//                String status = (new UsuarioDAO()).RedefSenha(usu, idUnico);
+//                                
+//                out.writeObject(status);
+////                if((new UsuarioDAO()).RedefSenha(usu, idUnico) == -1){
+////                  out.writeObject("ok");
+////                } else {
+////                  out.writeObject("nok");
+////                }
+//                
+//              }
+//
+//              gravaLog("UPD", idUnico, "Redefinir senha - senha - FIM");
+//            }
           }
         } else if(wCom.equalsIgnoreCase("Alterar Senha Usuário")){
           gravaLog("UPD", idUnico, "Alterar senha INI");

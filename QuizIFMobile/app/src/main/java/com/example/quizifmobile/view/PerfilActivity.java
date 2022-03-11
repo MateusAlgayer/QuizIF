@@ -34,6 +34,7 @@ public class PerfilActivity extends AppCompatActivity {
     InfoApp infoApp;
 
     final int TELAPERFIL = 1;
+    final int ALTSENHA   = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,14 +86,16 @@ public class PerfilActivity extends AppCompatActivity {
             }
         }).start();
 
-        //btAltSenhaUsu.setOnClickListener(new View.OnClickListener() {
-            //@Override
-            //public void onClick(View view) {
-                //Intent alterarSenha = new Intent(PerfilActivity.this, ConfirmaSenhaActivity.class);
+        btAltSenhaUsu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent alterarSenha = new Intent(PerfilActivity.this, ConfirmaSenhaActivity.class);
 
-                //startActivity(alterarSenha);
-            //}
-        //});
+                alterarSenha.putExtra("TelaPai", ALTSENHA);
+
+                startActivity(alterarSenha);
+            }
+        });
 
         btDeletaUsu.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -18,11 +18,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Senha Antiga: "
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:id="@+id/tvSenhaAntigaUsu"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
+        android:inputType="textPassword"
         android:id="@+id/etSenhaAntigaUsu"
         android:layout_margin="10dp"
         />
@@ -31,12 +32,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Senha Nova: "
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:id="@+id/tvLabelSenha"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:id="@+id/etSenhaNovaUsu"
+            android:inputType="textPassword"
+            android:id="@+id/etSenhaUsu"
             android:layout_margin="10dp"
             />
 
@@ -48,7 +50,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
+            android:inputType="textPassword"
             android:id="@+id/etConfirmaSenhaUsu"
             android:layout_margin="10dp"
             />
@@ -88,6 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="Ser Iguais"
+            android:textColor="@color/red"
+            android:id="@+id/tvSenhaIgual"
             ></TextView>
 
         <TextView
@@ -95,6 +99,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="Possuir ao menos uma letra maiúscula"
+            android:textColor="@color/red"
+            android:id="@+id/tvSenhaMaisc"
             ></TextView>
 
         <TextView
@@ -102,6 +108,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="Possuir ao menos uma letra minúscula"
+            android:textColor="@color/red"
+            android:id="@+id/tvSenhaMinusc"
             ></TextView>
 
         <TextView
@@ -109,6 +117,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="Possuir ao menos um caracter especial"
+            android:textColor="@color/red"
+            android:id="@+id/tvSenhaCaracEspec"
             ></TextView>
 
         <TextView
@@ -116,6 +126,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="Possuir ao menos 1 digito"
+            android:textColor="@color/red"
+            android:id="@+id/tvSenhaDigito"
             ></TextView>
 
         <TextView
@@ -123,6 +135,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="Possuir no mínimo 8 e no máximo 20 caracteres"
+            android:textColor="@color/red"
+            android:id="@+id/tvSenhaTamanho"
             ></TextView>
     </LinearLayout>
 

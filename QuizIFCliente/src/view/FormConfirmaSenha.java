@@ -32,12 +32,12 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
       lbSenha.setText(trocasenha ? "senha:" : "Senha:");
     }
     
-    public int consistSenha() {
+    public boolean consistSenha() {
         String senha = String.valueOf(pfSenha.getPassword());
         
         String confirmaSenha = String.valueOf(pfConfirmaSenha.getPassword());
         
-        int validSenha = 0;
+        boolean validSenha = true;
         
         if(senha.equals("")){
             lbCaracteres.setForeground(Color.red);
@@ -46,55 +46,49 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
             lbMinuscula.setForeground(Color.red);
             lbSenhas.setForeground(Color.red);
             lbTamanho.setForeground(Color.red);
-            return 0;
+            return false;
         }
         
         if(senha.equals(confirmaSenha)){
             lbSenhas.setForeground(Color.green);
-            validSenha++;
         } else{
             lbSenhas.setForeground(Color.red);
-            validSenha--;
+            validSenha = false;
         }
         
         if(senha.chars().anyMatch(Character::isLowerCase)){
             lbMinuscula.setForeground(Color.green);
-            validSenha++;
         } else{
             lbMinuscula.setForeground(Color.red);
-            validSenha--;
+            validSenha = false;
         }
         
         if(senha.chars().anyMatch(Character::isUpperCase)){
             lbMaiuscula.setForeground(Color.green);
-            validSenha++;
         } else{
             lbMaiuscula.setForeground(Color.red);
-            validSenha--;
+            validSenha = false;
         }
         
         if(senha.chars().anyMatch(Character::isDigit)){
             lbDigito.setForeground(Color.green);
-            validSenha++;
         } else{
             lbDigito.setForeground(Color.red);
-            validSenha--;
+            validSenha = false;
         }
         
         if(senha.matches(".*[^A-Za-z0-9 ].*")){
           lbCaracteres.setForeground(Color.green);
-          validSenha++;
         } else{
           lbCaracteres.setForeground(Color.red);
-          validSenha--;
+          validSenha = false;
         }
         
         if(senha.length() >= 8 && senha.length() <= 20){
           lbTamanho.setForeground(Color.green);
-          validSenha++;
         } else {
           lbTamanho.setForeground(Color.red);
-          validSenha--;
+          validSenha = false;
         }
         
         return validSenha;
@@ -307,7 +301,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         if(!Metodos.consistencia(true, pfSenha, pfConfirmaSenha)) return;
         
-        if(consistSenha() == 6){
+        if(consistSenha()){
           String senhaCripto = CriptoHash.Cripto(String.valueOf(pfSenha.getPassword()), GSal, 0);
           InfoApp.setGSenhaCripto(senhaCripto);
           dispose();
@@ -335,7 +329,7 @@ public class FormConfirmaSenha extends javax.swing.JDialog {
         String antigaSenha = CriptoHash.Cripto(String.valueOf(pfAntigaSenha.getPassword()), InfoApp.getGUsuLogado().getSal(), 0);
         
         if(antigaSenha.equals(InfoApp.getGUsuLogado().getSenha())){
-            if(consistSenha() == 6){
+            if(consistSenha()){
                 String senhaCripto = CriptoHash.Cripto(String.valueOf(pfSenha.getPassword()), GSal, 0);
                 InfoApp.setGSenhaCripto(senhaCripto);
                 dispose();

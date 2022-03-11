@@ -219,75 +219,49 @@ public class ConexaoController {
       //boolean rep = false;
       
       //while(continua){
-        gravaLog("VAL", 0, "Codigo email rep:"+(cont++));
-        
-        FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(false);
-        frm.setModal(true);
-        frm.setVisible(true);
+      gravaLog("VAL", 0, "Codigo email rep:"+(cont++));
 
-        switch (InfoApp.getGCodConfirmacao()) {
-          case "Fechou" -> {
-            if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? \n A redefinição de senha será perdida.")){
-              out.writeObject("Cancelar");
-            } else {
-              out.writeObject("");
-            }
-          }
-          default -> out.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
-        }
-        
-        msg = (String) in.readObject();
-        
-        switch (msg) {
-            case "S^ok" -> {
-              gravaLog("UPD", 0, "Redefinir senha - email - FIM");
-              //continua = false;
-            }
-            case "Cancelei" -> {
-              gravaLog("UPD", 0, "Redefinir senha - email - FIM");
-              return "A^Redefinição de senha cancelada!";
-            }
-            default -> {
-              //rep = true;
-              return "E^O processo sera cancelado";
-            }
-          }
-      //}
-      
-      //continua = true;
-      cont = 0;
-      
-      InfoApp.setGSenhaCripto("");
-      gravaLog("UPD", 0, "Redefinir senha - senha - INI");
-      
-      //while(continua){
-        gravaLog("UPD", 0, "Codigo email rep:"+(cont++));
-        
-        FormConfirmaSenha form = new FormConfirmaSenha(sal, false);
-        form.setModal(true);
-        form.setVisible(true);
+      FormConfirmaCodigoEmail frm = new FormConfirmaCodigoEmail(false);
+      frm.setModal(true);
+      frm.setVisible(true);
 
-        if(InfoApp.getGSenhaCripto().equals("Fechou")) {
-          if(Metodos.msgConfirma("Deseja interromper o processo de redefinição de senha?")){
-            out.writeObject(null);
-            return "A^Redefinição de senha cancelada!";
-          } 
-        } else if(!InfoApp.getGSenhaCripto().equals("")){
-          //altera
-          Comum novoUsu = new Comum(email, InfoApp.getGSenhaCripto());
-          
-          out.writeObject(novoUsu);
-          
-          gravaLog("CAD", 0, "Cadastro - FIM");
-          return (String)in.readObject();
+      switch (InfoApp.getGCodConfirmacao()) {
+        case "Fechou" -> {
+          if(Metodos.msgConfirma("Deseja interromper o processo de verificação de código via email? \n A redefinição de senha será perdida.")){
+            out.writeObject("Cancelar");
+          } else {
+            out.writeObject("");
+          }
         }
-      //}
+        default -> out.writeObject(CriptoHash.Cripto(InfoApp.getGCodConfirmacao(), sal, 0));
+      }
+        
+      msg = (String) in.readObject();
+        
+      InfoApp.setSalRedef("");
+      
+      switch (msg) {
+        case "S^ok" -> {
+          gravaLog("UPD", 0, "Redefinir senha - email - FIM");
+          
+          InfoApp.setSalRedef(sal);
+          return "S^ok";
+          //continua = false;
+        }
+        case "Cancelei" -> {
+          gravaLog("UPD", 0, "Redefinir senha - email - FIM");
+          return "A^Redefinição de senha cancelada!";
+        }
+        default -> {
+          //rep = true;
+          return "E^O processo sera cancelado";
+        }
+      }
       
     }catch(IOException | ClassNotFoundException e){
       gravaLogErro("ERR", 0, "Erro ao redefinir a senha\n"+e.toString());
       return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
-    return "E^Erro na comunicação entre cliente/servidor";
   }
 
   public ArrayList<Area> getListaArea() {
@@ -751,5 +725,37 @@ public class ConexaoController {
       gravaLogErro("ERR", 0, "Erro ao gravar jogo\n"+e.toString());
       return "Erro na comunicação entre cliente/servidor\n"+e.toString();
     }
+  }
+
+  public String AltSenhaPosRedef(String email){
+    String msg;
+      try {         
+
+        if(InfoApp.getGSalRedef().equals(""))
+          return "E^Erro ao redefinir senha!";
+        
+        FormConfirmaSenha frm = new FormConfirmaSenha(InfoApp.getGSalRedef(), false);
+        frm.setModal(true);
+        frm.setVisible(true);
+        
+        if(InfoApp.getGSenhaCripto().equals("Fechou"))
+          return "A^Processo de alteração de senha cancelado!";
+        
+        out.writeObject("Alterar Senha Usuário");
+        msg = (String) in.readObject();
+
+        if(!msg.equals("ok"))
+          throw new IOException("Servidor não pode processar a requisição");
+
+        Usuario usu = new Usuario(email, InfoApp.getGSenhaCripto());
+        out.writeObject(usu);
+
+        msg = (String) in.readObject();
+
+        return msg;
+      } catch (IOException | ClassNotFoundException e) {
+        gravaLogErro("ERRO", 0, "Erro ao alterar senha \n" + e.toString());
+        return "E^Erro na comunicação entre cliente/servidor\n"+e.toString();
+      }
   }
 }

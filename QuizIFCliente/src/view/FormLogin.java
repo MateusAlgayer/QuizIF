@@ -201,7 +201,11 @@ public class FormLogin extends javax.swing.JFrame{
     
     String res = QuizIFCliente.ccont.enviaRedefSenha(tfUsu.getText());
     
-    Metodos.processaMsgServidor(this.getTitle(), res, "Senha redefinida com sucesso!", "Erro ao redefinir a senha!"); 
+    if(Metodos.processaMsgServidor(this.getTitle(), res, "", "Erro ao redefinir a senha!")){
+      res = QuizIFCliente.ccont.AltSenhaPosRedef(tfUsu.getText());
+      
+      Metodos.processaMsgServidor(this.getTitle(), res, "Senha redefinida com sucesso!", "Erro ao redefinir a senha!");
+    } 
     
     Metodos.gravaLog("UPD", 0, "Redefinição de senha - FIM");
   }//GEN-LAST:event_btRedefSenhaActionPerformed
