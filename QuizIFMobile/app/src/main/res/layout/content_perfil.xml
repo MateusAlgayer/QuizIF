@@ -28,12 +28,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
                     android:text="Nome: "
                     ></TextView>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="17dp"
                     android:id="@+id/tvNomePerfil"
                     ></TextView>
 
@@ -48,12 +51,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
                     android:text="Apelido: "
                     ></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="17dp"
                     android:id="@+id/tvApelidoPerfil"
                     ></TextView>
             </LinearLayout>
@@ -67,12 +73,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
                     android:text="Email: "
                     ></TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="17dp"
                     android:id="@+id/tvEmailPerfil"
                     ></TextView>
             </LinearLayout>
@@ -110,7 +119,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Histórico de partidas"
+                android:layout_marginBottom="5dp"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                android:text="Histórico de partidas: "
                 ></TextView>
 
             <androidx.recyclerview.widget.RecyclerView
